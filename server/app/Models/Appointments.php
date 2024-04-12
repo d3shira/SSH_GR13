@@ -10,14 +10,16 @@ class Appointments extends Model
     use HasFactory;
     protected $primaryKey = 'Appointment_id';
     protected $fillable = [
+        'Property_id',
         'Time',
         'Full_name',
         'Email',
-        'Address_id',
         'Phone',
         'Message',
-        'Create_at',
-        'Updated_at',
     ];
 
+    public function properties()
+    {
+        return $this->belongsTo(Properties::class);
+    }
 }

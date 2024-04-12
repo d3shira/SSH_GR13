@@ -13,9 +13,9 @@ class Properties extends Model
         'Type',
         'For_rent',
         'For_sale',
-        'Address_id',
-        'Seller_id',
-        'Application_id',
+        'Address_id', //PropertyAddresses
+        'Seller_id',  //Users 
+        'Application_id', //Applications
         'Price',
         'Nr_bedrooms',
         'Nr_bathrooms',
@@ -24,4 +24,25 @@ class Properties extends Model
         'Status',
        
     ];
+
+    
+    public function appointments()
+    {
+        return $this->hasMany(Appointments::class);
+    }
+
+    public function property_addresses(): HasOne
+    {
+        return $this->hasOne(PropertyAddresses::class);
+    }
+
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(Users::class);
+    }
+
+    public function application(): HasOne
+    {
+        return $this->hasOne(Applications::class);
+    }
 }

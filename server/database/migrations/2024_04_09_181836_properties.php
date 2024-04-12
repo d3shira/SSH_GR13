@@ -16,9 +16,12 @@ return new class extends Migration
             $table->text('type');
             $table->boolean('for_rent');
             $table->boolean('for_sale');
-            $table->unsignedBigInteger('address_id');
+            $table->unsignedBigInteger('property_address_id');
+            $table->foreign('property_address_id')->references('id')->on('property_addresses');
             $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('users');
             $table->unsignedBigInteger('application_id');
+            $table->foreign('application_id')->references('id')->on('applications');
             $table->decimal('price', 10, 2)->nullable();
             $table->integer('nr_bedrooms');
             $table->integer('nr_bathrooms');

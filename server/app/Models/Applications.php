@@ -25,9 +25,12 @@ class Application extends Model
         'status',
     ];
 
-    // Metoda për të lidhur tabelën e adresave të pronave
-    public function propertyAddress()
+    public function users()
     {
-        return $this->belongsTo(PropertyAddress::class);
+        return $this->belongsTo(Users::class);
+    }
+    public function properties(): BelongsTo
+    {
+        return $this->belongsTo(Properties::class);
     }
 }

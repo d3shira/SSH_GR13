@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('document'); // Të përcaktohet data type sipas nevojës (p.sh. VARCHAR)
             $table->boolean('for_rent');
             $table->boolean('for_sale');
-            $table->unsignedBigInteger('property_address_id'); // FK për tabelën e adresave të pronave
-            $table->foreign('property_address_id')->references('id')->on('property_addresses');
+            $table->string('property_address');
             $table->decimal('price', 10, 2); // Decimal field për çmimin
             $table->integer('bedrooms');
             $table->integer('bathrooms');

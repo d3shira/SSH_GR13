@@ -16,4 +16,9 @@ class PropertyAddresses extends Model
         'address_line',                                      //must include details like: neighborhood, street name, building name and/or number
         'postal_code',
     ];
+
+    public function properties(): BelongsTo
+    {
+        return $this->belongsTo(Properties::class);
+    }
 }
