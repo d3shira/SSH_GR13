@@ -11,24 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('property_addresses', function (Blueprint $table){
+        Schema::create('property_types', function (Blueprint $table) {
             $table->id();
-            $table->string('country');
-            $table->string('municipality');
-            $table->string('city_town_village');
-            $table->text('address_line');
-            $table->string('postal_code', 20)->nullable();
+            $table->string('property_type_name');
             $table->timestamps();
-
         });
     }
-    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('property_addresses');
+        Schema::dropIfExists('property_types');
     }
 };

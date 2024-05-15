@@ -27,7 +27,7 @@
           <InputText id="confirmPassword" v-model="confirmPassword" type="password" />
         </div>
       </div>
-      <Button type="submit" label="Register" icon="pi pi-check" />
+      <Button type="submit" label="Register"  />
     </form>
   </div>
 </template>
