@@ -16,7 +16,7 @@
         </div>
         <div class="p-field p-grid">
           <div class="p-col-12">
-            <Button type="submit" label="Login" icon="pi pi-check" />
+            <Button type="submit" label="Login"  />
           </div>
         </div>
       </form>
