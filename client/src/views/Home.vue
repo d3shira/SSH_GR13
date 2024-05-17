@@ -44,32 +44,7 @@
     </div>
   
     <div style="display: flex; justify-content: center; align-items: center;">
-    <Card style="width: 25rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
-        <template #header>
-            <img alt="user header" src="https://primefaces.org/cdn/primevue/images/usercard.png" />
-        </template>
-        <template #title>Advanced Card</template>
-        <template #subtitle>
-          <div class="flex items-center gap-2">
-            <i class="pi pi-map-marker"></i>
-            <span>New York, NY</span>
-          </div>
-        </template>
-        <template #content>
-          <div class="flex items-center gap-2 mt-4">
-            <i class="pi pi-home"></i>
-            <span>3 Bedrooms</span>
-            <i class="pi pi-chart-line"></i>
-            <span>120 sqm</span>
-          </div>
-        </template>
-        <template #footer>
-          <div class="flex items-center justify-between">
-            <i class="pi pi-coins"></i>
-            <span>$250,000</span>
-          </div>
-        </template>
-    </Card>
+      <PropertyCard v-for="(property, index) in properties" :key="index" :property="property" />
     </div>
 
     <!-- Agents -->
@@ -109,6 +84,7 @@ import InputText from 'primevue/inputtext';
 import RadioButton from 'primevue/radiobutton';
 import Card from 'primevue/card';
 import Footer from '@/components/Footer.vue';
+import PropertyCard from '@/components/PropertyCard.vue';
 
 export default {
   components: {
@@ -117,7 +93,30 @@ export default {
     InputText,
     RadioButton,
     Card,
-    Footer
+    Footer,
+    PropertyCard
+  },
+  data() {
+    return {
+      properties: []
+    };
+  },
+  mounted() {
+    this.getProperties();
+  },
+  methods: {
+    async getProperties() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/properties');
+        if (!response.ok) {
+          throw new Error('Failed to fetch properties');
+        }
+        const data = await response.json();
+        this.properties = data;
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+    }
   }
 };
 
