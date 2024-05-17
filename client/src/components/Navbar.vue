@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <div class="background-image"></div>
     <div class="p-shadow-2 navbar">
       <div class="p-d-flex p-jc-between p-ai-center" style="display: flex; align-items: center;">
         <div class="logo p-text-center">Kosova Estate</div>
@@ -7,7 +9,7 @@
             <router-link to="" class="menu-item">Properties</router-link>
           </div>
           <div class="p-mx-3">
-            <router-link to="" class="menu-item">Agents</router-link>
+            <router-link to="/agents" class="menu-item">Agents</router-link>
           </div>
           <div class="p-mx-3">
             <router-link to="" class="menu-item">About Us</router-link>
@@ -24,6 +26,7 @@
         </div>
       </div>
     </div>
+  </div>
   </template>
   
   <script>
@@ -33,12 +36,25 @@
   </script>
   
   <style scoped>
+  .background-image {
+    background-image: url('@/assets/images/photo.png');
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    /*filter: saturate(0.5); /* Adjust values as needed */
+}
   .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background-color: #010633; 
+    background-color: #010633;
+    /*background-color: rgba(1, 6, 51, 0.8); /* Add some transparency to the navbar */
     color: white;
     padding: 25px 20px; 
     width: 100%;
