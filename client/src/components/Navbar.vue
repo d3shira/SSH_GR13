@@ -40,7 +40,7 @@
     background-image: url('@/assets/images/photo.png');
     background-size: cover;
     background-position: center;
-    position: fixed;
+    position: absolute; /*was fixed*/
     width: 100%;
     height: 100%;
     top: 0;
