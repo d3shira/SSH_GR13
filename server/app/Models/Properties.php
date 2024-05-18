@@ -8,41 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 class Properties extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'Property_id';
-    protected $fillable = [
-        'Type',
-        'For_rent',
-        'For_sale',
-        'Address_id', //PropertyAddresses
-        'Seller_id',  //Users 
-        'Application_id', //Applications
-        'Price',
-        'Nr_bedrooms',
-        'Nr_bathrooms',
-        'Square_meters',
-        'Description',
-        'Status',
-       
-    ];
 
-    
-    public function appointments()
+    public function propertyType()
     {
-        return $this->hasMany(Appointments::class);
+        return $this->belongsTo(PropertyTypes::class, 'property_type_id');
     }
 
-    public function property_addresses(): HasOne
+    public function address()
     {
-        return $this->hasOne(PropertyAddresses::class);
+        return $this->belongsTo(Addresses::class, 'address_id');
     }
 
-    public function users(): BelongsTo
+    public function seller()
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsTo(SalesAgents::class, 'seller_id');
     }
 
-    public function application(): HasOne
+    public function owner()
     {
-        return $this->hasOne(Applications::class);
+        return $this->belongsTo(Owners::class, 'owner_id');
+    }
+
+    public function propertyFeature()
+    {
+        return $this->belongsTo(Features::class, 'property_feature_id');
     }
 }
