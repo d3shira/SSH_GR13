@@ -9,19 +9,21 @@
         </div>
         <div class="contact-info">
           <h4>CONTACT</h4>
-          <div>
+          <div class="contact-line">
+            <div class="contact-line">
             <i class="pi pi-map-marker" style="margin-right: 5px;"></i> 123 Main Street
           </div>
-          <div>
+          <div class="contact-line">
             <i class="pi pi-globe" style="margin-right: 5px;"></i> City, Country
           </div>
-          <div>
+          <div class="contact-line">
             <i class="pi pi-envelope" style="margin-right: 5px;"></i> Email: info@kosovaestate.com
           </div>
-          <div>
+          <div class="contact-line">
             <i class="pi pi-phone" style="margin-right: 5px;"></i> Phone: +123 456 789
           </div>
         </div>
+      </div>
         <div class="menu-items">
           <h4>NAVIGATION</h4>
           <router-link to="/" class="footer-link">Home</router-link>
@@ -85,6 +87,10 @@
     margin: 20px 0;
     border: 0;
     border-top: 1px solid #3C5B6F;
+  }
+
+  .contact-line {
+    margin-bottom: 10px; /* Same margin as the navigation links */
   }
   
   .footer-copyright {
