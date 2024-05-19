@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertyController;
@@ -11,6 +12,9 @@ Route::get('/user', function (Request $request) {
 
 
 Route::get('/properties', [PropertyController::class, 'getProperties']);
+
+Route::post('/home/properties/filter', [HomeController::class, 'filter']);
+
 Route::post('/careers', [CareersController::class, 'store']);
 
 
