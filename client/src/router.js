@@ -9,6 +9,7 @@ import Agents from './views/Agents.vue';
 
 const routes = [
     { path: '/', component: Home },
+    {path:'/register',component:Register},
     { path: '/login', component: Login },
     { path: '/careers', component: Careers },
     { path: '/agents', component: Agents },
