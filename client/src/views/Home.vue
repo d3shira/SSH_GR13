@@ -12,26 +12,32 @@
           <h1>Welcome to Kosova Estate</h1>
           <p>Find your dream home with us</p>
           <div class="buttons">
-            <Button label="Residential" class="p-button-lg p-button-primary" />
-            <Button label="Business" class="p-button-lg p-button-primary" />
+            <Button label="Residential" 
+                    class="residential-button p-button-lg p-button-primary" 
+                    :class="{ 'selected': selectedPropertyCategory === 'residential' }" 
+                    @click="setPropertyCategory('residential')" />
+            <Button label="Business" 
+                    class="business-button p-button-lg p-button-primary" 
+                    :class="{ 'selected': selectedPropertyCategory === 'business' }" 
+                    @click="setPropertyCategory('business')" />
           </div>
           <!-- Search Bar and Radio Buttons -->
           <div class="search-container">
             <div class="radio-buttons p-field">
               <div class="p-formgrid p-grid">
                 <div class="p-field-radiobutton p-col-6">
-                  <RadioButton inputId="sale" name="propertyType" value="sale" class="p-mr-2" />
+                  <RadioButton inputId="sale" name="propertyType" value="sale" v-model="selectedPropertyType" />
                   <label for="sale">For Sale</label>
                 </div>
                 <div class="p-field-radiobutton p-col-6">
-                  <RadioButton inputId="rent" name="propertyType" value="rent" class="p-mr-2" />
+                  <RadioButton inputId="rent" name="propertyType" value="rent" v-model="selectedPropertyType" />
                   <label for="rent">For Rent</label>
                 </div>
               </div>
             </div>
             <div class="search-bar p-inputgroup p-col">
-              <InputText placeholder="Search properties..." class="p-inputtext-lg" />
-              <Button icon="pi pi-search" class="p-button-lg p-button-primary" />
+              <InputText placeholder="Search properties..." class="search-input p-inputtext-lg" v-model="searchQuery" />
+              <Button icon="pi pi-search" class="search-button p-button-lg p-button-primary" @click="filterPropertiesBySearch" />
             </div>
           </div>
         </div>
@@ -39,17 +45,25 @@
     </div>
 
     <!-- New Listings Section -->
-    <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
-      <h1 style="color: #010633;">New Listings</h1>
+    <div ref="listingsSection" class="section-title">
+      <h1>New Listings</h1>
     </div>
   
-    <div style="display: flex; justify-content: center; align-items: center;">
-      <PropertyCard v-for="(property, index) in properties" :key="index" :property="property" />
+    <div class="property-container">
+      <PropertyCard v-for="(property, index) in limitedProperties" :key="index" :property="property" style="margin: 10px;"/>
+    </div>
+
+    <div v-if="noProperties" class="no-properties-message">
+      No properties found matching your criteria.
+    </div>
+
+    <div class="see-more-button-container">
+      <Button label="See More" class="p-button-lg p-button-primary" @click="redirectToProperties" />
     </div>
 
     <!-- Agents -->
-    <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
-      <h1 style="color: #010633;">Agents</h1>
+    <div class="section-title">
+      <h1>Agents</h1>
     </div>
 
     <div style="display: flex; justify-content: center; align-items: center;">
@@ -98,8 +112,17 @@ export default {
   },
   data() {
     return {
-      properties: []
+      properties: [],
+      searchQuery: '',
+      selectedPropertyType: '',
+      selectedPropertyCategory: '',
+      noProperties: false
     };
+  },
+  computed: {
+    limitedProperties() {
+      return this.properties.slice(0, 9);
+    }
   },
   mounted() {
     this.getProperties();
@@ -116,6 +139,48 @@ export default {
       } catch (error) {
         console.error('Error fetching properties:', error);
       }
+    },
+    setPropertyCategory(category) {
+      this.selectedPropertyCategory = category;
+    },
+    async filterPropertiesBySearch() {
+      const data = {
+        query: this.searchQuery,
+        propertyType: this.selectedPropertyType,
+        propertyCategory: this.selectedPropertyCategory
+      };
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/home/properties/filter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch properties');
+        }
+        const jsonData = await response.json();
+        this.properties = jsonData;
+        this.noProperties = this.properties.length === 0;
+        this.scrollToListings();
+        this.clearFilters();
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    },
+    scrollToListings() {
+      this.$nextTick(() => {
+        this.$refs.listingsSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    },
+    clearFilters() {
+      this.selectedPropertyType = '';
+      this.searchQuery = '';
+      this.selectedPropertyCategory = '';
+    },
+    redirectToProperties() {
+      this.$router.push('/properties');
     }
   }
 };
@@ -135,7 +200,7 @@ export default {
 }
 
 .background-image {
-  background-image: url('@/assets/images/photo.png');
+  /* background-image: url('@/assets/images/photo.png'); */
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -153,8 +218,21 @@ export default {
   width: 100%;
 }
 
+.section-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: white;
+}
+
 .buttons {
   margin-top: 20px;
+}
+
+.buttons .selected {
+  background-color: #007ad9;
+  color: white;
 }
 
 .p-button-lg {
@@ -180,6 +258,50 @@ export default {
 .radio-buttons {
   margin-top: 20px;
   margin-right: 10px; 
+}
+
+.property-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.no-properties-message {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.see-more-button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  margin-right: 120px
+}
+
+.p-field-radiobutton {
+  display: flex;
+  align-items: center;
+}
+
+.p-field-radiobutton label {
+  margin-left: 0.5rem;
+}
+
+.p-field-radiobutton input[type="radio"]:checked + label::before {
+  content: "●";
+  color: #055190;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+  text-align: center;
+  border: 1px solid #055190;
+  border-radius: 50%;
+  margin-right: 0.5em;
 }
 
 </style>

@@ -1,125 +1,217 @@
 <template>
-  <div class="center-container">
-    <div class="careers-form">
-      <h1 class="form-title">Careers Form</h1>
-      <div class="p-grid">
-        <div class="p-col-12 p-md-6">
-          <img src="@/assets/images/careers.jpg" alt="Company Logo" class="responsive-image" />
-        </div>
-        <div class="p-col-12 p-md-6">
-          <p class="content-paragraph">
-            We're excited that you're interested in joining our team! At our company, we value innovation, collaboration,
-            and creativity. If you're passionate about making a difference and eager to contribute your skills and ideas,
-            we encourage you to apply.
-          </p>
-          <p class="content-paragraph">
-            Please fill out the form below to apply for a position with us. We look forward to reviewing your application.
-          </p>
+  <div class="home">
+    <Navbar />
+    <br><br><br>
+    <div class="job-application-content">
+      <div class="background-image">
+        <div class="content">
+          <h1 style="color:white"><b>Join Our Team</b></h1>
+          <p style="color: white;">Apply for your dream job with us</p>
+          <div class="form-container">
+            <form @submit.prevent="submitForm">
+              <div class="p-field p-grid">
+                <label for="name" class="p-col-12 p-md-2">Name</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="name" v-model="form.name" class="input-field" required />
+                  <div v-if="errors.name" class="error">{{ errors.name }}</div>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <label for="surname" class="p-col-12 p-md-2">Surname</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="surname" v-model="form.surname" class="input-field" required />
+                  <div v-if="errors.surname" class="error">{{ errors.surname }}</div>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <label for="birthday" class="p-col-12 p-md-2">Birthday</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="birthday" v-model="form.birthday" class="input-field" required type="date" />
+                  <div v-if="errors.birthday" class="error">{{ errors.birthday }}</div>
+                </div>
+              </div>
+              <!-- <div class="p-field p-grid">
+                <label for="gender" class="p-col-12 p-md-2">Gender</label>
+                <div class="p-col-12 p-md-10">
+                  <Dropdown id="gender" v-model="form.gender" :options="genderOptions" optionLabel="label" placeholder="Select a Gender" class="input-field" required />
+                  <div v-if="errors.gender" class="error">{{ errors.gender }}</div>
+                </div>
+              </div> -->
+              <div class="p-field p-grid">
+                <label for="nationality" class="p-col-12 p-md-2">Nationality</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="nationality" v-model="form.nationality" class="input-field" required />
+                  <div v-if="errors.nationality" class="error">{{ errors.nationality }}</div>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <label for="personal_number" class="p-col-12 p-md-2">Phone Number</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="personal_number" v-model="form.personal_number" class="input-field" required />
+                  <div v-if="errors.personal_number" class="error">{{ errors.personal_number }}</div>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <label for="email" class="p-col-12 p-md-2">Email</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="email" v-model="form.email" class="input-field" required type="email" />
+                  <div v-if="errors.email" class="error">{{ errors.email }}</div>
+                </div>
+              </div>
+              <!-- <div class="p-field p-grid">
+                <label for="resume" class="p-col-12 p-md-2">Resume</label>
+                <div class="p-col-12 p-md-10">
+                  <input type="file" id="resume" @change="handleFileUpload" required />
+                  <div v-if="errors.resume" class="error">{{ errors.resume }}</div>
+                </div>
+              </div> -->
+              <div class="p-field p-grid">
+                <label for="message" class="p-col-12 p-md-2">Message</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="message" v-model="form.message" class="input-field" />
+                  <div v-if="errors.message" class="error">{{ errors.message }}</div>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <div class="p-col-12 p-md-10 p-md-offset-2">
+                  <br>
+                  <Button type="submit" label="Submit" class="p-button-lg p-button-primary" />
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-      <form class="p-grid p-fluid">
-        <div class="p-col-12 p-md-6">
-          <label for="name">Name</label>
-          <input id="name" type="text" v-model="name" class="p-inputtext" placeholder="Enter your name" required />
-        </div>
-        <div class="p-col-12 p-md-6">
-          <label for="email">Email</label>
-          <input id="email" type="email" v-model="email" class="p-inputtext" placeholder="Enter your email" required />
-        </div>
-        <div class="p-col-12">
-          <label for="resume">Upload Resume</label>
-          <input id="resume" type="file" @change="onFileChange" class="p-inputtext" accept=".pdf,.doc,.docx" required />
-          <small class="p-invalid" v-if="!resume">Please upload your resume.</small>
-        </div>
-        <div class="p-col-12">
-          <label for="message">Message (optional)</label>
-          <textarea id="message" v-model="message" rows="4" class="p-inputtext" placeholder="Enter your message"></textarea>
-        </div>
-        <div class="p-col-12 button-container">
-          <button @click.prevent="submitForm" class="p-button p-button-primary small-button"><b>SUBMIT</b></button>
-        </div>
-      </form>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+import Dropdown from 'primevue/dropdown';
+
 export default {
+  components: {
+    Navbar,
+    Footer,
+    InputText,
+    Button,
+    Dropdown
+  },
+ 
   data() {
     return {
-      name: '',
-      email: '',
-      resume: null,
-      message: ''
+      form: {
+        name: '',
+        surname: '',
+        birthday: '',
+       // gender: null,
+        nationality: '',
+        personal_number: '',
+        email: '',
+        // resume: null,
+        message: ''
+      },
+      errors: {},
+      // genderOptions: [
+      //   { label: 'Male', value: 'Male' },
+      //   { label: 'Female', value: 'Female' },
+      //   { label: 'Other', value: 'Other' }
+      // ]
     };
   },
+ 
   methods: {
-    onFileChange(event) {
-      this.resume = event.target.files[0];
-    },
-    submitForm() {
-      if (!this.resume) {
-        // Handle file not uploaded scenario
-        console.error('Resume not uploaded');
-        return;
-      }
-      // Handle form submission here
-      console.log('Form submitted');
+    async submitForm() {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/careers', {
+      method: 'POST',
+      headers: {
+       
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.form) 
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit form');
     }
+
+    const data = await response.json();
+    console.log('Form submitted successfully:', data);
+    // Reset form after successful submission
+    this.form = {
+      name: '',
+      surname: '',
+      birthday: '',
+     // gender: null,
+      nationality: '',
+      personal_number: '',
+      email: '',
+      message: ''
+    };
+    this.errors = {};
+  } catch (error) {
+    console.error('Error submitting form:', error);
   }
 }
+
+  }
+};
 </script>
 
+
 <style scoped>
-.center-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.home {
   height: 100vh;
 }
 
-.careers-form {
-  max-width: 600px;
-  width: 100%;
-  padding: 20px;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-.form-title {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.content-paragraph {
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.responsive-image {
-  max-width: 100%;
-}
-
-.button-container {
+.job-application-content {
+  height: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
 }
 
-.small-button {
-  padding: 15px 20px;
-  font-size: 12px;
-  width: auto;
-
+.background-image {
+  
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
 }
 
-@media (max-width: 500px) {
-  .content-paragraph {
-    font-size: 12px;
-  }
-  .p-col-12 {
-    width: 100% !important;
-  }
+.content {
+  text-align: center;
+  color: black;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.form-container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.input-field {
+  width: 250px;
+}
+
+.p-button-lg {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  background-color: #055190;
+  border: #303B98;
 }
 </style>

@@ -11,6 +11,8 @@ import Contact from './views/Contact.vue';
 
 const routes = [
     { path: '/', component: Home },
+
+    { path: '/register',component:Register},
     { path: '/login', component: Login },
     { path: '/careers', component: Careers },
     { path: '/agents', component: Agents },

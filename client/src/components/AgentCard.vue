@@ -1,47 +1,41 @@
 <template>
-    <div class="agent-card">
-      <Card class="agent-card-inner">
-        <template #header>
-          <img :src="agent.photo" alt="agent photo" class="agent-photo" />
-        </template>
-        <template #title>
-          <div class="agent-name">{{ agent.name }}</div>
-        </template>
-        <template #subtitle>
-          <div class="agent-title">{{ agent.title }}</div>
-        </template>
-        <template #content>
-          <div class="agent-contact">
-            <div>Email: {{ agent.email }}</div>
-            <div>Phone: {{ agent.phone }}</div>
-          </div>
-        </template>
-      </Card>
-    </div>
-  </template>
-  
-  <script>
-  import Card from 'primevue/card';
-  export default {
-  name: 'AgentCard',
+  <div class="agent-card">
+    <Card class="agent-card-inner">
+      <template #header>
+        <img :src="agent.photo" alt="agent photo" class="agent-photo" />
+      </template>
+      <template #title>
+        <div class="agent-name">{{ agent.first_name }} {{ agent.last_name }}</div>
+      </template>
+      <template #subtitle>
+        <div class="agent-title">{{ agent.job_position }}</div>
+      </template>
+      <template #content>
+        <div class="agent-contact">
+          <div>Email: {{ agent.email }}</div>
+          <div>Phone: {{ agent.phone }}</div>
+        </div>
+      </template>
+    </Card>
+  </div>
+</template>
+
+<script>
+import Card from 'primevue/card';
+
+export default {
   components: {
     Card
   },
-    props: {
-      agent: {
-        type: Object,
-        required: true,
-        default: () => ({
-          name: 'Agent Name Surname',
-          title: 'Real Estate Agent',
-          email: 'agent@example.com',
-          phone: '+1 (123) 456-7890',
-          photo: 'https://primefaces.org/cdn/primevue/images/usercard.png'
-        })
-      }
+  props: {
+    agent: {
+      type: Object,
+      required: true,
     }
-  };
-  </script>
+  }
+};
+</script>
+
   
   <style scoped>
   .agent-card {
