@@ -14,7 +14,7 @@
             <router-link to="/agents" class="menu-item">Agents</router-link>
           </div>
           <div class="p-mx-3">
-            <router-link to="" class="menu-item">About Us</router-link>
+            <router-link to="/aboutus" class="menu-item">About Us</router-link>
           </div>
           <div class="p-mx-3">
             <router-link to="/careers" class="menu-item">Career</router-link>
@@ -42,7 +42,7 @@
     background-image: url('@/assets/images/photo.png');
     background-size: cover;
     background-position: center;
-    position: fixed;
+    position: absolute; /*was fixed*/
     width: 100%;
     height: 100%;
     top: 0;
