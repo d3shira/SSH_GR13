@@ -6,7 +6,7 @@
         <div class="logo p-text-center">Kosova Estate</div>
         <div class="menu-items p-d-flex p-ai-center">
           <div class="p-mx-3">
-            <router-link to="" class="menu-item">Properties</router-link>
+            <router-link to="/properties" class="menu-item">Properties</router-link>
           </div>
           <div class="p-mx-3">
             <router-link to="/agents" class="menu-item">Agents</router-link>
