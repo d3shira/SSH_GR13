@@ -5,6 +5,7 @@
     <!-- Agents Page Content -->
     <div class="agents-content">
       <h1 class="page-title">Meet our team!</h1>
+
       <p class="page-description">
         Our team of dedicated agents works tirelessly to provide the best service possible. 
         Each member brings a wealth of experience and a strong commitment to excellence, 
@@ -22,6 +23,16 @@
         :first="first" 
         @page="onPageChange" 
       />
+
+      <p class="page-description">Our team of dedicated agents works tirelessly to provide the best service possible. 
+        Each member brings a wealth of experience and a strong commitment to excellence, 
+        ensuring that all your needs are met with the highest standards. They are passionate, 
+        diligent, and always ready to go the extra mile to achieve outstanding results for our clients.</p>
+      <!-- Agent cards -->
+      <div class="agents-list">
+        <AgentCard v-for="agent in agents" :key="agent.id" :agent="agent" />
+      </div>
+
     </div>
     <Footer />
   </div>
@@ -32,6 +43,7 @@ import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import AgentCard from '@/components/AgentCard.vue';
 import Paginator from 'primevue/paginator';
+//import Pagination from 'primevue/pagination';
 
 export default {
   components: {
@@ -55,6 +67,13 @@ export default {
       return this.agents.slice(start, end);
     }
   },
+    AgentCard
+  },
+  data() {
+    return {
+      agents: []
+    };
+  },
   mounted() {
     this.fetchAgents();
   },
@@ -74,6 +93,9 @@ export default {
     },
     onPageChange(event) {
       this.first = event.first;
+      } catch (error) {
+        console.error('Error fetching agents:', error);
+      }
     }
   }
 }
@@ -86,6 +108,7 @@ export default {
 
 .agents-content {
   max-width: 1000px; /* Increase the max-width for a wider content area */
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }

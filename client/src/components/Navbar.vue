@@ -3,7 +3,9 @@
     <div class="background-image"></div>
     <div class="p-shadow-2 navbar">
       <div class="p-d-flex p-jc-between p-ai-center" style="display: flex; align-items: center;">
-        <div class="logo p-text-center">Kosova Estate</div>
+        <div class="p-text-center">
+          <router-link to="/" class="logo">Kosova Estate</router-link>
+        </div>
         <div class="menu-items p-d-flex p-ai-center">
           <div class="p-mx-3">
             <router-link to="/properties" class="menu-item">Properties</router-link>
@@ -12,7 +14,7 @@
             <router-link to="/agents" class="menu-item">Agents</router-link>
           </div>
           <div class="p-mx-3">
-            <router-link to="" class="menu-item">About Us</router-link>
+            <router-link to="/aboutus" class="menu-item">About Us</router-link>
           </div>
           <div class="p-mx-3">
             <router-link to="/careers" class="menu-item">Career</router-link>
@@ -64,6 +66,8 @@
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
+    color: white;
+    text-decoration: none;
   }
   
   .menu-items {

@@ -31,7 +31,6 @@ export default {
     agent: {
       type: Object,
       required: true,
-
     }
   }
 };

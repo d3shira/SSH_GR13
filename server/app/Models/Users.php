@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Users extends Model
 {
     use HasFactory;
-
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');
@@ -22,4 +21,14 @@ class Users extends Model
     {
         return $this->hasOne(SalesAgents::class, 'user_id');
     }
+
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'username',
+        'email',
+        'password',
+    ];
+
 }
