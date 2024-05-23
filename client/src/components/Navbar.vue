@@ -15,7 +15,7 @@
             <router-link to="/agents" class="menu-item">Agents</router-link>
           </div>
           <div class="p-mx-3">
-            <router-link to="" class="menu-item">About Us</router-link>
+            <router-link to="/aboutus" class="menu-item">About Us</router-link>
           </div>
           <div class="p-mx-3">
             <router-link to="/careers" class="menu-item">Career</router-link>

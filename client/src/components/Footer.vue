@@ -29,7 +29,7 @@
           <router-link to="/" class="footer-link">Home</router-link>
           <router-link to="/properties" class="footer-link">Properties</router-link>
           <router-link to="/agents" class="footer-link">Agents</router-link>
-          <router-link to="/about" class="footer-link">About Us</router-link>
+          <router-link to="/aboutus" class="footer-link">About Us</router-link>
           <router-link to="/contact" class="footer-link">Contact Us</router-link>
         </div>
       </div>

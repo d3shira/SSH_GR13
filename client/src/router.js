@@ -8,6 +8,8 @@ import Home from './views/Home.vue';
 import Agents from './views/Agents.vue'; 
 import Properties from './views/Properties.vue';
 import Contact from './views/Contact.vue';
+import AboutUs from './views/AboutUs.vue';
+
 
 const routes = [
     { path: '/', component: Home },
@@ -18,6 +20,7 @@ const routes = [
     { path: '/agents', component: Agents },
     { path: '/properties', component: Properties },
     { path: '/contact', component: Contact },
+    { path: '/aboutus', component: AboutUs},
 
 
 ];
