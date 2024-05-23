@@ -21,7 +21,8 @@ Route::post('/home/properties/filter', [HomeController::class, 'filter']);
 Route::post('/careers', [CareersController::class, 'store']);
 Route::get('/agents', [AgentController::class, 'getAgents']);
 Route::post('/register', [UserController::class, 'register']);
-
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 
 
 
