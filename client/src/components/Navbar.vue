@@ -21,7 +21,7 @@
             <router-link to="/careers" class="menu-item">Career</router-link>
           </div>
           <div class="p-mx-3">
-            <router-link to="" class="menu-item">Contact Us</router-link>
+            <router-link to="/contact" class="menu-item">Contact Us</router-link>
           </div>
           <div class="p-mx-3">
             <router-link to="/login" class="menu-item">Login</router-link>
