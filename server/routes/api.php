@@ -14,12 +14,12 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 Route::get('/properties', [PropertyController::class, 'getProperties']);
 Route::get('/agents', [AgentController::class, 'getAgents']);
 Route::post('/home/properties/filter', [HomeController::class, 'filter']);
 Route::post('/careers', [CareersController::class, 'store']);
 Route::get('/agents', [AgentController::class, 'getAgents']);
-Route::post('/register', [UserController::class, 'register']);
 Route::post('/contact', [ContactController::class, 'store']);
 
