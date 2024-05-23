@@ -25,6 +25,7 @@ class Users extends Authenticatable implements JWTSubject
         return $this->hasOne(SalesAgents::class, 'user_id');
     }
 
+
     protected $fillable = [
         'first_name',
         'last_name',
