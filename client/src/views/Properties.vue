@@ -7,6 +7,7 @@
           <div class="property" v-for="(property, index) in properties" :key="property.id" :style="{ 'margin-right': getMargin(index) }">
             <img :src="property.image" alt="Property Image" style="max-width: 100%; max-height:180px;">
             <h3>{{ property.title }}</h3>
+            <p><strong>Location:</strong> {{ property.id }}</p>
             <p>{{ property.description }}</p>
             <p><strong>Location:</strong> {{ property.id }}</p>
             <p><strong>Area:</strong> {{ property.area }}, <strong>ID:</strong> {{ property.id }}, <strong>Price:</strong> ${{ property.price }}</p>
