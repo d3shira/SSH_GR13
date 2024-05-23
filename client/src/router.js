@@ -18,13 +18,7 @@ const routes = [
     { path: '/agents', component: Agents },
     { path: '/properties', component: Properties },
     { path: '/aboutus', component: AboutUs},
-
-import Properties from './views/Properties.vue';
-
-const routes = [
-    { path: '/', component: Properties },
 ];
-
 
 const router = createRouter({
     history: createWebHistory(),

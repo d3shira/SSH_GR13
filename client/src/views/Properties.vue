@@ -1,206 +1,180 @@
-
 <template>
-    <div class="page-container">
-      <div class="properties">
-        <h2>Properties</h2>
-        <div class="property-container">
-          <div class="property" v-for="(property, index) in properties" :key="property.id" :style="{ 'margin-right': getMargin(index) }">
-            <img :src="property.image" alt="Property Image" style="max-width: 100%; max-height:180px;">
-            <h3>{{ property.title }}</h3>
-            <p><strong>Location:</strong> {{ property.id }}</p>
-            <p>{{ property.description }}</p>
-            <p><strong>Location:</strong> {{ property.id }}</p>
-            <p><strong>Area:</strong> {{ property.area }}, <strong>ID:</strong> {{ property.id }}, <strong>Price:</strong> ${{ property.price }}</p>
-            <p><strong>ID:</strong> {{ property.id }}</p>
-              <p><strong>Area:</strong> {{ property.area }}</p>
-            <p><strong>Price:</strong> ${{ property.price }}</p>
-            <!-- Additional property details can be displayed here -->
-          </div>
-        </div>
+  <div class="page-container">
+    <Navbar />
+
+    <div class="properties">
+      <h2>Properties</h2>
+      <div class="property-container">
+        <PropertyCard v-for="(property, index) in limitedProperties" :key="index" :property="property" style="margin: 10px;" />
       </div>
-      
-      
-      
-
-      <!-- Extended search form -->
-      <form class="extended-search" @submit.prevent="handleSearchSubmit">
-        <h2>Kërkimi i zgjeruar</h2>
-        
-        <div class="form-group">
-          <label for="category">Kategoria</label>
-          <select id="category" v-model="category">
-            <option value=""></option>
-            <option value="Residenciale">Residenciale</option>
-            <option value="Biznes">Biznes</option>
-            <option value="Tokë">Tokë</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="status">Statuset</label>
-          <select id="status" v-model="status">
-            <option value=""></option>
-            <option value="Për Qira">Për Qira</option>
-            <option value="Për shitje">Për Shitje</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="type">Tipet</label>
-          <select id="status" v-model="status">
-            <option value=""></option>
-            <option value="Shtëpi">Shtëpi</option>
-            <option value="Zyre">Zyre</option>
-            <option value="Ndërtim i vjetër">Ndërtim i vjetër</option>
-            <option value="Banese">Banese</option>
-            <option value="Ndërtese">Ndërtese</option>
-            <option value="Hotel">Hotel</option>
-            <option value="Tokë">Tokë</option>
-            <option value="Depo">Depo</option>
-            <option value="Studio">Studio</option>
-            <option value="Vila">Vila</option>
-            <option value="Bar restorant">Bar restorant</option>
-
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="city">Qytet</label>
-          <select id="status" v-model="status">
-            <option value=""></option>
-            <option value="Gjilan">Gjilan</option>
-            <option value="Gjakovë">Gjakovë</option>
-            <option value="Drenas">Drenas</option>
-            <option value="Klinë">Klinë</option>
-            <option value="Fushë Kosovë">Fushë Kosovë</option>
-            <option value="Lipjan">Lipjan</option>
-            <option value="Mitrovicë">Mitrovicë</option>
-            <option value="Kastriot">Kastriot</option>
-            <option value="Podujevë">Podujevë</option>
-            <option value="Prishtinë">Prishtinë</option>
-            <option value="Prizren">Prizren</option>
-            <option value="Ferizaj">Ferizaj</option>
-            <option value="Vushtrri">Vushtrri</option>
-          </select>
-        </div>
-        <!-- Additional labels for surface -->
-   
-        <div class="form-group surface-group">
-  <label for="surface">Siperfaqe</label>
-  <div class="surface-inputs">
-    <div class="half-input">
-      <label for="minSurface" class="hidden">Min</label>
-      <input type="number" id="minSurface" v-model="minSurface" placeholder="Min">
+      <div class="pagination">
+        <button @click="fetchProperties(properties.prev_page_url)" :disabled="!properties.prev_page_url">Previous</button>
+        <button @click="fetchProperties(properties.next_page_url)" :disabled="!properties.next_page_url">Next</button>
+      </div>
     </div>
-    <div class="half-input">
-      <label for="maxSurface" class="hidden">Max</label>
-      <input type="number" id="maxSurface" v-model="maxSurface" placeholder="Max">
-    </div>
+
+    <form class="extended-search" @submit.prevent="filterProperties">
+      <h2 style="color: white;">Kërkimi i zgjeruar</h2>
+
+      <div class="form-group">
+        <label for="category"  style="color: white;">Kategoria</label>
+        <select id="category" v-model="category">
+          <option value="residential">Residenciale</option>
+          <option value="business">Biznes</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="status" style="color: white;">Statuset</label>
+        <select id="status" v-model="status">
+          <option value=""></option>
+          <option value="rent">Për Qira</option>
+          <option value="sale">Për Shitje</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="type" style="color: white;">Tipet</label>
+        <select id="type" v-model="type">
+          <option value=""></option>
+          <option value="apartment">Apartment</option>
+          <option value="house">House</option>
+          <option value="business">Business</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="city" style="color: white;">Qytet</label>
+        <select id="city" v-model="city">
+          <option value=""></option>
+          <option value="New York">New York</option>
+          <option value="Toronto">Toronto</option>
+          <option value="Gjakove">Gjakove</option>
+          <option value="Gjilan">Gjilan</option>
+          <option value="Kosove">Kosove</option>
+          <option value="Lipjan">Lipjan</option>
+        </select>
+      </div>
+
+      <button type="submit">Search</button>
+    </form>
   </div>
-</div>
+  <Footer />
+</template>
 
-<div class="form-group price-group">
-  <label for="price">Price</label>
-  <div class="price-inputs">
-    <div class="half-input">
-      <label for="minPrice" class="hidden">Min</label>
-      <input type="number" id="minPrice" v-model="minPrice" placeholder="Min">
-    </div>
-    <div class="half-input">
-      <label for="maxPrice" class="hidden">Max</label>
-      <input type="number" id="maxPrice" v-model="maxPrice" placeholder="Max">
-    </div>
-  </div>
-</div>
+<script>
+import PropertyCard from '@/components/PropertyCard.vue';
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
 
-<div class="form-group room-group">
-  <div class="room-inputs">
-    <div class="half-input">
-      <label for="bedroom" class="hidden">Bedroom</label>
-      <input type="number" id="bedroom" v-model="bedroom" placeholder="Bedroom">
-    </div>
-    <div class="half-input">
-      <label for="workroom" class="hidden">WorkRoom</label>
-      <input type="number" id="workroom" v-model="workroom" placeholder="Workroom">
-    </div>
-  </div>
-</div>
+export default {
+  components: {
+    PropertyCard,
+    Navbar,
+    Footer
+  },
+  data() {
+    return {
+      properties: [],
+      category: '',
+      status: '',
+      type: '',
+      city: ''
+    };
+  },
+  computed: {
+    limitedProperties() {
+      return this.properties.slice(0, 7
+      );
+    }
+  },
+  mounted() {
+    this.getProperties();
+  },
+  methods: {
+    async filterProperties() {
+      console.log('Submitting search with the following parameters:');
+      console.log({
+        category: this.category,
+        status: this.status,
+        type: this.type,
+        city: this.city
+      });
 
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/properties/filter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            category: this.category,
+            status: this.status,
+            type: this.type,
+            city: this.city
+          }),
+        });
 
-        <!-- Add more form fields for extended search as needed -->
-        <button type="submit">Search</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        properties: [
-          { id: '', title: 'Modern Apartment in City Center', image: 'https://www.livehome3d.com/assets/img/articles/design-house/how-to-design-a-house.jpg',price:''},
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
-          { id: '', title: 'Cozy Family House in Suburbs',image:"https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/wp-content/uploads/2021/08/download-7.jpg",price:'' },
+        console.log('Response status:', response.status);
 
-          // Add more properties as needed
-        ],
-
-        
-        minPrice: '',
-        maxPrice: '',
-        category: '',
-        status: '',
-        type: '',
-        city: '',
-        minSurface: '',
-        maxSurface: '',
-        bedroom:'',
-        workroom:''
-      };
-    },
-    methods: {
-      handleSearchSubmit() {
-        // Handle extended search form submission logic here
-        console.log('Extended search form submitted');
-        console.log('Category:', this.category);
-        console.log('Status:', this.status);
-        console.log('Type:', this.type);
-        console.log('City:', this.city);
-        console.log('Minimum Surface:', this.minSurface);
-        console.log('Maximum Surface:', this.maxSurface);
-        // You can perform the search based on the entered values
-      },
-      getMargin(index) {
-        if (index === 0) {
-          return '30px';
-        } else if (this.properties[index].id === 2) {
-          return '30px'; // Adjust this value as needed
-        } else {
-          return '10px';
+        if (!response.ok) {
+          throw new Error('Failed to fetch properties');
         }
-      },
-      focusInput(inputId) {
-        document.getElementById(inputId).focus();
+
+        const data = await response.json();
+        console.log('Fetched properties:', data);
+
+        this.properties = data;
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+      }
+    },
+    async getProperties() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/properties');
+        if (!response.ok) {
+          throw new Error('Failed to fetch properties');
+        }
+        const data = await response.json();
+        this.properties = data;
+      } catch (error) {
+        console.error('Error fetching properties:', error);
       }
     }
-  };
-  </script>
-  
-  <style scoped>
-  .page-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top:20px;
-    margin-left: 150px;
-    margin-right: 150px;
   }
-  .hidden {
+};
+</script>
+
+<style scoped>
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+.pagination button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.page-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -211,73 +185,91 @@
   border: 0;
 }
 
+.properties {
+  width: calc(66.66% - 20px);
+}
+
+.property-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0; /* You can add a gap if you want space between the containers */
+}
+
+.property-container > * {
+  flex: 0 1 45.33%; /* Each item takes up 33.33% of the width */
+  box-sizing: border-box;
+}
+
+
+
+.property {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.property h3 {
+  margin-top: 0;
+}
+
+.property p {
+  margin-bottom: 10px;
+}
+
+.search-forms-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: calc(33.33% - 20px);
+}
+
+.extended-search {
+  width: 28%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 80px;
+}
+
+.form-group {
+  margin-bottom: 20px;
   
-  .properties {
-    width: calc(66.66% - 20px);
-  }
-  
-  .property-container {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-  }
-  
-  .property {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .property h3 {
-    margin-top: 0;
-  }
-  
-  .property p {
-    margin-bottom: 10px;
-  }
-  
-  .extended-search {
-    width: calc(33.33% - 20px);
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 69px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .extended-search label {
-    display: block;
-    margin-bottom: 10px; /* Adjust spacing between labels */
-    cursor: pointer;
-  }
-  
-  .extended-search input[type="number"],
-  .extended-search input[type="text"],
-  .extended-search select {
-    width: calc(100% - 40px); /* Adjust for padding */
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 5px; /* Add margin for spacing */
-  }
-  
-  .extended-search button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .extended-search button:hover {
-    background-color: #0056b3;
-  }
-  .surface-group {
+}
+
+
+.extended-search label {
+  display: block;
+  margin-bottom: 10px; /* Adjust spacing between labels */
+  cursor: pointer;
+}
+
+.extended-search input[type="number"],
+.extended-search input[type="text"],
+.extended-search select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px; /* Add margin for spacing */
+}
+
+.extended-search button {
+  width: 100%; /* Make the button the same width as the input fields */
+  margin-top: 20px; /* Add margin for spacing */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.extended-search button:hover {
+  background-color: #0056b3;
+}
+
+.surface-group {
   display: flex;
   flex-direction: column;
 }
@@ -346,17 +338,13 @@
 }
 
 .extended-search button {
-    width: calc(100% - 40px); /* Make the button the same width as the input fields */
-    margin-top: 20px; /* Add margin for spacing */
-    padding: 10px 20px;
-    background-color:#1434A4; /* Set the background color to red */
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-
-
-  </style>
-  
+  width: 50%; /* Make the button the same width as the input fields */
+  margin-top: 20px; /* Add margin for spacing */
+  padding: 10px 20px;
+  background-color: #1434A4; /* Set the background color to red */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+</style>
