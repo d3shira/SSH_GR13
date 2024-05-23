@@ -19,6 +19,10 @@ const routes = [
     { path: '/properties', component: Properties },
     { path: '/aboutus', component: AboutUs},
 
+import Properties from './views/Properties.vue';
+
+const routes = [
+    { path: '/', component: Properties },
 ];
 
 
