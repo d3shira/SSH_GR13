@@ -22,6 +22,7 @@ class Users extends Model
         return $this->hasOne(SalesAgents::class, 'user_id');
     }
 
+
     protected $fillable = [
         'first_name',
         'last_name',
