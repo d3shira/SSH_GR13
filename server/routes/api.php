@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactController;
 
 
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -22,5 +23,6 @@ Route::post('/home/properties/filter', [HomeController::class, 'filter']);
 Route::post('/careers', [CareersController::class, 'store']);
 Route::post('/properties/filter', [PropertyController::class, 'filterProperties']);
 Route::post('/contact', [ContactController::class, 'store']);
+
 
 
