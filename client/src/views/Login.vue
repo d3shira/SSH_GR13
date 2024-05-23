@@ -5,44 +5,40 @@
 
     <!-- Login Form Content -->
     <div class="login-form-content">
-  
-        <!-- Form Content -->
-        <div class="content">
-          <!-- Login Form -->
-          <div class="form-container">
-            <h1>Login</h1>
-            <form @submit.prevent="submitForm">
-              <div class="p-field p-grid">
-                <label for="email" class="p-col-12 p-md-2">Email</label>
-               
-                <div class="p-col-12 p-md-10">
-                  <br>
-                  <InputText id="email" v-model="email" class="input-field" required />
-                </div>
-              </div>
-              <div class="p-field p-grid">
+      <!-- Form Content -->
+      <div class="content">
+        <!-- Login Form -->
+        <div class="form-container">
+          <h1>Login</h1>
+          <form @submit.prevent="submitForm">
+            <div class="p-field p-grid">
+              <label for="username" class="p-col-12 p-md-2">Username</label>
+              <div class="p-col-12 p-md-10">
                 <br>
-                <label for="password" class="p-col-12 p-md-2">Password</label>
-                <div class="p-col-12 p-md-10">
-                  <br>
-                  <InputText id="password" v-model="password" type="password" class="input-field" required />
-                </div>
+                <InputText id="username" v-model="form.username" class="input-field" required />
               </div>
-              <div class="p-field p-grid">
-                <div class="p-col-12">
-                  <br>
-                  <Button type="submit" label="Login" class="p-button-lg p-button-primary" />
-                </div>
-              </div>
-            </form>
-            <div class="create-account">
-              <p>No Account? <router-link to="/register">Create one</router-link></p>
             </div>
+            <div class="p-field p-grid">
+              <br>
+              <label for="password" class="p-col-12 p-md-2">Password</label>
+              <div class="p-col-12 p-md-10">
+                <br>
+                <InputText id="password" v-model="form.password" type="password" class="input-field" required />
+              </div>
+            </div>
+            <div class="p-field p-grid">
+              <div class="p-col-12">
+                <br>
+                <Button type="submit" label="Login" class="p-button-lg p-button-primary" />
+              </div>
+            </div>
+          </form>
+          <div class="create-account">
+            <p>No Account? <router-link to="/register">Create one</router-link></p>
           </div>
         </div>
       </div>
-  
-
+    </div>
     <Footer />
   </div>
 </template>
@@ -63,15 +59,41 @@ export default {
   data() {
     return {
       form: {
-        email: '',
+        username: '',
         password: ''
       }
     };
   },
   methods: {
-    submitForm() {
-      console.log(this.form);
-      // Handle form submission logic here
+    async submitForm() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.form)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log('Login successful', data);
+          this.$router.push({ path: '/' });
+      
+        } else {
+          console.error('Login failed', data);
+          
+          if (data.errors) {
+            for (const key in data.errors) {
+              console.error(`${key}: ${data.errors[key].join(', ')}`);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error during login', error);
+       
+      }
     }
   }
 };
@@ -89,8 +111,6 @@ export default {
   justify-content: center;
 }
 
-
-
 .content {
   text-align: center;
   color: white;
@@ -101,14 +121,12 @@ export default {
 }
 
 .form-container {
-
   padding: 20px;
   border-radius: 8px;
-  
 }
 
 .input-field {
-  width: 350px; /* Adjust this value for smaller or larger fields */
+  width: 350px;
 }
 
 .p-button-lg {
