@@ -1,177 +1,191 @@
 <template>
-    <div class="form-container">
-      <div class="p-grid p-fluid">
-
-        <div class="container">
-        <div class="p-col-12 p-md-6">
-          <div class="field-container">
-            <label for="name">Name</label>
-            <InputText id="name" v-model="form.name" placeholder="Enter your name" />
-          </div>
-        </div>
-        <div class="p-col-12 p-md-6">
-          <div class="field-container">
-            <label for="email">Email</label>
-            <InputText id="email" v-model="form.email" placeholder="Enter your email" />
-          </div>
-        </div>
-        </div>
-      </div>
-  
-      <div class="p-grid p-fluid">
-        <div class="container">
-        <div class="p-col-12 p-md-6">
-          <div class="field-container">
-            <label for="address">Address</label>
-            <InputText id="address" v-model="form.address" placeholder="Enter your address" />
-          </div>
-        </div>
-        <div class="p-col-12 p-md-6">
-          <div class="field-container">
-            <label for="phone">Phone Number</label>
-            <InputText id="phone" v-model="form.phone" placeholder="Enter your phone number" />
-          </div>
-        </div>
-        </div>
-      </div>
-  
-      <div class="p-grid p-fluid">
-        <div class="p-col-12">
-          <div class="field-container">
-            <label for="message">Message</label>
-            <InputText id="message" v-model="form.message" rows="4" placeholder="Enter your message" class="message" />
-          </div>
-        </div>
-      </div>
-  
-      <div class="p-grid p-fluid">
-        <div class="p-col-12">
-          <Button style="background-color: #022953;" label="Send Message" icon="pi pi-send" @click="submitForm" />
-        </div>
-      </div>
-    </div>
+  <div class="home">
+    <Navbar />
+    <br><br><br>
+    <div class="job-application-content">
+      <div class="background-image">
+        <div class="content">
+          <h1 style="color:white"><b>Contact Us</b></h1>
+          <p style="color: white;">You can also contact to sell your property</p>
+        
+          <div class="form-container">
+            <form @submit.prevent="submitForm">
+              <div class="p-field p-grid">
+                <label for="name" class="p-col-12 p-md-2">Name</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="name" v-model="form.name" class="input-field" required />
+                  <div v-if="errors.name" class="error">{{ errors.name }}</div>
+                </div>
+              </div>
+            
+              <div class="p-field p-grid">
+                <label for="contact" class="p-col-12 p-md-2">Phone Number</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="contact" v-model="form.contact" class="input-field" required />
+                  <div v-if="errors.contact" class="error">{{ errors.contact }}</div>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <label for="email" class="p-col-12 p-md-2">Email</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="email" v-model="form.email" class="input-field" required type="email" />
+                  <div v-if="errors.email" class="error">{{ errors.email }}</div>
+                </div>
+              </div>
+              <div class="p-field p-grid">
+                <label for="address" class="p-col-12 p-md-2">Address</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="address" v-model="form.address" class="input-field" />
+                  <div v-if="errors.address" class="error">{{ errors.address }}</div>
+                </div>
+              </div>
+              
+              <div class="p-field p-grid">
+                <label for="message" class="p-col-12 p-md-2">Message</label>
+                <div class="p-col-12 p-md-10">
+                  <InputText id="message" v-model="form.message" class="input-field" />
+                  <div v-if="errors.message" class="error">{{ errors.message }}</div>
+                </div>
+              </div>
 
 
-    
-  <div class="contact-info">
-    <div class="container">
-    <div class="contact-item">
-      <i class="pi pi-map-marker"></i>
-      <span>Pristina, Kosovo</span>
+              <div class="p-field p-grid">
+                <div class="p-col-12 p-md-10 p-md-offset-2">
+                  <br>
+                  <Button type="submit" label="Submit" class="p-button-lg p-button-primary" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="contact-item">
-      <i class="pi pi-phone"></i>
-      <span>+38345111111</span>
-    </div>
-    <div class="contact-item">
-      <i class="pi pi-envelope"></i>
-      <span>kosova_estate@gmail.com</span>
-    </div>
-    </div>
+    <Footer />
   </div>
+</template>
 
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        form: {
-          name: '',
-          email: '',
-          address: '',
-          phone: '',
-          message: '',
-        },
-      };
-    },
-    methods: {
-      submitForm() {
-        console.log('Form submitted:', this.form);
+
+<script>
+
+import Navbar from '@/components/Navbar.vue';
+import Footer from '@/components/Footer.vue';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
+
+export default {
+  components: {
+    Navbar,
+    Footer,
+    InputText,
+    Button
+  },
+
+  data() {
+    return {
+      form: {
+        name: '',
+        email: '',
+        address: '',
+        contact: '',
+        message: '',
       },
-    },
-  };
-  </script>
-  
-  <style scoped>
-  .container{
-    display: flex;
-    column-gap: 100px;
-  }
-  .form-container {
-    max-width: 850px;
-    margin: 0 auto;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    background-color: #ffffff;
-  }
-  
-  .field-container {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  .p-inputtext,
-  .p-inputtextarea {
-    width: 350px;
+      errors: {}
+    };
+  },
+
  
+  methods: {
+    async submitForm() {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/contact', {
+      method: 'POST',
+      headers: {
+       
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.form) 
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to submit form');
+    }
+
+    const data = await response.json();
+    console.log('Form submitted successfully:', data);
+    // Reset form after successful submission
+    this.form = {
+      name: '',
+      
+      address: '',
+      nationality: '',
+      contact: '',
+      email: '',
+      message: ''
+    };
+    this.errors = {};
+  } catch (error) {
+    console.error('Error submitting form:', error);
   }
-
-  
-  .p-button {
-    width: 25%;
-    margin-top: 20px;
-    margin-left: 37%;
-    justify-content: center;
-  }
-
-  .message{
-    width: 800px;
-   
-  }
-  
-
-  .contact-info {
-  text-align: center;
-  margin-top: 100px;
-  font-size: 18px;
-  margin-left: 300px;
-
 }
 
-.contact-item {
+  }
+};
+</script>
+
+<style scoped>
+.home {
+  height: 100vh;
+}
+
+.job-application-content {
+  height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
-  transition: transform 0.2s;
-  margin-right: 130px;
+  justify-content: center;
 }
 
-.contact-item i {
-  margin-bottom: 5px; 
-  font-size: 36px; 
-  color: #022953; 
-}
-
-.contact-item span {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.contact-item:hover {
-  transform: translateY(-3px);
-}
-
-.contact-item i:hover {
-  color: #000307; 
-  cursor: pointer;
-}
-  </style>
+.background-image {
   
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
+.content {
+  text-align: center;
+  color: black;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.form-container {
+  /* background: rgba(255, 255, 255, 0.9); */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.input-field {
+  width: 250px;
+}
+
+.p-button-lg {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 1.2rem;
+  background-color: #055190;
+  border: #303B98;
+}
+
+
+label {
+  color: white;
+  font-weight: bolder;
+}
+</style>
+
