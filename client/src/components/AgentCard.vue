@@ -46,7 +46,7 @@ export default {
   }
   
   .agent-card-inner {
-    width: 20rem;
+    width: 25rem;
     height: 25rem;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -71,7 +71,7 @@ export default {
   
   .agent-contact {
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
   }
   </style>
