@@ -22,9 +22,7 @@ const routes = [
     { path: '/contact', component: Contact },
     { path: '/aboutus', component: AboutUs},
 
-
 ];
-
 
 const router = createRouter({
     history: createWebHistory(),

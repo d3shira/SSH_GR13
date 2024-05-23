@@ -20,6 +20,7 @@ Route::get('/properties', [PropertyController::class, 'getProperties']);
 Route::get('/agents', [AgentController::class, 'getAgents']);
 Route::post('/home/properties/filter', [HomeController::class, 'filter']);
 Route::post('/careers', [CareersController::class, 'store']);
-Route::get('/agents', [AgentController::class, 'getAgents']);
+Route::post('/properties/filter', [PropertyController::class, 'filterProperties']);
 Route::post('/contact', [ContactController::class, 'store']);
+
 
