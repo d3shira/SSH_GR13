@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddPropertyController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::post('/home/properties/filter', [HomeController::class, 'filter']);
 Route::post('/careers', [CareersController::class, 'store']);
 Route::post('/properties/filter', [PropertyController::class, 'filterProperties']);
 Route::post('/contact', [ContactController::class, 'store']);
+Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
+Route::post('/add_properties', [AddPropertyController::class, 'store']);
 
 
 

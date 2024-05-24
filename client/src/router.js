@@ -11,6 +11,8 @@ import Contact from './views/Contact.vue';
 import AboutUs from './views/AboutUs.vue';
 import Dashboard from './views/staffViews/Dashboard.vue';
 import adminDashboard from './views/adminViews/adminDashboard.vue';
+import AddProperty from './views/staffViews/AddProperty.vue';
+
 
 
 const routes = [
@@ -23,9 +25,9 @@ const routes = [
     { path: '/properties', component: Properties },
     { path: '/contact', component: Contact },
     { path: '/aboutus', component: AboutUs},
-    {path: '/staffDashboard', component: Dashboard},
-    {path:'/adminDashboard',component:adminDashboard}
-
+    { path:' /adminDashboard',component:adminDashboard}
+    { path: '/staffDashboard', component: Dashboard},
+    { path: '/add-property', component: AddProperty}
 ];
 
 const router = createRouter({
