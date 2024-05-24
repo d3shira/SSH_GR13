@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddPropertyController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,8 @@ Route::get('/careers', [CareersController::class, 'getJobApplications']);
 Route::put('/careers/{id}/approve', [CareersController::class, 'approveApplication']); // Route for approving application
 Route::put('/careers/{id}/reject', [CareersController::class, 'rejectApplication']); // Route for rejecting application
 Route::put('/careers/{id}/undo', [CareersController::class, 'undoApplicationStatus']);
-
-
+Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
+Route::post('/add_properties', [AddPropertyController::class, 'store']);
 
 
 
