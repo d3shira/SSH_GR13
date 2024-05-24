@@ -4,7 +4,8 @@
     <div class="p-shadow-2 navbar">
       <div class="p-d-flex p-jc-between p-ai-center" style="display: flex; align-items: center;">
         <div class="p-text-center">
-          <router-link to="/" class="logo">Kosova Estate</router-link>
+          <div class="logo"> <img width="50px" height="50" src="../assets/images/kosova-estate.png"> </div>
+          <div class="title"> <router-link to="/" class="logo">Kosova Estate</router-link> </div>
         </div>
         <div class="menu-items p-d-flex p-ai-center">
           <div class="p-mx-3">
@@ -20,7 +21,7 @@
             <router-link to="/careers" class="menu-item">Career</router-link>
           </div>
           <div class="p-mx-3">
-            <router-link to="" class="menu-item">Contact Us</router-link>
+            <router-link to="/contact" class="menu-item">Contact Us</router-link>
           </div>
           <div class="p-mx-3">
             <router-link to="/login" class="menu-item">Login</router-link>
@@ -89,6 +90,15 @@
     background-color: #010633;
     color: #3C5B6F;
     transition: 1ms;
+  }
+
+  .p-text-center{
+    display: flex;
+  }
+  
+  .title{
+    margin-top: 15px;
+    margin-left: 15px;
   }
   </style>
   

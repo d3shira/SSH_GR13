@@ -16,6 +16,7 @@ class Careers extends Model
         'nationality',
         'personal_number',
         'email',
+        'resume',
         'message'
     ];
 }

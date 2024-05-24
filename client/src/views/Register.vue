@@ -6,7 +6,7 @@
     <!-- Register Form Content -->
     <div class="register-form-content">
       <!-- Background Image -->
-      <div class="background-image">
+      <!-- <div class="background-image"> -->
         <!-- Form Content -->
         <div class="content">
           <!-- Register Form -->
@@ -53,7 +53,7 @@
             </form>
           </div>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
 
     <Footer />
@@ -112,7 +112,7 @@ export default {
         };
 
         console.log('Registration successful');
-        // Optionally, you can redirect the user to another page after successful registration
+        this.$router.push('/login');
       } catch (error) {
         console.error('Error registering user:', error);
         
@@ -135,7 +135,7 @@ export default {
   justify-content: center;
 }
 
-.background-image {
+/* .background-image {
   background-image: url('@/assets/images/photo.png');
   background-size: cover;
   background-position: center;
@@ -143,7 +143,7 @@ export default {
   width: 100%;
   height: 100%;
   left: 0;
-}
+} */
 
 .content {
   text-align: center;

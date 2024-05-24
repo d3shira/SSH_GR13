@@ -34,7 +34,7 @@
             </div>
           </form>
           <div class="create-account">
-            <p>No Account? <router-link to="/register">Create one</router-link></p>
+            <p>No Account? <router-link to="/register" style="color: white;"><b>Create one</b></router-link></p>
           </div>
         </div>
       </div>
