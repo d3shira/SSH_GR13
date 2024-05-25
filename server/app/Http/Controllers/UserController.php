@@ -147,7 +147,7 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 300,
+            'expires_in' => JWTAuth::factory()->getTTL() * 3600,
             'user' => auth()->user()
         ]);
     }

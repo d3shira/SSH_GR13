@@ -22,7 +22,7 @@ class PropertyController extends Controller
                 'features.num_bedrooms',
                 'features.square_meters',
                 'features.price',
-                'images.image_url'
+                // 'images.image_url'
             )
                 ->leftJoin('addresses', 'properties.address_id', '=', 'addresses.id')
                 ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
@@ -91,7 +91,7 @@ class PropertyController extends Controller
                 'features.price',
                 'property_types.id',
                 'property_types.property_type_name',
-                'images.image_url'
+                // 'images.image_url'
             )
             ->leftJoin('addresses', 'properties.address_id', '=', 'addresses.id')
             ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
@@ -126,20 +126,38 @@ class PropertyController extends Controller
             'features.has_elevator',
             'features.square_meters',
             'features.price',
-            'images.image_url'
+            // 'images.image_url',
+            'reviews.rating',
+            'reviews.comment'
         )
         ->leftJoin('addresses', 'properties.address_id', '=', 'addresses.id')
         ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
+        ->leftJoin('reviews','properties.id','=','property_id')
         ->leftJoin('property_types', 'properties.property_type_id', '=', 'property_types.id')
-        ->leftJoin('images', 'properties.id', '=', 'images.property_id')
+        // ->leftJoin('images', 'properties.id', '=', 'images.property_id')
         ->where('properties.id', $id)
         ->first();
 
         if ($property) {
+            $reviews = DB::table('reviews')
+            ->where('property_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->select('rating', 'comment')
+            ->get();
+
+            $property->reviews = $reviews;
+
+
             return response()->json($property);
         } else {
             return response()->json(['message' => 'Property not found'], 404);
         }
+
+        
     }
+
+    
+    
 }
 
