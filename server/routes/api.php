@@ -42,4 +42,6 @@
     Route::get('/applications', function () { return Applications::all();});
     Route::get('/users', [ClientsController::class, 'index']);
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
-    Route::put('/users/{id}', [ClientsController::class, 'update']);                                           
+    Route::put('/users/{id}', [ClientsController::class, 'update']); 
+    Route::get('/cities', [PropertyController::class, 'getCities']);
+                                          
