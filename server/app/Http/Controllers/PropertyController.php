@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class PropertyController extends Controller
+
 {
     public function getProperties(Request $request)
     {
         try {
             $properties = Properties::select(
                 'properties.id',
+                'properties.title',
                 'properties.description',
                 'addresses.address_line',
                 'addresses.municipality',
@@ -27,8 +29,14 @@ class PropertyController extends Controller
                 ->leftJoin('images', 'properties.id', '=', 'images.property_id')
                 ->get();
 
+                $groupedProperties = $properties->groupBy('id')->map(function ($propertyGroup) {
+                    $property = $propertyGroup->first();
+                    $property->image_url = $propertyGroup->pluck('image_url')->filter()->first();
+                    return $property;
+                });
 
-            return response()->json($properties);
+            return response()->json($groupedProperties->values());
+
         } catch (\Exception $e) {
             Log::error('Error fetching properties: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()]);
@@ -101,4 +109,37 @@ class PropertyController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function show( $id)
+    {
+        $property = Properties::select(
+            'properties.id',
+            'properties.status',
+            'properties.description',
+            'addresses.address_line',
+            'addresses.municipality',
+            'features.num_bedrooms',
+            'features.num_bathrooms',
+            'features.floor_number',
+            'features.has_balcony',
+            'features.has_garden',
+            'features.has_parking',
+            'features.has_elevator',
+            'features.square_meters',
+            'features.price',
+            'images.image_url'
+        )
+        ->leftJoin('addresses', 'properties.address_id', '=', 'addresses.id')
+        ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
+        ->leftJoin('property_types', 'properties.property_type_id', '=', 'property_types.id')
+        ->leftJoin('images', 'properties.id', '=', 'images.property_id')
+        ->where('properties.id', $id)
+        ->first();
+
+        if ($property) {
+            return response()->json($property);
+        } else {
+            return response()->json(['message' => 'Property not found'], 404);
+        }
+    }
 }
+

@@ -79,6 +79,7 @@ export default {
 
         if (response.ok) {
           console.log('Login successful', data);
+          localStorage.setItem('auth_token', data.access_token);
           this.$router.push({ path: '/' });
       
         } else {
