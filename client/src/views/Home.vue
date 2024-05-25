@@ -108,7 +108,10 @@ export default {
   },
   computed: {
     limitedProperties() {
-      return this.properties.slice(0, 6);
+      return this.properties.slice(0, 12);
+    },
+    agents(){
+      return this.agents.slice(0, 3);
     }
   },
   mounted() {

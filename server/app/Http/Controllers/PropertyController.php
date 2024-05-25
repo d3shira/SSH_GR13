@@ -14,6 +14,7 @@ class PropertyController extends Controller
         try {
             $properties = Properties::select(
                 'properties.id',
+                'properties.title',
                 'properties.description',
                 'addresses.address_line',
                 'addresses.municipality',
@@ -27,8 +28,14 @@ class PropertyController extends Controller
                 ->leftJoin('images', 'properties.id', '=', 'images.property_id')
                 ->get();
 
+                $groupedProperties = $properties->groupBy('id')->map(function ($propertyGroup) {
+                    $property = $propertyGroup->first();
+                    $property->image_url = $propertyGroup->pluck('image_url')->filter()->first();
+                    return $property;
+                });
 
-            return response()->json($properties);
+            return response()->json($groupedProperties->values());
+
         } catch (\Exception $e) {
             Log::error('Error fetching properties: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()]);
