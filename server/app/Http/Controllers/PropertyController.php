@@ -23,7 +23,7 @@ class PropertyController extends Controller
                 'features.num_bedrooms',
                 'features.square_meters',
                 'features.price',
-                // 'images.image_url'
+                'images.image_url'
             )
                 ->leftJoin('addresses', 'properties.address_id', '=', 'addresses.id')
                 ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
@@ -127,7 +127,7 @@ class PropertyController extends Controller
             'features.has_elevator',
             'features.square_meters',
             'features.price',
-            // 'images.image_url',
+            'images.image_url',
             'reviews.rating',
             'reviews.comment'
         )
@@ -135,7 +135,7 @@ class PropertyController extends Controller
         ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
         ->leftJoin('reviews','properties.id','=','property_id')
         ->leftJoin('property_types', 'properties.property_type_id', '=', 'property_types.id')
-        // ->leftJoin('images', 'properties.id', '=', 'images.property_id')
+        ->leftJoin('images', 'properties.id', '=', 'images.property_id')
         ->where('properties.id', $id)
         ->first();
 
