@@ -7,10 +7,12 @@
       <div class="property-container">
         <PropertyCard v-for="(property, index) in limitedProperties" :key="index" :property="property" style="margin: 10px;" />
       </div>
-      <div class="pagination">
-        <button @click="fetchProperties(properties.prev_page_url)" :disabled="!properties.prev_page_url">Previous</button>
-        <button @click="fetchProperties(properties.next_page_url)" :disabled="!properties.next_page_url">Next</button>
-      </div>
+      <Paginator 
+        :rows="rowsPerPage" 
+        :totalRecords="totalAgents" 
+        :first="first" 
+        @page="onPageChange" 
+      />
     </div>
 
     <form class="extended-search" @submit.prevent="filterProperties">
@@ -66,12 +68,15 @@
 import PropertyCard from '@/components/PropertyCard.vue';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
+import Paginator from 'primevue/paginator';
 
 export default {
   components: {
     PropertyCard,
     Navbar,
-    Footer
+    Footer,
+    Paginator,
+
   },
   data() {
     return {
@@ -79,14 +84,18 @@ export default {
       category: '',
       status: '',
       type: '',
-      city: ''
+      city: '',
+      first: 0,
+      rowsPerPage: 6,
     };
   },
   computed: {
     limitedProperties() {
-      return this.properties.slice(0, 7
+      return this.properties.slice(0, 6
       );
+      
     }
+    
   },
   mounted() {
     this.getProperties();
