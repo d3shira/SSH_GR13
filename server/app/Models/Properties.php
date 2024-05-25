@@ -33,4 +33,9 @@ class Properties extends Model
     {
         return $this->belongsTo(Features::class, 'property_feature_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(Images::class, 'property_id');
+    }
 }

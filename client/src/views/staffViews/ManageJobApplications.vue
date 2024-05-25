@@ -3,6 +3,7 @@
       <StaffNavbar />
       <br><br><br>
       <br><br><br>
+      <JobApplications />
       <StaffFooter />
     </div>
   </template>
@@ -10,14 +11,13 @@
   <script>
   import StaffFooter from '../../components/staffComponents/StaffFooter.vue';
   import StaffNavbar from '../../components/staffComponents/StaffNavbar.vue';
-  //import JobApplications from '../../components/staffComponents/JobApplications.vue';
+  import JobApplications from '../../components/staffComponents/JobApplications.vue';
   
   export default {
     components: {
       StaffNavbar,
       StaffFooter,
-      //JobApplications,
+      JobApplications,
     },
   };
   </script>
-  
