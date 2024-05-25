@@ -39,16 +39,7 @@
     Route::post('/loginStaff', [UserController::class, 'loginStaff']);
     Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
-    Route::get('/applications', function () { return Applications::all();
+    Route::get('/applications', function () { return Applications::all();});
     Route::get('/users', [ClientsController::class, 'index']);
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
-    Route::put('/users/{id}', [ClientsController::class, 'update']);
-                                             
-
-                           
-
-
-
-
-
-
+    Route::put('/users/{id}', [ClientsController::class, 'update']);                                           
