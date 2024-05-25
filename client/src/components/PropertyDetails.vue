@@ -8,6 +8,14 @@
     <div class="content-wrapper">
       <!-- Property Information Table -->
       <div class="property-info">
+        <div class="property-images">
+          <h2>Property Images</h2>
+          <div class="image-gallery">
+            <div v-for="(image, index) in property.images" :key="index" class="image-container">
+              <img :src="image.image_url" alt="Property Image" />
+            </div>
+          </div>
+        </div>
         <table>
           <tr>
             <th>ID</th>
@@ -175,7 +183,7 @@ export default {
 }
 .property-details h1 {
   text-align: center;
-  color: #333;
+  color: #010633;
   margin-bottom: 20px;
 }
 .content-wrapper {
@@ -201,9 +209,36 @@ export default {
 .property-info th {
   background-color: #f2f2f2;
 }
+
+.property-images {
+  width: 100%;
+  margin-top: 20px;
+}
+.property-images h2 {
+  color: #010633;
+  margin-bottom: 10px;
+}
+.image-gallery {
+  display: flex;
+}
+.image-container {
+  flex: 1 1 calc(33.333% - 10px);
+  max-width: calc(33.333% - 10px);
+  height: 150px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .reviews-box {
   width: 300px;
-  margin-top: 20px;
+  margin-top: 75px;
   margin-right: 50px;
   margin-left: 0px;
   padding: 20px;
@@ -214,6 +249,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #010633;
 }
 .reviews-box h2 {
   margin-bottom: 10px;

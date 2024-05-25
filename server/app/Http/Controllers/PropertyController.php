@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Properties;
+use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -136,6 +137,8 @@ class PropertyController extends Controller
         ->first();
 
         if ($property) {
+            $images = Images::where('property_id', $id)->get();
+            $property->images = $images;
             return response()->json($property);
         } else {
             return response()->json(['message' => 'Property not found'], 404);
