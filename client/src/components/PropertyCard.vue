@@ -3,10 +3,13 @@
     <Card
       style="width: 24rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); margin-right: 20px;"
     >
-      <template #header>
-        <img alt="user header" src="https://primefaces.org/cdn/primevue/images/usercard.png" />
-      </template>
-      <template #title>Property</template>
+    <template #header>
+      <div class="image-container">
+        <img v-if="property.image_url" :src="property.image_url" alt="property image" />
+        <img v-else alt="default header" src="https://primefaces.org/cdn/primevue/images/usercard.png" />
+      </div>
+    </template>
+      <template #title>{{ property.title }}</template>
       <template #subtitle>
         <div class="flex items-center gap-2">
           <i class="pi pi-map-marker"></i>
@@ -43,6 +46,26 @@ export default {
       type: Object,
       required: true
     }
+  };
+  </script>
+  
+  <style scoped>
+    .image-container {
+      width: 100%;
+      height: 280px; 
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+  
   }
 };
 </script>
