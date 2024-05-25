@@ -40,6 +40,8 @@
     Route::post('/loginStaff', [UserController::class, 'loginStaff']);
     Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
+    Route::post('/faqs', [FAQsController::class, 'store']);
+
 
 
 

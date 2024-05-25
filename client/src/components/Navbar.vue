@@ -26,6 +26,15 @@
           <div class="p-mx-3">
             <router-link to="/login" class="menu-item">Login</router-link>
           </div>
+
+          <!-- <div class="p-mx-3">
+            <router-link to="/faqs" class="menu-item">FAQs</router-link>
+          </div> -->
+          <div class="faq">
+          <router-link to="/faqs" >
+            <i class="fas fa-question-circle" style="font-size: 1.7rem; color:white; "></i>
+          </router-link>
+        </div>
         </div>
       </div>
     </div>
@@ -62,6 +71,7 @@
     padding: 25px 20px; 
     width: 100%;
     z-index: 1000;
+
   }
   
   .logo {
@@ -74,8 +84,10 @@
   .menu-items {
     flex: 1; 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; 
+    /* justify-content: center; */
+    justify-content: end;
+
   }
   
   .menu-item {
@@ -99,6 +111,11 @@
   .title{
     margin-top: 15px;
     margin-left: 15px;
+  }
+
+  .faq{
+   margin-left: 300px;
+
   }
   </style>
   

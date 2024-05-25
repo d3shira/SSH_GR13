@@ -1,30 +1,37 @@
-<?php 
-
+<?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Faqs;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth; // Add this line
 
-class FAQsController extends Controller
+class FaqsController extends Controller
 {
     public function store(Request $request)
     {
-        Log::info('store method called'); // Log statement
+        try {
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'nullable|integer',
+                'question' => 'required|string',
+                'answer' => 'nullable|string',
+            ]);
 
-        $request->validate([
-            'question' => 'required|string|max:255',
-        ]);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
 
-        $faq = Faqs::create([
-            'user_id' => Auth::id(),
-            'question' => $request->question,
-            'answer' => null,
-        ]);
+            $faq = new Faqs();
+            $faq->user_id = $request->user_id;
+            $faq->question = $request->question;
+            $faq->answer = $request->answer;
+            $faq->save();
 
-        Log::info('FAQ created', ['faq' => $faq]); // Log statement
-
-        return response()->json(['message' => 'Question submitted successfully', 'faq' => $faq], 201);
+            return response()->json($faq, 201);
+        } catch (\Exception $e) {
+           Log::error('Error in FaqsController@store: ' . $e->getMessage());
+           return response()->json(['error' => 'Server Error'], 500);
+        }
     }
 }
