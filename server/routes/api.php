@@ -41,6 +41,9 @@
     Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
     Route::post('/faqs', [FAQsController::class, 'store']);
+    Route::get('/faqs', [FAQsController::class, 'getFaqs']);
+
+
 
 
 
