@@ -71,8 +71,26 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60,
+            'expires_in' => JWTAuth::factory()->getTTL() * 300,
             'user' => auth()->user()
         ]);
     }
+
+    public function getAuthenticatedUser()
+    {
+        try {
+            // Attempt to authenticate the user with the provided token
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                // Return a 404 response if the user is not found
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (JWTException $e) {
+            // Return a 500 response if there is an error during token authentication
+            return response()->json(['error' => 'Could not authenticate token'], 500);
+        }
+
+        // Return the authenticated user
+        return response()->json($user);
+    }
+
 }
