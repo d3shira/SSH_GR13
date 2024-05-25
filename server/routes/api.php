@@ -31,6 +31,14 @@ Route::put('/careers/{id}/reject', [CareersController::class, 'rejectApplication
 Route::put('/careers/{id}/undo', [CareersController::class, 'undoApplicationStatus']);
 Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
 Route::post('/add_properties', [AddPropertyController::class, 'store']);
+Route::post('/registerStaff', [UserController::class, 'registerStaff']);
+Route::post('/loginStaff', [UserController::class, 'loginStaff']);
+Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
+Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
+
+
+
+
 
 
 

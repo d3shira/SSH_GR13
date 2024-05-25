@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class SalesAgents extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'user_id', 
+        'job_position'
+    ];
 
     public function user()
     {
