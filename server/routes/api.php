@@ -9,8 +9,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\CareersController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactController;
-
-
+use App\Models\Applications;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,6 +25,6 @@ Route::post('/properties/filter', [PropertyController::class, 'filterProperties'
 Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
 Route::post('/add_properties', [AddPropertyController::class, 'store']);
-
+Route::get('/applications', function () { return Applications::all(); });
 
 

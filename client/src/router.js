@@ -11,7 +11,7 @@ import Contact from './views/Contact.vue';
 import AboutUs from './views/AboutUs.vue';
 import Dashboard from './views/staffViews/Dashboard.vue';
 import AddProperty from './views/staffViews/AddProperty.vue';
-
+import Messages from './views/staffViews/Messages.vue';
 
 const routes = [
     { path: '/', component: Home },
@@ -24,7 +24,8 @@ const routes = [
     { path: '/contact', component: Contact },
     { path: '/aboutus', component: AboutUs},
     { path: '/staffDashboard', component: Dashboard},
-    { path: '/add-property', component: AddProperty}
+    { path: '/add-property', component: AddProperty},
+    { path: '/messages', component: Messages}
 ];
 
 const router = createRouter({

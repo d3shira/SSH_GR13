@@ -20,6 +20,9 @@
             <div class="p-mx-3">
               <router-link to="/contracts" class="menu-item">Contracts</router-link>
             </div>
+            <div class="p-mx-3">
+              <router-link to="/messages" class="menu-item">Messages</router-link>
+            </div>
           </div>
         </div>
       </div>
