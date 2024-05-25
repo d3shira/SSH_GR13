@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Validation\ValidationException;
 
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -20,7 +21,7 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users', 
             'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:255',
             'password' => 'required|string|min:8', 
         ]);
 
