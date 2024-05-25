@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Properties;
+use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -139,6 +140,8 @@ class PropertyController extends Controller
         ->first();
 
         if ($property) {
+            $images = Images::where('property_id', $id)->get();
+            $property->images = $images;
             $reviews = DB::table('reviews')
             ->where('property_id', $id)
             ->orderBy('created_at', 'desc')
