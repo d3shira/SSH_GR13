@@ -1,11 +1,7 @@
-
 import 'primevue/resources/themes/aura-light-green/theme.css';
 import 'primeicons/primeicons.css';
 import 'primevue/resources/primevue.min.css';
 import '/node_modules/primeflex/primeflex.css';
-
-
-
 
 import { createApp } from 'vue';
 import App from './App.vue';
@@ -16,6 +12,10 @@ import router from './router';
 
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+import 'primevue/resources/themes/aura-light-green/theme.css';
+import 'primeicons/primeicons.css';
+import 'primevue/resources/primevue.min.css';
+import '/node_modules/primeflex/primeflex.css';
 
 const app = createApp(App);
 

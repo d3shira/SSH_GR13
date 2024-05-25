@@ -16,11 +16,11 @@
               </div>
             </div>
             <div class="p-mx-3 dropdown">
-              <router-link to="/clients" class="menu-item">Clients</router-link>
+              <router-link to="/manageClients" class="menu-item">Clients</router-link>
               <div class="dropdown-content">
-                <router-link to="/add-clients" class="dropdown-item">Add Clients</router-link>
-                <router-link to="/update-clients" class="dropdown-item">Update Clients</router-link>
-                <router-link to="/delete-clients" class="dropdown-item">Delete Clients</router-link>
+                <router-link to="/manageClients" class="dropdown-item">Manage Clients</router-link>
+                <router-link to="/addClient" class="dropdown-item">Add Client</router-link>
+                <router-link to="/editClient" class="dropdown-item">Edit Client</router-link>
               </div>
             </div>
             <div class="p-mx-3 dropdown">
