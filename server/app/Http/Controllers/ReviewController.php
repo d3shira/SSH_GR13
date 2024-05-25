@@ -22,7 +22,7 @@ class ReviewController extends Controller
                 'user_id' => 'nullable|integer',
                 'property_id' => 'required|integer',
                 'review_category_id' => 'nullable|integer',
-                'rating' => 'required|integer|min:1|max:5',
+                'rating' => 'required|integer|min:1|max:5', 
                 'comment' => 'required|string',
             ]);
 

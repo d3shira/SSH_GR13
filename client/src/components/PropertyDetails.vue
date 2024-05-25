@@ -86,6 +86,21 @@
           <div v-for="(error, index) in errors" :key="index">{{ error }}</div>
         </div>
         <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
+
+        <h2><br>Reviews</h2>
+        
+        <div v-if="property.reviews && property.reviews.length > 0">
+          <div v-for="(review, index) in property.reviews" :key="index" class="review-item">
+            <p><strong>Rating:</strong> {{ review.rating }} / 5</p>
+            <p><strong>Comment:</strong> {{ review.comment }}</p>
+            <hr>
+          </div>
+        </div>
+        <div v-else>
+          <p>No reviews yet.</p>
+        </div>
+
+       
       </div>
     </div>
   </div>
@@ -108,7 +123,7 @@ export default {
         rating: '',
         comment: ''
       },
-      user:{},
+      user: {},
       errors: [],
       successMessage: ''
     };
@@ -117,6 +132,14 @@ export default {
     const propertyId = this.$route.params.id;
     this.fetchPropertyDetails(propertyId);
     this.fetchUser();
+  },
+  computed: {
+    lastThreeReviews() {
+      if (this.property.reviews && this.property.reviews.length > 0) {
+        return this.property.reviews.slice().reverse().slice(0, 3);
+      }
+      return [];
+    }
   },
   methods: {
     fetchUser() {
@@ -152,6 +175,8 @@ export default {
           // Reset the review form
           this.review.rating = '';
           this.review.comment = '';
+          // Fetch property details again to update reviews
+          this.fetchPropertyDetails(this.property.id);
         })
         .catch(error => {
           if (error.response && error.response.data.errors) {
@@ -254,6 +279,14 @@ export default {
 .reviews-box h2 {
   margin-bottom: 10px;
 }
+.reviews-box .review-item {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
 .reviews-box textarea {
   width: 100%;
   margin-bottom: 10px;
@@ -262,6 +295,16 @@ export default {
   border-radius: 5px;
   resize: none;
 }
+.review-item {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .reviews-box input {
   width: 100%;
   margin-bottom: 10px;

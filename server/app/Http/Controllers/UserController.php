@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Validation\ValidationException;
 
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -20,6 +21,7 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users', 
             'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'nullable|string|max:255',
             'password' => 'required|string|min:8', 
         ]);
 
@@ -34,6 +36,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->username = $request->username;
         $user->email = $request->email;
+        $user->phone= $request->phone;
         $user->password = $hashedPassword; 
         $user->save();
 
@@ -144,7 +147,7 @@ class UserController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 300,
+            'expires_in' => JWTAuth::factory()->getTTL() * 3600,
             'user' => auth()->user()
         ]);
     }
