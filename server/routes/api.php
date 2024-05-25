@@ -1,5 +1,6 @@
     <?php
 
+    use App\Http\Controllers\AddPropertyController;
     use App\Http\Controllers\HomeController;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Route;
@@ -10,9 +11,9 @@
     use App\Http\Controllers\ContactController;
     use App\Http\Controllers\ReviewController; // Add this line
 
-    // Route::get('/user', function (Request $request) {
-    //     return $request->user();
-    // })->middleware('auth:sanctum');
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
 
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
@@ -25,6 +26,16 @@
     Route::get('/properties/{id}', [PropertyController::class, 'show']);
     Route::post('/reviews', [ReviewController::class, 'store']);
     Route::get('/user', [UserController::class, 'getAuthenticatedUser'])->middleware('auth:api');
+   Route::get('/careers', [CareersController::class, 'getJobApplications']);
+   Route::put('/careers/{id}/approve', [CareersController::class, 'approveApplication']); // Route for approving application
+   Route::put('/careers/{id}/reject', [CareersController::class, 'rejectApplication']); // Route for rejecting application
+   Route::put('/careers/{id}/undo', [CareersController::class, 'undoApplicationStatus']);
+   Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
+   Route::post('/add_properties', [AddPropertyController::class, 'store']);
+   Route::post('/registerStaff', [UserController::class, 'registerStaff']);
+   Route::post('/loginStaff', [UserController::class, 'loginStaff']);
+   Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
+   Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
 
 
 
