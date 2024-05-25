@@ -11,6 +11,7 @@
               <router-link to="/properties" class="menu-item">Properties</router-link>
               <div class="dropdown-content">
                 <router-link to="/add-property" class="dropdown-item">Add Property</router-link>
+                <router-link to="/manage-properties" class="dropdown-item">Manage Properties</router-link>
                 <router-link to="/owners" class="dropdown-item">Owners</router-link>
               </div>
             </div>

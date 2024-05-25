@@ -19,6 +19,7 @@ import Messages from './views/staffViews/Messages.vue';
 import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
+import ManageProperties from './views/staffViews/ManageProperties.vue'
 
 
 
@@ -46,7 +47,8 @@ const routes = [
     name: 'PropertyDetails',
     component: PropertyDetails
   },
-  { path: '/messages', component: Messages}
+  { path: '/messages', component: Messages},
+  {path: '/manage-properties', component: ManageProperties}
 
   ];
 
