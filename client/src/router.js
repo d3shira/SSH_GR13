@@ -11,6 +11,7 @@ import Contact from './views/Contact.vue';
 import AboutUs from './views/AboutUs.vue';
 import Dashboard from './views/staffViews/Dashboard.vue';
 import adminDashboard from './views/adminViews/adminDashboard.vue';
+import ManageJobApplications from './views/staffViews/ManageJobApplications.vue';
 import AddProperty from './views/staffViews/AddProperty.vue';
 import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
@@ -29,6 +30,7 @@ const routes = [
     { path: '/contact', component: Contact },
     { path: '/aboutus', component: AboutUs},
     { path: '/adminDashboard',component:adminDashboard},
+    {path: '/job-applications', component: ManageJobApplications},
     { path: '/staffDashboard', component: Dashboard},
     { path: '/add-property', component: AddProperty},
     { path: '/registerStaff',component:registerStaff},

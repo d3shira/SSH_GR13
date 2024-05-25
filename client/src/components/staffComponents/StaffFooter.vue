@@ -25,11 +25,11 @@
         <div class="menu-items">
           <h4>NAVIGATION</h4>
           <router-link to="/" class="footer-link">Home</router-link>
-          <router-link to="/dashboard" class="footer-link">Dashboard</router-link>
+          <router-link to="/staffDashboard" class="footer-link">Dashboard</router-link>
+          <router-link to="/job-applications" class="footer-link">Job Applications</router-link>
           <router-link to="/manage-properties" class="footer-link">Manage Properties</router-link>
           <router-link to="/manage-agents" class="footer-link">Manage Agents</router-link>
           <router-link to="/reports" class="footer-link">Reports</router-link>
-          <router-link to="/settings" class="footer-link">Settings</router-link>
         </div>
       </div>
       <hr class="footer-line" />
