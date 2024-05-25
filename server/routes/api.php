@@ -26,16 +26,16 @@
     Route::get('/properties/{id}', [PropertyController::class, 'show']);
     Route::post('/reviews', [ReviewController::class, 'store']);
     Route::get('/user', [UserController::class, 'getAuthenticatedUser'])->middleware('auth:api');
-   Route::get('/careers', [CareersController::class, 'getJobApplications']);
-   Route::put('/careers/{id}/approve', [CareersController::class, 'approveApplication']); // Route for approving application
-   Route::put('/careers/{id}/reject', [CareersController::class, 'rejectApplication']); // Route for rejecting application
-   Route::put('/careers/{id}/undo', [CareersController::class, 'undoApplicationStatus']);
-   Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
-   Route::post('/add_properties', [AddPropertyController::class, 'store']);
-   Route::post('/registerStaff', [UserController::class, 'registerStaff']);
-   Route::post('/loginStaff', [UserController::class, 'loginStaff']);
-   Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
-   Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
+    Route::get('/careers', [CareersController::class, 'getJobApplications']);
+    Route::put('/careers/{id}/approve', [CareersController::class, 'approveApplication']); // Route for approving application
+    Route::put('/careers/{id}/reject', [CareersController::class, 'rejectApplication']); // Route for rejecting application
+    Route::put('/careers/{id}/undo', [CareersController::class, 'undoApplicationStatus']);
+    Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
+    Route::post('/add_properties', [AddPropertyController::class, 'store']);
+    Route::post('/registerStaff', [UserController::class, 'registerStaff']);
+    Route::post('/loginStaff', [UserController::class, 'loginStaff']);
+    Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
+    Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
 
 
 
