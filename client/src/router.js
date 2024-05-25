@@ -10,12 +10,16 @@ import AboutUs from './views/AboutUs.vue';
 import PropertyDetails from './components/PropertyDetails.vue'; 
 import Dashboard from './views/staffViews/Dashboard.vue';
 import adminDashboard from './views/adminViews/adminDashboard.vue';
+import manageClients from './views/adminViews/manageClients.vue';
+import addClient from './views/adminViews/addClient.vue';
+import editClient from './views/adminViews/editClient.vue';
 import ManageJobApplications from './views/staffViews/ManageJobApplications.vue';
 import AddProperty from './views/staffViews/AddProperty.vue';
 import Messages from './views/staffViews/Messages.vue';
 import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
+
 
 
 const routes = [
@@ -34,6 +38,9 @@ const routes = [
   { path: '/registerStaff',component:registerStaff},
   { path: '/updateStaff', component:updateStaff},
   { path: '/deleteStaff', component:deleteStaff},
+  { path: '/manageClients', component:manageClients},
+  { path: '/addClient', component:addClient},
+  { path: '/editClient', component: editClient},
   {
     path: '/property/:id',
     name: 'PropertyDetails',
@@ -42,6 +49,7 @@ const routes = [
   { path: '/messages', component: Messages}
 
   ];
+
 
 
 const router = createRouter({
