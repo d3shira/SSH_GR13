@@ -7,6 +7,7 @@ use App\Models\Owners;
 use App\Models\Features;
 use App\Models\Images;
 use App\Models\Properties;
+use App\Models\Contracts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -33,7 +34,8 @@ class AddPropertyController extends Controller
         // Validate the request
         $request->validate([
             'form' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'contract' => 'file|mimes:pdf,doc,docx|max:5120' // Validate contract file
         ]);
 
         // Decode the JSON form data
@@ -67,7 +69,9 @@ class AddPropertyController extends Controller
             'features.has_elevator' => 'boolean',
             'features.price' => 'nullable|numeric',
             'owner.owner_name' => 'required|string|max:255',
-            'owner.contact_info' => 'required|string|max:255'
+            'owner.contact_info' => 'required|string|max:255',
+            'contract_type' => 'required|exists:contract_types,id',
+            'contract' => 'nullable|file|mimes:pdf,doc,docx|max:2048'
         ])->validate();
 
         // Save the address
@@ -133,6 +137,19 @@ class AddPropertyController extends Controller
             }
         } else {
             Log::debug('No images found in the request.');
+        }
+
+
+        if ($request->hasFile('contract')) {
+            $contract = $request->file('contract');
+            $contractName = time().'_'.$contract->getClientOriginalName();
+            $contract->move(public_path('contracts'), $contractName);
+            $contractModel = new Contracts();
+            $contractModel->property_id = $property->id;
+            $contractPath = 'contracts/' . $contractName;
+            $contractModel->contract_text = asset($contractPath);
+            $contractModel->contract_type_id = $form['contract_type'];
+            $contractModel->save();
         }
 
 

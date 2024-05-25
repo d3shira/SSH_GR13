@@ -3,7 +3,7 @@
     <Navbar />
 
     <div class="properties">
-      <h2>Properties</h2>
+      <h1 style="color: white; display: flex; justify-content: center;">Properties</h1>
       <div class="property-container">
         <PropertyCard v-for="(property, index) in limitedProperties" :key="index" :property="property" style="margin: 10px;" />
       </div>
@@ -195,6 +195,7 @@ export default {
 }
 
 .properties {
+  padding-top: 100px;
   width: calc(66.66% - 20px);
 }
 
@@ -238,7 +239,7 @@ export default {
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-top: 80px;
+  margin-top: 190px;
 }
 
 .form-group {

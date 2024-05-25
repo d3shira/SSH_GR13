@@ -93,6 +93,20 @@
           <InputNumber id="price" v-model="form.features.price" />
         </div>
 
+        <!-- Upload Contract -->
+        <div class="p-field">
+          <h3>Upload Contract</h3>
+          <div class="checkboxes">
+            <RadioButton v-model="form.contract_type" inputId="contract_for_rent" name="contract_type" :value="1"/>
+            <label for="contract_for_rent" class="ml-2">Contract For Rent</label>
+          </div>
+          <div class="checkboxes">
+            <RadioButton v-model="form.contract_type" inputId="contract_for_sale" name="contract_type" :value="2"/>
+            <label for="contract_for_sale" class="ml-2">Contract For Sale</label>
+          </div>
+          <input type="file" id="contract" accept=".pdf,.doc,.docx" @change="handleContractUpload">
+        </div>
+
         <div class="p-field">
           <h3>Upload Images</h3>
           <input type="file" id="images" multiple accept="image/*" @change="handleImageUpload">
@@ -172,7 +186,9 @@
           },
           owner: {
             owner_name: '',
-            contact_info: ''
+            contact_info: '',
+            contract_type: null,
+            contract: null // Add contract file data
           }
         },
         propertyTypes: [],
@@ -202,6 +218,9 @@
           this.images.push(files[i]);
         }
       },
+      handleContractUpload(event) {
+        this.contract = event.target.files[0];
+      },
       async submitForm() {
         try {
           console.log('Form Data:', this.form);
@@ -212,6 +231,10 @@
           // Append each image to the FormData object
           for (let i = 0; i < this.images.length; i++) {
             formData.append('images[]', this.images[i]);
+          }
+
+          if (this.contract) {
+            formData.append('contract', this.contract);
           }
 
           const response = await fetch('http://127.0.0.1:8000/api/add_properties', {
