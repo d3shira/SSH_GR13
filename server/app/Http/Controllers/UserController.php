@@ -20,6 +20,7 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users', 
             'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|max:255',
             'password' => 'required|string|min:8', 
         ]);
 
@@ -34,6 +35,7 @@ class UserController extends Controller
         $user->last_name = $request->last_name;
         $user->username = $request->username;
         $user->email = $request->email;
+        $user->phone= $request->phone;
         $user->password = $hashedPassword; 
         $user->save();
 
