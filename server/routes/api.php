@@ -11,6 +11,7 @@
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\ContactController;
     use App\Http\Controllers\ReviewController; // Add this line
+    use App\Http\Controllers\FAQsController;
     use App\Models\Applications;
 
 
@@ -39,8 +40,6 @@
     Route::post('/loginStaff', [UserController::class, 'loginStaff']);
     Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
-    Route::get('/applications', function () { return Applications::all(); });
-
 
 
 

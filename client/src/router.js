@@ -16,6 +16,7 @@ import Messages from './views/staffViews/Messages.vue';
 import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
+import Questions from './views/Questions.vue';
 
 
 const routes = [
@@ -34,15 +35,18 @@ const routes = [
   { path: '/registerStaff',component:registerStaff},
   { path: '/updateStaff', component:updateStaff},
   { path: '/deleteStaff', component:deleteStaff},
+  { path: '/messages', component: Messages},
+  { path: '/questions', component: Questions},
+
   {
     path: '/property/:id',
     name: 'PropertyDetails',
     component: PropertyDetails
-  },
-  { path: '/messages', component: Messages}
-
+  }
   ];
 
+
+  
 
 const router = createRouter({
   history: createWebHistory(),
