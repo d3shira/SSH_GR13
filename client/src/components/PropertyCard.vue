@@ -46,10 +46,11 @@ export default {
       type: Object,
       required: true
     }
-  };
-  </script>
-  
-  <style scoped>
+  }
+}
+</script>
+
+<style scoped>
     .image-container {
       width: 100%;
       height: 280px; 
@@ -65,11 +66,3 @@ export default {
       object-fit: cover;
     }
   </style>
-  
-  }
-};
-</script>
-
-<style scoped>
-/* Add any scoped styles for the card component */
-</style>

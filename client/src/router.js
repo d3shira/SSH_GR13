@@ -38,22 +38,10 @@ const routes = [
     path: '/property/:id',
     name: 'PropertyDetails',
     component: PropertyDetails
-  }
+  },
+  { path: '/messages', component: Messages}
+
   ];
-
-
-
-    { path: '/register',component:Register},
-    { path: '/login', component: Login },
-    { path: '/careers', component: Careers },
-    { path: '/agents', component: Agents },
-    { path: '/properties', component: Properties },
-    { path: '/contact', component: Contact },
-    { path: '/aboutus', component: AboutUs},
-    { path: '/staffDashboard', component: Dashboard},
-    { path: '/add-property', component: AddProperty},
-    { path: '/messages', component: Messages}
-];
 
 
 const router = createRouter({
