@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Properties;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -43,6 +44,7 @@ class HomeController extends Controller
 
             $properties->select(
                 'properties.id',
+                'properties.title',
                 'properties.property_type_id',
                 'properties.for_sale',
                 'properties.for_rent',
@@ -50,15 +52,24 @@ class HomeController extends Controller
                 'property_types.property_type_name',
                 'addresses.address_line',
                 'addresses.municipality',
-                'features.price'
+                'features.price',
+                'images.image_url'
             )
             ->leftJoin('addresses', 'properties.address_id', '=', 'addresses.id')
             ->leftJoin('property_types', 'properties.property_type_id', '=', 'property_types.id')
-            ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id');
+            ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
+            ->leftJoin('images', 'properties.id', '=', 'images.property_id');
 
             $filteredProperties = $properties->get();
 
-            return response()->json($filteredProperties);
+            $groupedProperties = $filteredProperties->groupBy('id')->map(function ($propertyGroup) {
+                $property = $propertyGroup->first();
+                $property->images = $propertyGroup->pluck('image_url')->filter()->toArray();
+                return $property;
+            });
+
+            return response()->json($groupedProperties->values());
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
