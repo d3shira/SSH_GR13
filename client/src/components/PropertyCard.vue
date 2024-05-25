@@ -1,6 +1,7 @@
 <template>
+  <router-link :to="{ name: 'PropertyDetails', params: { id: property.id } }" style="text-decoration: none;">
     <Card
-      style="width: 25rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); margin-right: 20px;"
+      style="width: 24rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); margin-right: 20px;"
     >
     <template #header>
       <div class="image-container">
@@ -30,20 +31,20 @@
         </div>
       </template>
     </Card>
-  </template>
-  
-  <script>
-  import Card from 'primevue/card';
+  </router-link>
+</template>
 
-  export default {
-    components: {
-        Card
-    },
-    props: {
-      property: {
-        type: Object,
-        required: true
-      }
+<script>
+import Card from 'primevue/card';
+
+export default {
+  components: {
+    Card
+  },
+  props: {
+    property: {
+      type: Object,
+      required: true
     }
   };
   </script>
@@ -65,3 +66,10 @@
     }
   </style>
   
+  }
+};
+</script>
+
+<style scoped>
+/* Add any scoped styles for the card component */
+</style>

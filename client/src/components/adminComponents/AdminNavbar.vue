@@ -8,23 +8,28 @@
           </div>
           <div class="menu-items p-d-flex p-ai-center">
             <div class="p-mx-3 dropdown">
-              <router-link to="/properties" class="menu-item">Properties</router-link>
+              <router-link to="/staff" class="menu-item">Staff</router-link>
               <div class="dropdown-content">
-                <router-link to="/add-property" class="dropdown-item">Add Property</router-link>
-                <router-link to="/owners" class="dropdown-item">Owners</router-link>
+                <router-link to="/registerStaff" class="dropdown-item">Add Staff</router-link>
+                <router-link to="/updateStaff" class="dropdown-item">Update Staff</router-link>
+                <router-link to="/deleteStaff" class="dropdown-item">Delete Staff</router-link>
               </div>
             </div>
-            <div class="p-mx-3">
-              <router-link to="/job-applications" class="menu-item">Job Applications</router-link>
+            <div class="p-mx-3 dropdown">
+              <router-link to="/clients" class="menu-item">Clients</router-link>
+              <div class="dropdown-content">
+                <router-link to="/add-clients" class="dropdown-item">Add Clients</router-link>
+                <router-link to="/update-clients" class="dropdown-item">Update Clients</router-link>
+                <router-link to="/delete-clients" class="dropdown-item">Delete Clients</router-link>
+              </div>
             </div>
-            <div class="p-mx-3">
-              <router-link to="/faqs" class="menu-item">FAQs</router-link>
-            </div>
-            <div class="p-mx-3">
-              <router-link to="/contracts" class="menu-item">Contracts</router-link>
-            </div>
-            <div class="p-mx-3">
-              <router-link to="/messages" class="menu-item">Messages</router-link>
+            <div class="p-mx-3 dropdown">
+              <router-link to="/properties" class="menu-item">Properties</router-link>
+              <div class="dropdown-content">
+                <router-link to="/add-properties" class="dropdown-item">Add Properties</router-link>
+                <router-link to="/update-properties" class="dropdown-item">Update Properties</router-link>
+                <router-link to="/delete-Properties" class="dropdown-item">Delete Properties</router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -34,7 +39,7 @@
   
   <script>
   export default {
-    name: 'StaffNavbar',
+    name: 'AdminNavbar',
   };
   </script>
   
