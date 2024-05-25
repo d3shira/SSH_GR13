@@ -26,6 +26,14 @@ Route::post('/properties/filter', [PropertyController::class, 'filterProperties'
 Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
 Route::post('/add_properties', [AddPropertyController::class, 'store']);
+Route::post('/registerStaff', [UserController::class, 'registerStaff']);
+Route::post('/loginStaff', [UserController::class, 'loginStaff']);
+Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
+Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
+
+
+
+
 
 
 

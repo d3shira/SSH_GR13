@@ -12,6 +12,9 @@ import AboutUs from './views/AboutUs.vue';
 import Dashboard from './views/staffViews/Dashboard.vue';
 import adminDashboard from './views/adminViews/adminDashboard.vue';
 import AddProperty from './views/staffViews/AddProperty.vue';
+import registerStaff from './views/adminViews/registerStaff.vue';
+import updateStaff from './views/adminViews/updateStaff.vue';
+import deleteStaff from './views/adminViews/deleteStaff.vue';
 
 
 
@@ -25,9 +28,12 @@ const routes = [
     { path: '/properties', component: Properties },
     { path: '/contact', component: Contact },
     { path: '/aboutus', component: AboutUs},
-    { path:' /adminDashboard',component:adminDashboard}
+    { path: '/adminDashboard',component:adminDashboard},
     { path: '/staffDashboard', component: Dashboard},
-    { path: '/add-property', component: AddProperty}
+    { path: '/add-property', component: AddProperty},
+    { path: '/registerStaff',component:registerStaff},
+    { path: '/updateStaff', component:updateStaff},
+    { path: '/deleteStaff', component:deleteStaff}
 ];
 
 const router = createRouter({

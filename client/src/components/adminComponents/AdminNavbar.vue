@@ -10,9 +10,9 @@
             <div class="p-mx-3 dropdown">
               <router-link to="/staff" class="menu-item">Staff</router-link>
               <div class="dropdown-content">
-                <router-link to="/add-staff" class="dropdown-item">Add Staff</router-link>
-                <router-link to="/update-staff" class="dropdown-item">Update Staff</router-link>
-                <router-link to="/delete-staff" class="dropdown-item">Delete Staff</router-link>
+                <router-link to="/registerStaff" class="dropdown-item">Add Staff</router-link>
+                <router-link to="/updateStaff" class="dropdown-item">Update Staff</router-link>
+                <router-link to="/deleteStaff" class="dropdown-item">Delete Staff</router-link>
               </div>
             </div>
             <div class="p-mx-3 dropdown">
