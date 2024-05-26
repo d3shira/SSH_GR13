@@ -82,7 +82,7 @@ methods: {
         if (response.ok) {
           console.log('Login successful', data);
           localStorage.setItem('auth_token', data.access_token);
-          this.$router.push({ path: '/' });
+          this.$router.push({ path: data.redirect }); // Use the redirect path from the response
       
         } else {
           console.error('Login failed', data);
