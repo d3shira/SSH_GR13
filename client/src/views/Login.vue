@@ -39,6 +39,8 @@
         </div>
       </div>
     </div>
+
+    <!-- <Button @click="logout" label="Logout" class="p-button-lg p-button-secondary logout-button" /> -->
     <Footer />
   </div>
 </template>
@@ -64,7 +66,7 @@ export default {
       }
     };
   },
-  methods: {
+methods: {
     async submitForm() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/login', {
@@ -95,7 +97,28 @@ export default {
         console.error('Error during login', error);
        
       }
+    },
+    logout() {
+  fetch('http://127.0.0.1:8000/api/logout', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
     }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.message) {
+      localStorage.removeItem('auth_token');
+      this.$router.push({ path: '/login' });
+    } else {
+      console.error('Logout failed', data);
+    }
+  })
+  .catch(error => {
+    console.error('Error during logout', error);
+  });
+}
+
   }
 };
 </script>
@@ -134,4 +157,17 @@ export default {
   padding: 10px 20px;
   font-size: 1.2rem;
 }
+
+
+
+.logout-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin-top: 200px;
+}
+
+
+
 </style>
+

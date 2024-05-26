@@ -17,7 +17,8 @@ class AgentController extends Controller
                 'users.email', 
                 'users.phone', 
                 'users.username',
-                'sales_agents.job_position'
+                'sales_agents.job_position',
+                'sales_agents.image'
                 )
                 ->join('sales_agents', 'users.id', '=', 'sales_agents.user_id')
                 ->get();
@@ -42,17 +43,37 @@ class AgentController extends Controller
                 'phone' => $request->input('phone'),
                 'username' => $request->input('username'),
             ]);
+ // If the user has a sales agent record, update job position and image path
+ if ($user->salesAgent) {
+    $salesAgent = $user->salesAgent;
+    $salesAgent->job_position = $request->input('job_position');
+    $salesAgent->image = $request->input('image');
 
-            // If the user has a sales agent record, update job position
-            if ($user->salesAgent) {
-                $user->salesAgent->update([
-                    'job_position' => $request->input('job_position')
-                ]);
-            }
+    $salesAgent->save();
+}
 
+       
             return response()->json(['message' => 'User updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Unable to update user.'], 500);
+        }
+    }
+
+    public function uploadAgentImage(Request $request)
+    {
+        try {
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('agents_picture'), $fileName);
+                $imagePath = 'agents_picture/' . $fileName;
+
+                return response()->json(['imagePath' =>asset($imagePath)]);
+            } else {
+                return response()->json(['error' => 'No file uploaded.'], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Unable to upload image.'], 500);
         }
     }
 

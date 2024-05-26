@@ -70,6 +70,12 @@
               <InputText v-model="filterModel.value" type="text" class="p-column-filter" placeholder="Search by phone" />
             </template>
           </Column>
+          <Column field="image" header="Image" style="min-width: 12rem">
+          <template #body="{ data }">
+            <a :href="data.image" target="_blank">Agent Picture</a>
+          </template>
+        </Column>
+
           <!-- Actions Column -->
           <Column header="Actions" style="min-width: 10rem">
             <template #body="{ data }">
@@ -90,6 +96,13 @@
           <InputText v-model="editedUser.username" label="Username" />
           <InputText v-model="editedUser.job_position" label="Job Position" />
           <InputText v-model="editedUser.phone" label="Phone" />
+          <<InputText v-model="editedUser.image" label="Image " />
+
+<div class="p-field">
+  <label for="image">Choose a different image:</label>
+  <input type="file" id="image" accept="image/*" @change="handleFileChange">
+</div>
+          
           <!-- Save Button -->
           <Button label="Save" icon="pi pi-check" @click="saveUser" />
         </div>
@@ -118,6 +131,30 @@
   const editedUser = ref({});
   let pollingInterval;
   
+  const handleFileChange = async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('image', file);
+
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/agentImage', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error('Image upload failed');
+    }
+
+    const result = await response.json();
+    editedUser.value.image = result.imagePath; // Assuming the API returns the new image path in the 'imagePath' field
+  } catch (error) {
+    console.error('Error uploading image:', error);
+  }
+};
+
   // Fetch users function using fetch API
   const fetchUsers = async () => {
     try {
