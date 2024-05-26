@@ -5,38 +5,38 @@
     <div class="properties">
       <h1 style="color: white; display: flex; justify-content: center;">Properties</h1>
       <div class="property-container">
-        <PropertyCard v-for="(property, index) in limitedProperties" :key="index" :property="property" style="margin: 10px;" />
+        <PropertyCard v-for="(property, index) in paginatedProperties" :key="index" :property="property" style="margin: 10px;" />
       </div>
       <Paginator 
         :rows="rowsPerPage" 
-        :totalRecords="totalAgents" 
+        :totalRecords="totalProperties" 
         :first="first" 
         @page="onPageChange" 
       />
     </div>
 
     <form class="extended-search" @submit.prevent="filterProperties">
-      <h2 style="color: white;">Kërkimi i zgjeruar</h2>
+      <h2 style="color: white;">Extended Search</h2>
 
       <div class="form-group">
-        <label for="category"  style="color: white;">Kategoria</label>
+        <label for="category" style="color: white;">Category</label>
         <select id="category" v-model="category">
-          <option value="residential">Residenciale</option>
-          <option value="business">Biznes</option>
+          <option value="residential">Residential</option>
+          <option value="business">Business</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="status" style="color: white;">Statuset</label>
+        <label for="status" style="color: white;">Status</label>
         <select id="status" v-model="status">
           <option value=""></option>
-          <option value="rent">Për Qira</option>
-          <option value="sale">Për Shitje</option>
+          <option value="rent">For Rent</option>
+          <option value="sale">For Sale</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="type" style="color: white;">Tipet</label>
+        <label for="type" style="color: white;">Types</label>
         <select id="type" v-model="type">
           <option value=""></option>
           <option value="apartment">Apartment</option>
@@ -46,15 +46,9 @@
       </div>
 
       <div class="form-group">
-        <label for="city" style="color: white;">Qytet</label>
+        <label for="city" style="color: white;">City</label>
         <select id="city" v-model="city">
-          <option value=""></option>
-          <option value="New York">New York</option>
-          <option value="Toronto">Toronto</option>
-          <option value="Gjakove">Gjakove</option>
-          <option value="Gjilan">Gjilan</option>
-          <option value="Kosove">Kosove</option>
-          <option value="Lipjan">Lipjan</option>
+          <option v-for="(city, index) in cities" :key="index" :value="city">{{ city }}</option>
         </select>
       </div>
 
@@ -76,7 +70,6 @@ export default {
     Navbar,
     Footer,
     Paginator,
-
   },
   data() {
     return {
@@ -85,31 +78,41 @@ export default {
       status: '',
       type: '',
       city: '',
+      cities: [],
       first: 0,
-      rowsPerPage: 6,
+      rowsPerPage: 6, // Change to 4 properties per page for testing
+      totalProperties: 0,
     };
   },
   computed: {
-    limitedProperties() {
-      return this.properties.slice(0, 6
-      );
-      
-    }
-    
+    paginatedProperties() {
+      const start = this.first;
+      const end = this.first + this.rowsPerPage;
+      return this.properties.slice(start, end);
+    },
   },
   mounted() {
     this.getProperties();
+    this.getCities();
   },
   methods: {
     async filterProperties() {
-      console.log('Submitting search with the following parameters:');
-      console.log({
-        category: this.category,
-        status: this.status,
-        type: this.type,
-        city: this.city
-      });
-
+      this.first = 0; // Reset pagination to the first page when filtering
+      await this.fetchProperties();
+    },
+    async getCities() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/cities'); // Adjust the endpoint according to your Laravel routes
+        if (!response.ok) {
+          throw new Error('Failed to fetch cities');
+        }
+        const data = await response.json();
+        this.cities = data; // Set the fetched cities to the cities array
+      } catch (error) {
+        console.error('Error fetching cities:', error);
+      }
+    },
+    async fetchProperties() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/properties/filter', {
           method: 'POST',
@@ -120,23 +123,27 @@ export default {
             category: this.category,
             status: this.status,
             type: this.type,
-            city: this.city
+            city: this.city,
           }),
         });
-
-        console.log('Response status:', response.status);
 
         if (!response.ok) {
           throw new Error('Failed to fetch properties');
         }
 
         const data = await response.json();
-        console.log('Fetched properties:', data);
-
         this.properties = data;
+        this.totalProperties = data.length; // Update the total number of properties
+        this.clearFilters();
       } catch (error) {
         console.error('Error fetching properties:', error);
       }
+    },
+    clearFilters() {
+      this.category = '';
+      this.status = '';
+      this.type = '';
+      this.city = '';
     },
     async getProperties() {
       try {
@@ -146,11 +153,15 @@ export default {
         }
         const data = await response.json();
         this.properties = data;
+        this.totalProperties = data.length; // Update the total number of properties
       } catch (error) {
         console.error('Error fetching properties:', error);
       }
-    }
-  }
+    },
+    onPageChange(event) {
+      this.first = event.first;
+    },
+  },
 };
 </script>
 
@@ -206,11 +217,9 @@ export default {
 }
 
 .property-container > * {
-  flex: 0 1 45.33%; /* Each item takes up 33.33% of the width */
+  flex: 0 1 45.33%; /* Each item takes up 45.33% of the width */
   box-sizing: border-box;
 }
-
-
 
 .property {
   border: 1px solid #ddd;
@@ -244,9 +253,7 @@ export default {
 
 .form-group {
   margin-bottom: 20px;
-  
 }
-
 
 .extended-search label {
   display: block;
