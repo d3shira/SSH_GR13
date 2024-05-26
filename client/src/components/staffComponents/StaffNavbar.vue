@@ -11,6 +11,7 @@
               <router-link to="/properties" class="menu-item">Properties</router-link>
               <div class="dropdown-content">
                 <router-link to="/add-property" class="dropdown-item">Add Property</router-link>
+                <router-link to="/manage-properties" class="dropdown-item">Manage Properties</router-link>
                 <router-link to="/owners" class="dropdown-item">Owners</router-link>
               </div>
             </div>
@@ -18,7 +19,7 @@
               <router-link to="/job-applications" class="menu-item">Job Applications</router-link>
             </div>
             <div class="p-mx-3">
-              <router-link to="/faqs" class="menu-item">FAQs</router-link>
+              <router-link to="/manageFaqs" class="menu-item">FAQs</router-link>
             </div>
             <div class="p-mx-3">
               <router-link to="/contracts" class="menu-item">Contracts</router-link>

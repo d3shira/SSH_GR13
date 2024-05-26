@@ -81,14 +81,18 @@ export default {
       });
     },
     fetchFaqs() {
-      axios.get('http://127.0.0.1:8000/api/faqs')
-      .then(response => {
-        this.faqs = response.data.map(faq => ({ ...faq, showAnswer: false }));
-      })
-      .catch(error => {
-        console.error("There was an error fetching the FAQs:", error);
-      });
-    },
+  axios.get('http://127.0.0.1:8000/api/faqs')
+  .then(response => {
+    const faqs = response.data
+      .filter(faq => faq.answer) // Filter out only FAQs that have answers
+      .slice(-6); // Get the last 6 FAQs
+    this.faqs = faqs.map(faq => ({ ...faq, showAnswer: false }));
+  })
+  .catch(error => {
+    console.error("There was an error fetching the FAQs:", error);
+  });
+},
+
     submitQuestion() {
       if (this.user) {        
         axios.post('http://127.0.0.1:8000/api/faqs', this.question)

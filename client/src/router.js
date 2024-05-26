@@ -19,7 +19,9 @@ import Messages from './views/staffViews/Messages.vue';
 import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
+import ManageProperties from './views/staffViews/ManageProperties.vue'
 import Faqs from './views/Faqs.vue';
+import ManageFaqs from './views/staffViews/ManageFaqs.vue';
 
 
 
@@ -47,12 +49,16 @@ const routes = [
   { path: '/manageClients', component:manageClients},
   { path: '/addClient', component:addClient},
   { path: '/editClient', component: editClient},
+  { path: '/manageFaqs', component: ManageFaqs},
 
   {
     path: '/property/:id',
     name: 'PropertyDetails',
     component: PropertyDetails
-  }
+  },
+  { path: '/messages', component: Messages},
+  {path: '/manage-properties', component: ManageProperties}
+
   ];
 
 
