@@ -57,7 +57,6 @@ const routes = [
   { path: '/messages', component: Messages},
   {path: '/manage-properties', component: ManageProperties}
 
-  }
   ];
 
 
