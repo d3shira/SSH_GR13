@@ -15,6 +15,8 @@ import 'primevue/resources/themes/aura-light-green/theme.css';
 import 'primeicons/primeicons.css';
 import 'primevue/resources/primevue.min.css';
 import '/node_modules/primeflex/primeflex.css';
+import Dropdown from 'primevue/dropdown';
+import Menubar from 'primevue/menubar';
 
 const app = createApp(App);
 
@@ -24,5 +26,8 @@ app.use(ToastService);
 
 app.component('InputText', InputText);
 app.component('Button', Button);
+app.component('Dropdown', Dropdown);
+app.component('Menubar', Menubar);
+
 
 app.mount('#app');

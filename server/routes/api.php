@@ -9,8 +9,10 @@
     use App\Http\Controllers\CareersController;
     use App\Http\Controllers\UserController;
     use App\Http\Controllers\ContactController;
-    use App\Http\Controllers\ReviewController; 
+    use App\Http\Controllers\ReviewController; // Add this line
+    use App\Http\Controllers\FAQsController;
     use App\Http\Controllers\ClientsController;
+
     use App\Models\Applications;
     use App\Http\Controllers\StaffDashboardController;
 
@@ -37,16 +39,22 @@
     Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
     Route::post('/add_properties', [AddPropertyController::class, 'store']);
     Route::post('/registerStaff', [UserController::class, 'registerStaff']);
-    Route::post('/loginStaff', [UserController::class, 'loginStaff']);
     Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
+    Route::post('/faqs', [FAQsController::class, 'store']);
+    Route::get('/faqs', [FAQsController::class, 'getFaqs']);
     Route::get('/applications', function () { return Applications::all();});
     Route::get('/users', [ClientsController::class, 'index']);
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
-    Route::put('/users/{id}', [ClientsController::class, 'update']); 
+    Route::put('/users/{id}', [ClientsController::class, 'update']);   
+    Route::post('/agentImage',[AgentController::class,'uploadAgentImage']);                                        
     Route::get('/cities', [PropertyController::class, 'getCities']);
     Route::get('/sales-report', [StaffDashboardController::class, 'getSalesReport']);
     Route::get('/property-status', [StaffDashboardController::class, 'getPropertyStatus']);
     Route::get('/job-applications-report', [StaffDashboardController::class, 'getJobApplicationsReport']);
 
                                           
+    Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
+                                 
+
+
