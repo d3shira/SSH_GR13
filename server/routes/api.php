@@ -11,7 +11,6 @@
     use App\Http\Controllers\ContactController;
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
-    use App\Http\Controllers\ReviewController; 
     use App\Http\Controllers\ClientsController;
 
     use App\Models\Applications;
@@ -49,5 +48,6 @@
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
     Route::put('/users/{id}', [ClientsController::class, 'update']); 
     Route::get('/cities', [PropertyController::class, 'getCities']);
-                                          
+    Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
+                                 
 
