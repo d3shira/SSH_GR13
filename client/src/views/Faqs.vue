@@ -102,7 +102,7 @@ export default {
           if (error.response && error.response.data.errors) {
             this.errors = Object.values(error.response.data.errors).flat();
           } else {
-            this.errors = ['An error occurred while submitting the question.'];
+            this.errors = ['You should be logged in to submit a question!'];
           }
         });
       } else {

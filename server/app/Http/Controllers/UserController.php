@@ -149,5 +149,20 @@ class UserController extends Controller
     }
 
 
+    public function logout()
+{
+    try {
+        // Invalidate the token
+        JWTAuth::invalidate(JWTAuth::getToken());
 
+        return response()->json(['message' => 'User successfully logged out']);
+    } catch (JWTException $exception) {
+        return response()->json(['error' => 'Sorry, the user cannot be logged out'], 500);
     }
+}
+
+
+}
+
+
+
