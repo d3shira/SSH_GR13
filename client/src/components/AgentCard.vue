@@ -2,7 +2,7 @@
   <div class="agent-card">
     <Card class="agent-card-inner">
       <template #header>
-        <img :src="agent.photo" alt="agent photo" class="agent-photo" />
+        <img :src="agent.image" alt="agent photo" class="agent-photo" />
       </template>
       <template #title>
         <div class="agent-name">{{ agent.first_name }} {{ agent.last_name }}</div>

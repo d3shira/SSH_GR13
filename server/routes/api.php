@@ -38,7 +38,6 @@
     Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
     Route::post('/add_properties', [AddPropertyController::class, 'store']);
     Route::post('/registerStaff', [UserController::class, 'registerStaff']);
-    Route::post('/loginStaff', [UserController::class, 'loginStaff']);
     Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
     Route::post('/faqs', [FAQsController::class, 'store']);
@@ -46,8 +45,10 @@
     Route::get('/applications', function () { return Applications::all();});
     Route::get('/users', [ClientsController::class, 'index']);
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
-    Route::put('/users/{id}', [ClientsController::class, 'update']); 
+    Route::put('/users/{id}', [ClientsController::class, 'update']);   
+    Route::post('/agentImage',[AgentController::class,'uploadAgentImage']);                                        
     Route::get('/cities', [PropertyController::class, 'getCities']);
     Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
                                  
+
 
