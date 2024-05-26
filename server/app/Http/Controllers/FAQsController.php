@@ -13,18 +13,16 @@ class FaqsController extends Controller
     public function getFaqs()
     {
         try {
-            $faqs = Faqs::select('question', 'answer', DB::raw('count(*) as count'))
-                ->groupBy('question', 'answer')
-                ->orderBy('count', 'desc')
-                ->limit(6)
+            $faqs = Faqs::select('id', 'user_id', 'question', 'answer')
                 ->get();
-
+    
             return response()->json($faqs, 200);
         } catch (\Exception $e) {
             Log::error('Error in FaqsController@getFaqs: ' . $e->getMessage());
             return response()->json(['error' => 'Server Error'], 500);
         }
     }
+    
 
     public function store(Request $request)
     {
@@ -51,4 +49,28 @@ class FaqsController extends Controller
             return response()->json(['error' => 'Server Error'], 500);
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'answer' => 'required|string', // Ensure 'answer' is required for update
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+    
+            $faq = Faqs::findOrFail($id);
+            $faq->answer = $request->answer;
+            $faq->save();
+    
+            return response()->json($faq, 200);
+        } catch (\Exception $e) {
+            Log::error('Error in FaqsController@update: ' . $e->getMessage());
+            return response()->json(['error' => 'Server Error'], 500);
+        }
+    }
+    
+
 }

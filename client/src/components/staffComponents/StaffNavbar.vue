@@ -18,7 +18,7 @@
               <router-link to="/job-applications" class="menu-item">Job Applications</router-link>
             </div>
             <div class="p-mx-3">
-              <router-link to="/faqs" class="menu-item">FAQs</router-link>
+              <router-link to="/manageFaqs" class="menu-item">FAQs</router-link>
             </div>
             <div class="p-mx-3">
               <router-link to="/contracts" class="menu-item">Contracts</router-link>

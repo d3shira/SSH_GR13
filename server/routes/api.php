@@ -49,6 +49,8 @@
     Route::post('/agentImage',[AgentController::class,'uploadAgentImage']);                                        
     Route::get('/cities', [PropertyController::class, 'getCities']);
     Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
+    Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
+
                                  
 
 
