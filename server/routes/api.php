@@ -1,5 +1,4 @@
-
-    <?php
+   <?php
 
     use App\Http\Controllers\AddPropertyController;
     use App\Http\Controllers\HomeController;
@@ -12,6 +11,9 @@
     use App\Http\Controllers\ContactController;
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
+    use App\Http\Controllers\ReviewController; 
+    use App\Http\Controllers\ClientsController;
+
     use App\Models\Applications;
 
 
@@ -42,12 +44,10 @@
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
     Route::post('/faqs', [FAQsController::class, 'store']);
     Route::get('/faqs', [FAQsController::class, 'getFaqs']);
-
-
-
-
-
-
-
-
+    Route::get('/applications', function () { return Applications::all();});
+    Route::get('/users', [ClientsController::class, 'index']);
+    Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
+    Route::put('/users/{id}', [ClientsController::class, 'update']); 
+    Route::get('/cities', [PropertyController::class, 'getCities']);
+                                          
 
