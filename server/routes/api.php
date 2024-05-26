@@ -43,4 +43,5 @@
     Route::get('/users', [ClientsController::class, 'index']);
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
     Route::put('/users/{id}', [ClientsController::class, 'update']);    
-    Route::put('/properties/{id}', [AddPropertyController::class, 'update']);                                  
+    Route::put('/properties/{id}', [AddPropertyController::class, 'update']);    
+    Route::delete('/properties/{id}', [AddPropertyController::class, 'delete']);                              

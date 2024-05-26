@@ -175,32 +175,75 @@ class AddPropertyController extends Controller
                 'price' => 'nullable|numeric',
                 'balcony' => 'boolean',
                 'garden' => 'boolean',
+                'garage' => 'boolean',
                 'parking' => 'boolean',
                 'elevator' => 'boolean',
             ]);
 
             // Update the property
             $property->title = $request->input('title');
-            $property->municipality = $request->input('municipality');
-            $property->address_line = $request->input('address_line');
             $property->description = $request->input('description');
             $property->status = $request->input('status');
-            $property->num_bedrooms = $request->input('num_bedrooms');
-            $property->num_bathrooms = $request->input('num_bathrooms');
-            $property->floor_number = $request->input('floor_number');
-            $property->square_meters = (int)$request->input('square_meters');
-            $property->price = $request->input('price');
-            $property->balcony = $request->input('balcony');
-            $property->garden = $request->input('garden');
-            $property->parking = $request->input('parking');
-            $property->elevator = $request->input('elevator');
-
             $property->save();
+
+            // Update the address
+            $address = Addresses::findOrFail($property->address_id);
+            $address->municipality = $request->input('municipality');
+            $address->address_line = $request->input('address_line');
+            $address->save();
+
+            // Update the features
+            $features = Features::findOrFail($property->property_feature_id);
+            $features->num_bedrooms = $request->input('num_bedrooms');
+            $features->num_bathrooms = $request->input('num_bathrooms');
+            $features->floor_number = $request->input('floor_number');
+            $features->square_meters = $request->input('square_meters');
+            $features->price = $request->input('price');
+            $features->has_balcony = $request->input('balcony');
+            $features->has_garden = $request->input('garden');
+            $features->has_garage = $request->input('garage');
+            $features->has_parking = $request->input('parking');
+            $features->has_elevator = $request->input('elevator');
+            $features->save();
+
 
             return response()->json(['message' => 'Property updated successfully']);
         } catch (\Exception $e) {
             Log::error('Error updating property: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to update property'], 500);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            // Find the property by ID with its relationships
+            $property = Properties::with('address', 'propertyFeature', 'images')->findOrFail($id);
+
+            // Delete associated address
+            if ($property->address) {
+                $property->address->delete();
+            }
+
+            // Delete associated features
+            if ($property->propertyFeature) {
+                $property->propertyFeature->delete();
+            }
+
+            // Delete associated images
+            if ($property->images) {
+                foreach ($property->images as $image) {
+                    $image->delete();
+                }
+            }
+
+            // Finally, delete the property itself
+            $property->delete();
+
+            return response()->json(['message' => 'Property deleted successfully']);
+        } catch (\Exception $e) {
+            Log::error('Error deleting property: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete property'], 500);
         }
     }
 

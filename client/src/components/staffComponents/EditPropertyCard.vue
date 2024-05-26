@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>Properties</h1>
+    <h1 style="display: flex; justify-content: center; margin-bottom: 40px;">Properties</h1>
     <div class="property-list">
       <Card
         v-for="property in properties"
         :key="property.id"
-        style="width: 24rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); margin-right: 20px;"
+        style="width: 24rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); margin-right: 20px; margin-bottom: 20px;"
       >
         <template #header>
           <div class="image-container">
@@ -34,29 +34,29 @@
               <i class="pi pi-coins"></i>
               <span>{{ property.price }} €</span>
             </div>
-            <div class="buttons">
-              <!-- Edit button -->
-              <Button
-                label="Edit"
-                icon="pi pi-pencil"
-                class="p-button-rounded p-button-primary"
-                @click.prevent="showEditDialog(property)"
-              />
-              <!-- Delete button -->
-              <Button
-                label="Delete"
-                icon="pi pi-trash"
-                class="p-button-rounded p-button-danger"
-                @click.prevent="deleteProperty(property.id)"
-              />
-            </div>
+          </div>
+          <div class="buttons">
+            <!-- Edit button -->
+            <Button
+              label="Edit"
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-primary"
+              @click.prevent="showEditDialog(property)"
+            />
+            <!-- Delete button -->
+            <Button
+              label="Delete"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger"
+              @click.prevent="deleteProperty(property.id)"
+            />
           </div>
         </template>
       </Card>
     </div>
 
     <!-- Editing dialog -->
-    <Dialog v-model:visible="displayEditDialog" header="Edit Property" :modal="true" :closable="false">
+    <Dialog v-model:visible="displayEditDialog" header="Edit Property" :modal="true" :closable="false" :style="{ width: '60vw', maxWidth: '800px' }">
       <div>
         <!-- Edit form -->
         <form @submit.prevent="submitEditForm">
@@ -104,23 +104,27 @@
             <label for="price">Price</label>
             <input v-model="editForm.price" type="number" id="price" />
           </div>
-          <div class="field">
+          <div class="checkbox-field">
             <label for="balcony">Balcony</label>
-            <input v-model="editForm.balcony" type="checkbox" id="balcony" />
+            <input v-model="editForm.balcony" type="checkbox" id="balcony" style="margin-left: 12px;"/>
           </div>
-          <div class="field">
+          <div class="checkbox-field">
             <label for="garden">Garden</label>
-            <input v-model="editForm.garden" type="checkbox" id="garden" />
+            <input v-model="editForm.garden" type="checkbox" id="garden" style="margin-left: 17px;"/>
           </div>
-          <div class="field">
+          <div class="checkbox-field">
+            <label for="garage">Garage</label>
+            <input v-model="editForm.garage" type="checkbox" id="garage" style="margin-left: 16px;"/>
+          </div>
+          <div class="checkbox-field">
             <label for="parking">Parking</label>
-            <input v-model="editForm.parking" type="checkbox" id="parking" />
+            <input v-model="editForm.parking" type="checkbox" id="parking" style="margin-left: 14px;"/>
           </div>
-          <div class="field">
+          <div class="checkbox-field">
             <label for="elevator">Elevator</label>
-            <input v-model="editForm.elevator" type="checkbox" id="elevator" />
+            <input v-model="editForm.elevator" type="checkbox" id="elevator" style="margin-left: 10px;"/>
           </div>
-          <div class="buttons">
+          <div class="buttons" style="justify-content: flex-end;">
             <Button label="Cancel" icon="pi pi-times" class="p-button-secondary" @click="displayEditDialog = false" />
             <Button label="Save" icon="pi pi-check" class="p-button-primary" type="submit" />
           </div>
@@ -158,6 +162,7 @@ export default {
       price: '',
       balcony: false,
       garden: false,
+      garage: false,
       parking: false,
       elevator: false,
     });
@@ -168,7 +173,19 @@ export default {
     };
 
     const deleteProperty = async (id) => {
-      // Implement delete property logic here
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/properties/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        await getProperties();
+      } catch (error) {
+        console.error('Error deleting property:', error);
+      }
     };
 
     const getProperties = async () => {
@@ -192,6 +209,7 @@ export default {
           price: item.price,
           balcony: item.balcony,
           garden: item.garden,
+          garage: item.garage,
           parking: item.parking,
           elevator: item.elevator,
           image_url: item.image_url,
@@ -203,6 +221,7 @@ export default {
 
     const submitEditForm = async () => {
       try {
+        editForm.value.square_meters = parseInt(editForm.value.square_meters, 10);
         const response = await fetch(`http://127.0.0.1:8000/api/properties/${editForm.value.id}`, {
           method: 'PUT',
           headers: {
@@ -238,6 +257,7 @@ export default {
 <style scoped>
 .property-list {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -258,6 +278,8 @@ export default {
 
 .buttons {
   display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
   gap: 8px;
 }
 
@@ -276,5 +298,10 @@ export default {
   width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
+}
+
+.checkbox-field{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 </style> 
