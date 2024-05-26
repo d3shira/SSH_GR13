@@ -21,6 +21,7 @@ import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
 import ManageProperties from './views/staffViews/ManageProperties.vue'
 import Faqs from './views/Faqs.vue';
+import ManageFaqs from './views/staffViews/ManageFaqs.vue';
 
 
 
@@ -48,6 +49,7 @@ const routes = [
   { path: '/manageClients', component:manageClients},
   { path: '/addClient', component:addClient},
   { path: '/editClient', component: editClient},
+  { path: '/manageFaqs', component: ManageFaqs},
 
   {
     path: '/property/:id',

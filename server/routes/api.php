@@ -58,6 +58,8 @@
 
                                           
     Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
+    Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
+
                                  
 
 
