@@ -98,7 +98,7 @@
           </div>
           <div class="field">
             <label for="square_meters">Square Meters</label>
-            <input v-model="editForm.square_meters" type="number" id="square_meters" />
+            <input v-model.number="editForm.square_meters" type="number" id="square_meters" />
           </div>
           <div class="field">
             <label for="price">Price</label>
@@ -154,7 +154,7 @@ export default {
       num_bedrooms: '',
       num_bathrooms: '',
       floor_number: '',
-      square_meters: '',
+      square_meters: null,
       price: '',
       balcony: false,
       garden: false,
@@ -202,12 +202,25 @@ export default {
     };
 
     const submitEditForm = async () => {
-      // Implement form submission logic here
-      displayEditDialog.value = false;
-      // Update the properties list to reflect the changes
-      await getProperties();
-    };
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/properties/${editForm.value.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(editForm.value),
+        });
 
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        displayEditDialog.value = false;
+        await getProperties();
+      } catch (error) {
+        console.error('Error updating property:', error);
+      }
+    };
     getProperties();
 
     return {
@@ -264,6 +277,4 @@ export default {
   padding: 0.5rem;
   box-sizing: border-box;
 }
-</style>
-
-  
+</style> 

@@ -156,5 +156,52 @@ class AddPropertyController extends Controller
         return response()->json(['message' => 'Property added successfully']);
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $property = Properties::findOrFail($id);
+
+            // Validate the request
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'municipality' => 'required|string|max:255',
+                'address_line' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'status' => 'nullable|string',
+                'num_bedrooms' => 'nullable|integer',
+                'num_bathrooms' => 'nullable|integer',
+                'floor_number' => 'nullable|integer',
+                'square_meters' => 'nullable|integer',
+                'price' => 'nullable|numeric',
+                'balcony' => 'boolean',
+                'garden' => 'boolean',
+                'parking' => 'boolean',
+                'elevator' => 'boolean',
+            ]);
+
+            // Update the property
+            $property->title = $request->input('title');
+            $property->municipality = $request->input('municipality');
+            $property->address_line = $request->input('address_line');
+            $property->description = $request->input('description');
+            $property->status = $request->input('status');
+            $property->num_bedrooms = $request->input('num_bedrooms');
+            $property->num_bathrooms = $request->input('num_bathrooms');
+            $property->floor_number = $request->input('floor_number');
+            $property->square_meters = (int)$request->input('square_meters');
+            $property->price = $request->input('price');
+            $property->balcony = $request->input('balcony');
+            $property->garden = $request->input('garden');
+            $property->parking = $request->input('parking');
+            $property->elevator = $request->input('elevator');
+
+            $property->save();
+
+            return response()->json(['message' => 'Property updated successfully']);
+        } catch (\Exception $e) {
+            Log::error('Error updating property: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to update property'], 500);
+        }
+    }
 
 }

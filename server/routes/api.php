@@ -42,4 +42,5 @@
     Route::get('/applications', function () { return Applications::all();});
     Route::get('/users', [ClientsController::class, 'index']);
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
-    Route::put('/users/{id}', [ClientsController::class, 'update']);                                           
+    Route::put('/users/{id}', [ClientsController::class, 'update']);    
+    Route::put('/properties/{id}', [AddPropertyController::class, 'update']);                                  
