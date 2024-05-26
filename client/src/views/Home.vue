@@ -67,23 +67,7 @@
     </div>
 
     <div style="display: flex; justify-content: center; align-items: center;">
-    <Card style="width: 20rem; height: 25rem; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); padding: 10px;">
-      <template #header>
-        <img alt="agent photo" src="https://primefaces.org/cdn/primevue/images/usercard.png" style="width: 100%; height: 12rem; border-radius: 5px; margin-bottom: 10px;" />
-      </template>
-      <template #title>
-        <div style="font-size: 1.2rem; font-weight: bold;">Agent Name Surname</div>
-      </template>
-      <template #subtitle>
-        <div style="font-style: italic;">Real Estate Agent</div>
-      </template>
-      <template #content>
-        <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
-            <div>Email: agent@example.com</div>
-            <div>Phone: +1 (123) 456-7890</div>
-        </div>
-      </template>
-    </Card>
+      <AgentCard v-for="agent in agents" :key="agent.id" :agent="agent" />
     </div>
 
     <Footer />
@@ -99,6 +83,7 @@ import RadioButton from 'primevue/radiobutton';
 import Card from 'primevue/card';
 import Footer from '@/components/Footer.vue';
 import PropertyCard from '@/components/PropertyCard.vue';
+import AgentCard from '@/components/AgentCard.vue';
 
 export default {
   components: {
@@ -108,7 +93,8 @@ export default {
     RadioButton,
     Card,
     Footer,
-    PropertyCard
+    PropertyCard,
+    AgentCard
   },
   data() {
     return {
@@ -116,16 +102,21 @@ export default {
       searchQuery: '',
       selectedPropertyType: '',
       selectedPropertyCategory: '',
-      noProperties: false
+      noProperties: false,
+      agents: []
     };
   },
   computed: {
     limitedProperties() {
-      return this.properties.slice(0, 9);
+      return this.properties.slice(0, 12);
+    },
+    agents(){
+      return this.agents.slice(0, 3);
     }
   },
   mounted() {
     this.getProperties();
+    this.fetchAgents();
   },
   methods: {
     async getProperties() {
@@ -181,6 +172,18 @@ export default {
     },
     redirectToProperties() {
       this.$router.push('/properties');
+    },
+    async fetchAgents() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/agents');
+        if (!response.ok) {
+          throw new Error('Failed to fetch agents');
+        }
+        const data = await response.json();
+        this.agents = data;
+      } catch (error) {
+        console.error('Error fetching agents:', error);
+      }
     }
   }
 };
@@ -223,7 +226,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 200px;
-  color: white;
+  color: #010633;
 }
 
 .buttons {
@@ -269,7 +272,7 @@ export default {
 }
 
 .no-properties-message {
-  color: white;
+  color: #010633;
   text-align: center;
   margin-top: 20px;
 }

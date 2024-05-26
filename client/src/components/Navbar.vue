@@ -26,6 +26,19 @@
           <div class="p-mx-3">
             <router-link to="/login" class="menu-item">Login</router-link>
           </div>
+
+          <!-- <div class="p-mx-3">
+            <router-link to="/faqs" class="menu-item">FAQs</router-link>
+          </div> -->
+          <div class="faq">
+          <router-link to="/faqs" >
+            <i class="fas fa-question-circle" style="font-size: 1.7rem; color:white; "></i>
+          </router-link>
+        </div>
+        <div class="user-menu">
+            <Menu :model="userMenuItems" popup ref="userMenu"></Menu>
+            <i class="fas fa-user" style="font-size: 1.7rem; color:white; cursor: pointer;" @click="$refs.userMenu.toggle($event)"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -33,8 +46,51 @@
   </template>
   
   <script>
+import Menu from 'primevue/menu';
+
   export default {
     name: 'Navbar',
+    components: {
+    Menu
+  }, 
+  data() {
+    return {
+      userMenuItems: [
+        {
+          label: 'Login',
+          icon: 'pi pi-fw pi-sign-in',
+          command: () => { this.$router.push('/login'); }
+        },
+        {
+          label: 'Logout',
+          icon: 'pi pi-fw pi-sign-out',
+          command: this.logout
+        }
+      ]
+    };
+  },
+  methods: {
+    logout() {
+    fetch('http://127.0.0.1:8000/api/logout', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        localStorage.removeItem('auth_token');
+        this.$router.push({ path: '/' }); // Redirect to the home page
+      } else {
+        console.error('Logout failed', data);
+      }
+    })
+    .catch(error => {
+      console.error('Error during logout', error);
+    });
+  }
+  }
   };
   </script>
   
@@ -62,6 +118,7 @@
     padding: 25px 20px; 
     width: 100%;
     z-index: 1000;
+
   }
   
   .logo {
@@ -74,8 +131,10 @@
   .menu-items {
     flex: 1; 
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; 
+    /* justify-content: center; */
+    justify-content: end;
+
   }
   
   .menu-item {
@@ -100,5 +159,20 @@
     margin-top: 15px;
     margin-left: 15px;
   }
+
+  .faq{
+   margin-left: 250px;
+   margin-right: 30px;
+
+  }
+
+  
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
   </style>
   

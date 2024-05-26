@@ -58,13 +58,14 @@
                   <div v-if="errors.email" class="error">{{ errors.email }}</div>
                 </div>
               </div>
-              <!-- <div class="p-field p-grid">
+              <div class="p-field p-grid">
                 <label for="resume" class="p-col-12 p-md-2">Resume</label>
                 <div class="p-col-12 p-md-10">
                   <input type="file" id="resume" @change="handleFileUpload" required />
                   <div v-if="errors.resume" class="error">{{ errors.resume }}</div>
+                  <FileUpload />
                 </div>
-              </div> -->
+              </div>
               <div class="p-field p-grid">
                 <label for="message" class="p-col-12 p-md-2">Message</label>
                 <div class="p-col-12 p-md-10">
@@ -109,57 +110,59 @@ export default {
         name: '',
         surname: '',
         birthday: '',
-       // gender: null,
         nationality: '',
         personal_number: '',
         email: '',
-        // resume: null,
+        resume: null,
         message: ''
       },
       errors: {},
-      // genderOptions: [
-      //   { label: 'Male', value: 'Male' },
-      //   { label: 'Female', value: 'Female' },
-      //   { label: 'Other', value: 'Other' }
-      // ]
     };
   },
  
   methods: {
     async submitForm() {
-  try {
-    const response = await fetch('http://127.0.0.1:8000/api/careers', {
-      method: 'POST',
-      headers: {
-       
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.form) 
-    });
+      try {
+        const formData = new FormData();
+        formData.append('name', this.form.name);
+        formData.append('surname', this.form.surname);
+        formData.append('birthday', this.form.birthday);
+        formData.append('nationality', this.form.nationality);
+        formData.append('personal_number', this.form.personal_number);
+        formData.append('email', this.form.email);
+        formData.append('resume', this.form.resume);
 
-    if (!response.ok) {
-      throw new Error('Failed to submit form');
+        const response = await fetch('http://127.0.0.1:8000/api/careers', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit form');
+        }
+
+        const data = await response.json();
+        console.log('Form submitted successfully:', data);
+        // Reset form after successful submission
+        this.form = {
+          name: '',
+          surname: '',
+          birthday: '',
+          nationality: '',
+          personal_number: '',
+          email: '',
+          resume: null,
+          message: ''
+        };
+        this.errors = {};
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    },
+
+    handleFileUpload(event) {
+      this.form.resume = event.target.files[0];
     }
-
-    const data = await response.json();
-    console.log('Form submitted successfully:', data);
-    // Reset form after successful submission
-    this.form = {
-      name: '',
-      surname: '',
-      birthday: '',
-     // gender: null,
-      nationality: '',
-      personal_number: '',
-      email: '',
-      message: ''
-    };
-    this.errors = {};
-  } catch (error) {
-    console.error('Error submitting form:', error);
-  }
-}
-
   }
 };
 </script>
