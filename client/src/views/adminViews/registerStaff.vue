@@ -39,6 +39,11 @@
                             <InputText id="password" v-model="form.password" type="password" />
                         </div>
                         <div class="p-field">
+                            <label for="image">Profile Picture</label>
+                            <input type="file" id="image" @change="onFileChange" />
+                        </div>
+                        
+                        <div class="p-field">
                             <Button type="submit" label="Register" icon="pi pi-check" />
                         </div>
                     </form>
@@ -71,19 +76,31 @@ export default {
                 email: '',
                 phone:'',
                 job_position:'',
-                password: ''
+                password: '',
+                image: ''
             }
         };
     },
     methods: {
+        onFileChange(event) {
+            this.form.image = event.target.files[0];
+        },
         async submitForm() {
             try {
+                const formData = new FormData();
+                formData.append('first_name', this.form.first_name);
+                formData.append('last_name', this.form.last_name);
+                formData.append('username', this.form.username);
+                formData.append('email', this.form.email);
+                formData.append('phone', this.form.phone);
+                formData.append('job_position', this.form.job_position);
+                formData.append('password', this.form.password);
+                formData.append('image', this.form.image);
+                
+
                 const response = await fetch('http://127.0.0.1:8000/api/registerStaff', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(this.form)
+                    body: formData
                 });
 
                 if (!response.ok) {
@@ -96,13 +113,14 @@ export default {
                     last_name: '',
                     username: '',
                     email: '',
-                    phone:'',
-                    job_position:'',
-                    password: ''
+                    phone: '',
+                    job_position: '',
+                    password: '',
+                    image: null
                 };
 
                 console.log('Registration successful');
-        
+
             } catch (error) {
                 console.error('Error registering user:', error);
             }

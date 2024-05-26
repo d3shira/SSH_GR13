@@ -11,7 +11,8 @@ class SalesAgents extends Model
     
     protected $fillable = [
         'user_id', 
-        'job_position'
+        'job_position',
+        'image'
     ];
 
     public function user()
