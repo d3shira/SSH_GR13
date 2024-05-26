@@ -12,6 +12,7 @@
     use App\Http\Controllers\ReviewController; 
     use App\Http\Controllers\ClientsController;
     use App\Models\Applications;
+    use App\Http\Controllers\StaffDashboardController;
 
 
     Route::get('/user', function (Request $request) {
@@ -44,4 +45,8 @@
     Route::delete('/users/{id}', [ClientsController::class, 'destroy']);
     Route::put('/users/{id}', [ClientsController::class, 'update']); 
     Route::get('/cities', [PropertyController::class, 'getCities']);
+    Route::get('/sales-report', [StaffDashboardController::class, 'getSalesReport']);
+    Route::get('/property-status', [StaffDashboardController::class, 'getPropertyStatus']);
+    Route::get('/job-applications-report', [StaffDashboardController::class, 'getJobApplicationsReport']);
+
                                           
