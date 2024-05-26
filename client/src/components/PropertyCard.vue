@@ -47,8 +47,10 @@ export default {
       required: true
     }
   }
-}
-</script>
+  };
+  </script>
+  
+  
 
 <style scoped>
     .image-container {
@@ -66,3 +68,4 @@ export default {
       object-fit: cover;
     }
   </style>
+  
