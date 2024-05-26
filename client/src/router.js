@@ -20,6 +20,7 @@ import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
 import ManageProperties from './views/staffViews/ManageProperties.vue'
+import Faqs from './views/Faqs.vue';
 
 
 
@@ -39,9 +40,15 @@ const routes = [
   { path: '/registerStaff',component:registerStaff},
   { path: '/updateStaff', component:updateStaff},
   { path: '/deleteStaff', component:deleteStaff},
+
+  { path: '/messages', component: Messages},
+  { path: '/faqs', component: Faqs},
+
+
   { path: '/manageClients', component:manageClients},
   { path: '/addClient', component:addClient},
   { path: '/editClient', component: editClient},
+
   {
     path: '/property/:id',
     name: 'PropertyDetails',
@@ -50,8 +57,12 @@ const routes = [
   { path: '/messages', component: Messages},
   {path: '/manage-properties', component: ManageProperties}
 
+  }
   ];
 
+
+
+  
 
 
 const router = createRouter({

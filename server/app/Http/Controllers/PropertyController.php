@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Addresses;
 use App\Models\Properties;
 use App\Models\Images;
 use Illuminate\Http\Request;
@@ -52,64 +53,76 @@ class PropertyController extends Controller
             $type = $request->input('type');
             $city = $request->input('city');
 
-            $properties = Properties::query();
+            $query = Properties::query();
 
             if ($category) {
                 if ($category == 'residential') {
-                    $properties->whereIn('property_type_id', [1, 2]); // IDs for residential types
+                    $query->whereIn('property_type_id', [1, 2]); // IDs for residential types
                 } elseif ($category == 'business') {
-                    $properties->where('property_type_id', 3); // ID for business
+                    $query->where('property_type_id', 3); // ID for business
                 }
             }
 
             if ($status) {
                 if ($status == 'rent') {
-                    $properties->where('for_rent', true);
+                    $query->where('for_rent', true);
                 } elseif ($status == 'sale') {
-                    $properties->where('for_sale', true);
+                    $query->where('for_sale', true);
                 }
             }
 
             if ($type) {
-                $properties->whereHas('propertyType', function($q) use ($type) {
+                $query->whereHas('propertyType', function ($q) use ($type) {
                     $q->where('property_type_name', $type);
                 });
             }
 
             if ($city) {
-                $properties->whereHas('address', function($q) use ($city) {
+                $query->whereHas('address', function ($q) use ($city) {
                     $q->where('municipality', $city);
                 });
             }
 
-            $properties->select(
+            $query->select(
                 'properties.id',
+                'properties.title',
                 'properties.description',
                 'addresses.address_line',
                 'addresses.municipality',
                 'features.num_bedrooms',
                 'features.square_meters',
                 'features.price',
-                'property_types.id',
+                'property_types.id as property_type_id',
                 'property_types.property_type_name',
-                // 'images.image_url'
+                'images.image_url'
             )
             ->leftJoin('addresses', 'properties.address_id', '=', 'addresses.id')
             ->leftJoin('features', 'properties.property_feature_id', '=', 'features.id')
             ->leftJoin('property_types', 'properties.property_type_id', '=', 'property_types.id')
             ->leftJoin('images', 'properties.id', '=', 'images.property_id');
 
+            $properties = $query->get();
 
-            $filteredProperties = $properties->paginate(6); // Paginate with 6 items per page
+            $groupedProperties = $properties->groupBy('id')->map(function ($propertyGroup) {
+                $property = $propertyGroup->first();
+                $property->image_url = $propertyGroup->pluck('image_url')->filter()->first();
+                return $property;
+            });
 
-            $filteredProperties = $properties->get();
-
-            return response()->json($filteredProperties);
+            return response()->json($groupedProperties->values());
         } catch (\Exception $e) {
             Log::error('Error filtering properties: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getCities()
+    {
+        $cities = Addresses::distinct()->pluck('city_village')->toArray();
+        return response()->json($cities);
+    }
+
+    
     public function show( $id)
     {
         $property = Properties::select(

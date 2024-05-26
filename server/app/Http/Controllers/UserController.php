@@ -7,13 +7,14 @@ use App\Models\Users;
 use App\Models\SalesAgents;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Validation\ValidationException;
 
 
 class UserController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request)       //register for normal users
     {
         // Validation rules
         $validator = Validator::make($request->all(), [
@@ -38,6 +39,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone= $request->phone;
         $user->password = $hashedPassword; 
+        $user->role = 'client'; // Set role to client
         $user->save();
 
         return response()->json(['message' => 'User registered successfully', 'data' => $user], 201);
@@ -50,26 +52,39 @@ class UserController extends Controller
             'username' => 'required|string',
             'password' => 'required|string'
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+   // Retrieve the user by username
+   $user = Users::where('username', $request->username)->first();
 
-        // Retrieve the user by username
-        $user = Users::where('username', $request->username)->first();
+   if (!$user || !Hash::check($request->password, $user->password)) {
+       return response()->json(['error' => 'Unauthorized'], 401);
+   }
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+   // Generate token
+   if (!$token = JWTAuth::fromUser($user)) {
+       return response()->json(['error' => 'Could not create token'], 500);
+   }
 
-        // Generate token
-        if (!$token = JWTAuth::fromUser($user)) {
-            return response()->json(['error' => 'Could not create token'], 500);
-        }
+   // Determine the redirect path based on the user's role
+   $redirectPath = $user->role === 'staff' ? '/staffDashboard' : '/';
 
-        return $this->createNewToken($token);
-    }
-    public function registerStaff(Request $request)
+   return response()->json([
+       'access_token' => $token,
+       'token_type' => 'bearer',
+       'expires_in' => JWTAuth::factory()->getTTL() * 3600,
+       'user' => $user,
+       'redirect' => $redirectPath // Return the redirect path
+   ]);
+
+   return $this->createNewToken($token);
+            
+ } 
+    
+    
+  public function registerStaff(Request $request)
     {
         // Validation rules for staff registration
         $validator = Validator::make($request->all(), [
@@ -80,6 +95,7 @@ class UserController extends Controller
             'phone' => 'required|string|max:255',
             'job_position' => 'required|string|max:255',
             'password' => 'required|string|min:8', 
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -87,6 +103,15 @@ class UserController extends Controller
         }
 
         $hashedPassword = Hash::make($request->password);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('agents_picture'), $fileName);
+            $imagePath = 'agents_picture/' . $fileName;
+        } else {
+            $imagePath = null; // Handle the case where the image is not provided
+        }
 
         // Save staff
         $user = new Users();
@@ -96,51 +121,18 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = $hashedPassword; 
+        $user->role = 'staff'; // Set role to staff
         $user->save();
 
         // Save sales agent
         $salesAgent = new SalesAgents();
         $salesAgent->user_id = $user->id;
         $salesAgent->job_position = $request->job_position;
+        $salesAgent->image = asset($imagePath);
         $salesAgent->save();
 
         return response()->json(['message' => 'Staff registered successfully', 'data' => $user], 201);
     }
-
-    public function loginStaff(Request $request)
-    {
-        // Validation rules for staff login
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|string',
-            'password' => 'required|string'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        // Retrieve the user by username
-        $user = Users::where('username', $request->username)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        // Check if the user is a staff
-        $isStaff = $user->salesAgent()->exists();
-
-        if (!$isStaff) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
-
-        // Generate token for staff
-        if (!$token = JWTAuth::fromUser($user)) {
-            return response()->json(['error' => 'Could not create token'], 500);
-        }
-
-        return $this->createNewToken($token);
-    }
-
 
     protected function createNewToken($token)
     {
@@ -169,4 +161,21 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+
+    public function logout()
+{
+    try {
+        // Invalidate the token
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json(['message' => 'User successfully logged out']);
+    } catch (JWTException $exception) {
+        return response()->json(['error' => 'Sorry, the user cannot be logged out'], 500);
+    }
 }
+
+
+}
+
+
+

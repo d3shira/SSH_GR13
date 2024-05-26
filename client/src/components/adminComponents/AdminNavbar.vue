@@ -18,9 +18,9 @@
             <div class="p-mx-3 dropdown">
               <router-link to="/manageClients" class="menu-item">Clients</router-link>
               <div class="dropdown-content">
-                <router-link to="/manageClients" class="dropdown-item">Manage Clients</router-link>
                 <router-link to="/addClient" class="dropdown-item">Add Client</router-link>
-                <router-link to="/editClient" class="dropdown-item">Edit Client</router-link>
+                <router-link to="/editClient" class="dropdown-item">Update Client</router-link>
+                <router-link to="/manageClients" class="dropdown-item">Delete Clients</router-link>
               </div>
             </div>
             <div class="p-mx-3 dropdown">
