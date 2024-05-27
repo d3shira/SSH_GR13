@@ -27,15 +27,17 @@
             <router-link to="/login" class="menu-item">Login</router-link>
           </div> -->
 
-          <!-- <div class="p-mx-3">
-            <router-link to="/faqs" class="menu-item">FAQs</router-link>
-          </div> -->
           <div class="faq">
-          <router-link to="/faqs" >
-            <i class="fas fa-question-circle" style="font-size: 1.7rem; color:white; "></i>
-          </router-link>
-        </div>
-        <div class="user-menu">
+            <router-link to="/faqs">
+              <i class="fas fa-question-circle" style="font-size: 1.7rem; color:white;"></i>
+            </router-link>
+          </div>
+          <div class="favorites">
+            <router-link to="/favorites">
+              <i class="fas fa-heart" style="font-size: 1.7rem; color:white;"></i>
+            </router-link>
+          </div>
+          <div class="user-menu">
             <Menu :model="userMenuItems" popup ref="userMenu"></Menu>
             <i class="fas fa-user" style="font-size: 1.7rem; color:white; cursor: pointer;" @click="$refs.userMenu.toggle($event)"></i>
           </div>
@@ -43,14 +45,14 @@
       </div>
     </div>
   </div>
-  </template>
-  
-  <script>
+</template>
+
+<script>
 import Menu from 'primevue/menu';
 
-  export default {
-    name: 'Navbar',
-    components: {
+export default {
+  name: 'Navbar',
+  components: {
     Menu
   }, 
   data() {
@@ -71,108 +73,103 @@ import Menu from 'primevue/menu';
   },
   methods: {
     logout() {
-    fetch('http://127.0.0.1:8000/api/logout', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.message) {
-        localStorage.removeItem('auth_token');
-        this.$router.push({ path: '/' }); // Redirect to the home page
-      } else {
-        console.error('Logout failed', data);
-      }
-    })
-    .catch(error => {
-      console.error('Error during logout', error);
-    });
+      fetch('http://127.0.0.1:8000/api/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          localStorage.removeItem('auth_token');
+          this.$router.push({ path: '/' }); // Redirect to the home page
+        } else {
+          console.error('Logout failed', data);
+        }
+      })
+      .catch(error => {
+        console.error('Error during logout', error);
+      });
+    }
   }
-  }
-  };
-  </script>
-  
-  <style scoped>
-  .background-image {
-    background-image: url('@/assets/images/photo.png');
-    background-size: cover;
-    background-position: center;
-    position: absolute; /*was fixed*/
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    /*filter: saturate(0.5); /* Adjust values as needed */
+};
+</script>
+
+<style scoped>
+.background-image {
+  background-image: url('@/assets/images/photo.png');
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: #010633;
-    /*background-color: rgba(1, 6, 51, 0.8); /* Add some transparency to the navbar */
-    color: white;
-    padding: 25px 20px; 
-    width: 100%;
-    z-index: 1000;
 
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .menu-items {
-    flex: 1; 
-    display: flex;
-    align-items: center; 
-    /* justify-content: center; */
-    justify-content: end;
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #010633;
+  color: white;
+  padding: 25px 20px; 
+  width: 100%;
+  z-index: 1000;
+}
 
-  }
-  
-  .menu-item {
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px; 
-    margin: 0 10px; 
-    font-weight: bold;
-  }
-  
-  .menu-item:hover {
-    background-color: #010633;
-    color: #3C5B6F;
-    transition: 1ms;
-  }
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
 
-  .p-text-center{
-    display: flex;
-  }
-  
-  .title{
-    margin-top: 15px;
-    margin-left: 15px;
-  }
+.menu-items {
+  flex: 1; 
+  display: flex;
+  align-items: center; 
+  justify-content: end;
+}
 
-  .faq{
-   margin-left: 250px;
-   margin-right: 30px;
+.menu-item {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px; 
+  margin: 0 10px; 
+  font-weight: bold;
+}
 
-  }
+.menu-item:hover {
+  background-color: #010633;
+  color: #3C5B6F;
+  transition: 1ms;
+}
 
-  
+.p-text-center {
+  display: flex;
+}
+
+.title {
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.faq {
+  margin-left: 250px;
+  margin-right: 30px;
+}
+
+.favorites {
+  margin-right: 30px;
+}
 
 .user-menu {
   display: flex;
   align-items: center;
   margin-left: 20px;
 }
-
-  </style>
-  
+</style>

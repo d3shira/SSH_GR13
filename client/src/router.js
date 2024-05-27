@@ -21,6 +21,7 @@ import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
 import ManageProperties from './views/staffViews/ManageProperties.vue'
 import Faqs from './views/Faqs.vue';
+import Favorites from '@/views/Favorites.vue';
 import ManageFaqs from './views/staffViews/ManageFaqs.vue';
 
 
@@ -34,36 +35,25 @@ const routes = [
   { path: '/properties', component: Properties },
   { path: '/contact', component: Contact },
   { path: '/aboutus', component: AboutUs },
-  { path: '/adminDashboard',component:adminDashboard},
-  { path: '/job-applications', component: ManageJobApplications},
-  { path: '/staffDashboard', component: Dashboard},
-  { path: '/add-property', component: AddProperty},
-  { path: '/registerStaff',component:registerStaff},
-  { path: '/updateStaff', component:updateStaff},
-  { path: '/deleteStaff', component:deleteStaff},
-
-  { path: '/messages', component: Messages},
-  { path: '/faqs', component: Faqs},
-
-
-  { path: '/manageClients', component:manageClients},
-  { path: '/addClient', component:addClient},
-  { path: '/editClient', component: editClient},
+  { path: '/adminDashboard', component: adminDashboard },
+  { path: '/job-applications', component: ManageJobApplications },
+  { path: '/staffDashboard', component: Dashboard },
+  { path: '/add-property', component: AddProperty },
+  { path: '/registerStaff', component: registerStaff },
+  { path: '/updateStaff', component: updateStaff },
+  { path: '/deleteStaff', component: deleteStaff },
+  { path: '/messages', component: Messages },
+  { path: '/faqs', component: Faqs },
+  { path: '/manageClients', component: manageClients },
+  { path: '/addClient', component: addClient },
+  { path: '/editClient', component: editClient },
+  { path: '/property/:id', name: 'PropertyDetails', component: PropertyDetails },
+  { path: '/favorites', name: 'Favorites', component: Favorites },
   { path: '/manageFaqs', component: ManageFaqs},
-
-  {
-    path: '/property/:id',
-    name: 'PropertyDetails',
-    component: PropertyDetails
-  },
-  { path: '/messages', component: Messages},
   {path: '/manage-properties', component: ManageProperties}
 
-  ];
 
-
-
-  
+];
 
 
 const router = createRouter({
