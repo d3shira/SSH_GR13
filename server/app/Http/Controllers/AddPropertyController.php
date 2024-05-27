@@ -8,6 +8,7 @@ use App\Models\Features;
 use App\Models\Images;
 use App\Models\Properties;
 use App\Models\Contracts;
+use App\Models\SalesAgents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,18 @@ class AddPropertyController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getSalesAgents()
+    {
+        try {
+            $salesAgents = SalesAgents::with('user:id,first_name,last_name')->get(['id', 'user_id']); // Include sales_agents.id and user_id
+            return response()->json($salesAgents);
+        } catch (\Exception $e) {
+            Log::error('Error fetching sales agents: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 
     public function store(Request $request)
     {

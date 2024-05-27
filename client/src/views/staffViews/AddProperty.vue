@@ -31,9 +31,17 @@
           <InputText id="status" v-model="form.status" />
         </div>
         <div class="p-field">
-          <label>Seller ID:</label>
-          <InputNumber id="seller_id" v-model="form.seller_id" />
-        </div>
+        <label for="seller_id">Seller:</label>
+        <Dropdown
+          id="seller_id"
+          v-model="form.seller_id"
+          :options="salesAgents"
+          optionLabel="fullName"
+          optionValue="id"
+          placeholder="Select Sales Agent"
+          style="width: calc(100%); margin-bottom: 20px;"
+        />
+      </div>
   
         <!-- Property Type -->
         <div class="p-field">
@@ -164,6 +172,7 @@
           for_rent: false,
           for_sale: false,
           status: '',
+          seller_id: '',
           property_type_id: '',
           address: {
             country: '',
@@ -192,11 +201,13 @@
           }
         },
         propertyTypes: [],
-        images: [] 
+        images: [],
+        salesAgents: [],
       };
     },
     mounted() {
       this.fetchPropertyTypes();
+      this.fetchSalesAgents();
     },
     methods: {
       async fetchPropertyTypes() {
@@ -209,6 +220,22 @@
           this.propertyTypes = data;
         } catch (error) {
           console.error('Error fetching property types:', error);
+        }
+      },
+      async fetchSalesAgents() {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/sales_agents');
+          if (!response.ok) {
+            throw new Error('Failed to fetch sales agents');
+          }
+          const data = await response.json();
+          // Add fullName property to each agent
+          this.salesAgents = data.map(agent => ({
+            id: agent.id, // sales_agents id
+            fullName: `${agent.user.first_name} ${agent.user.last_name}`
+          }));
+        } catch (error) {
+          console.error('Error fetching sales agents:', error);
         }
       },
       handleImageUpload(event) {
@@ -245,7 +272,7 @@
             throw new Error('Failed to add property');
           }
           // Redirect to properties list or show success message
-          this.$router.push('/staffDashboard');
+          this.$router.push('/manage-properties');
         } catch (error) {
           console.error('Error adding property:', error);
         }
