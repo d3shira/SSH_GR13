@@ -12,6 +12,7 @@
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
     use App\Http\Controllers\ClientsController;
+    use App\Http\Controllers\FavoriteController;
 
     use App\Models\Applications;
 
@@ -49,6 +50,6 @@
     Route::post('/agentImage',[AgentController::class,'uploadAgentImage']);                                        
     Route::get('/cities', [PropertyController::class, 'getCities']);
     Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
-                                 
+    Route::post('/favorites', [FavoriteController::class, 'store']);
 
 

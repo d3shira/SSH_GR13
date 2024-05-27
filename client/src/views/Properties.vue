@@ -100,6 +100,13 @@ export default {
       this.first = 0; // Reset pagination to the first page when filtering
       await this.fetchProperties();
     },
+    saveFavorite(property) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    if (!favorites.some(fav => fav.id === property.id)) {
+      favorites.push(property);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+  },
     async getCities() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/cities'); // Adjust the endpoint according to your Laravel routes

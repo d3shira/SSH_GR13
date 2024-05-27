@@ -20,8 +20,7 @@ import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
 import Faqs from './views/Faqs.vue';
-
-
+import Favorites from '@/views/Favorites.vue';
 
 const routes = [
   { path: '/', component: Home },
@@ -32,33 +31,21 @@ const routes = [
   { path: '/properties', component: Properties },
   { path: '/contact', component: Contact },
   { path: '/aboutus', component: AboutUs },
-  { path: '/adminDashboard',component:adminDashboard},
-  { path: '/job-applications', component: ManageJobApplications},
-  { path: '/staffDashboard', component: Dashboard},
-  { path: '/add-property', component: AddProperty},
-  { path: '/registerStaff',component:registerStaff},
-  { path: '/updateStaff', component:updateStaff},
-  { path: '/deleteStaff', component:deleteStaff},
-
-  { path: '/messages', component: Messages},
-  { path: '/faqs', component: Faqs},
-
-
-  { path: '/manageClients', component:manageClients},
-  { path: '/addClient', component:addClient},
-  { path: '/editClient', component: editClient},
-
-  {
-    path: '/property/:id',
-    name: 'PropertyDetails',
-    component: PropertyDetails
-  }
-  ];
-
-
-
-  
-
+  { path: '/adminDashboard', component: adminDashboard },
+  { path: '/job-applications', component: ManageJobApplications },
+  { path: '/staffDashboard', component: Dashboard },
+  { path: '/add-property', component: AddProperty },
+  { path: '/registerStaff', component: registerStaff },
+  { path: '/updateStaff', component: updateStaff },
+  { path: '/deleteStaff', component: deleteStaff },
+  { path: '/messages', component: Messages },
+  { path: '/faqs', component: Faqs },
+  { path: '/manageClients', component: manageClients },
+  { path: '/addClient', component: addClient },
+  { path: '/editClient', component: editClient },
+  { path: '/property/:id', name: 'PropertyDetails', component: PropertyDetails },
+  { path: '/favorites', name: 'Favorites', component: Favorites }
+];
 
 const router = createRouter({
   history: createWebHistory(),
