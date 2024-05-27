@@ -12,6 +12,7 @@
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
     use App\Http\Controllers\ClientsController;
+    use App\Http\Middleware\CheckAbility;
 
     use App\Models\Applications;
     use App\Http\Controllers\StaffDashboardController;
@@ -38,7 +39,7 @@
     Route::put('/careers/{id}/undo', [CareersController::class, 'undoApplicationStatus']);
     Route::get('/property_types', [AddPropertyController::class, 'getPropertyTypes']);
     Route::post('/add_properties', [AddPropertyController::class, 'store']);
-    Route::post('/registerStaff', [UserController::class, 'registerStaff']);
+  //  Route::post('/registerStaff', [UserController::class, 'registerStaff']);
     Route::put('/editStaff/{id}', [AgentController::class, 'editAgent']);
     Route::delete('/deleteStaff/{id}', [AgentController::class, 'deleteAgent']);
     Route::post('/faqs', [FAQsController::class, 'store']);
@@ -59,7 +60,11 @@
                                           
     Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
     Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
+    Route::post('/registerAdmin',[UserController::class,'registerAdmin']);
+     
+    Route::group(['middleware' => ['auth:api', 'App\Http\Middleware\CheckAbility:admin,fill-form']], function () {
+      Route::post('/registerStaff', [UserController::class, 'registerStaff']);
+  }); 
 
-                                 
-
+    
 

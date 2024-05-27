@@ -18,12 +18,27 @@ class Users extends Authenticatable implements JWTSubject
 
     public function ability()
     {
-        return $this->belongsTo(Abilities::class, 'ability_id');
+        return $this->belongsTo(Ability::class, 'ability_id');
     }
     public function salesAgent()
     {
         return $this->hasOne(SalesAgents::class, 'user_id');
     }
+
+   
+
+       // Method to check ability
+       public function hasAbility($ability)
+       {
+           // Check if ability relationship is loaded and not null
+           return $this->ability && $this->ability->ability_name === $ability;
+       }
+
+    public function hasRole($roleName)
+{
+    return $this->role()->where('role_name', $roleName)->exists();
+}
+
 
 
     protected $fillable = [

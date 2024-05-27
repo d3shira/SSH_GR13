@@ -22,6 +22,7 @@ import deleteStaff from './views/adminViews/deleteStaff.vue';
 import ManageProperties from './views/staffViews/ManageProperties.vue'
 import Faqs from './views/Faqs.vue';
 import ManageFaqs from './views/staffViews/ManageFaqs.vue';
+import registerAdmin from './views/adminViews/registerAdmin.vue';
 
 
 
@@ -57,7 +58,9 @@ const routes = [
     component: PropertyDetails
   },
   { path: '/messages', component: Messages},
-  {path: '/manage-properties', component: ManageProperties}
+  {path: '/manage-properties', component: ManageProperties},
+
+  { path: '/registerAdmin',component:registerAdmin}
 
   ];
 

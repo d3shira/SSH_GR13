@@ -30,18 +30,12 @@
                             <label for="phone">Phone number</label>
                             <InputText id="phone" v-model="form.phone" />
                         </div>
-                        <div class="p-field">
-                            <label for="job_position">Job Position</label>
-                            <InputText id="job_position" v-model="form.job_position" />
-                        </div>
+                        
                         <div class="p-field">
                             <label for="password">Password</label>
                             <InputText id="password" v-model="form.password" type="password" />
                         </div>
-                        <div class="p-field">
-                            <label for="image">Profile Picture</label>
-                            <input type="file" id="image" @change="onFileChange" />
-                        </div>
+                       
                         
                         <div class="p-field">
                             <Button type="submit" label="Register" icon="pi pi-check" />
@@ -75,16 +69,13 @@ export default {
                 username: '',
                 email: '',
                 phone:'',
-                job_position:'',
-                password: '',
-                image: ''
+                password: ''
+                
             }
         };
     },
     methods: {
-        onFileChange(event) {
-            this.form.image = event.target.files[0];
-        },
+       
         async submitForm() {
             try {
                 const formData = new FormData();
@@ -93,16 +84,12 @@ export default {
                 formData.append('username', this.form.username);
                 formData.append('email', this.form.email);
                 formData.append('phone', this.form.phone);
-                formData.append('job_position', this.form.job_position);
                 formData.append('password', this.form.password);
-                formData.append('image', this.form.image);
+                
                 
 
-                const response = await fetch('http://127.0.0.1:8000/api/registerStaff', {
+                const response = await fetch('http://127.0.0.1:8000/api/registerAdmin', {
                     method: 'POST',
-                    headers: {
-                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-            },
                     body: formData
                 });
 
@@ -117,9 +104,8 @@ export default {
                     username: '',
                     email: '',
                     phone: '',
-                    job_position: '',
-                    password: '',
-                    image: null
+                    password: ''
+                  
                 };
 
                 console.log('Registration successful');

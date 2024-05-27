@@ -7,6 +7,7 @@
               <div class="title"> <router-link to="/" class="logo">Kosova Estate</router-link> </div>
           </div>
           <div class="menu-items p-d-flex p-ai-center">
+            <router-link to="/registerAdmin" class="menu-item">Admin</router-link>
             <div class="p-mx-3 dropdown">
               <router-link to="/staff" class="menu-item">Staff</router-link>
               <div class="dropdown-content">
