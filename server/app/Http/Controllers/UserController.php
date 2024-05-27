@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request)       //register for normal users
     {
         // Validation rules
         $validator = Validator::make($request->all(), [
@@ -39,6 +39,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone= $request->phone;
         $user->password = $hashedPassword; 
+        $user->role = 'client'; // Set role to client
         $user->save();
 
         return response()->json(['message' => 'User registered successfully', 'data' => $user], 201);
@@ -66,6 +67,17 @@ class UserController extends Controller
    if (!$token = JWTAuth::fromUser($user)) {
        return response()->json(['error' => 'Could not create token'], 500);
    }
+
+   // Determine the redirect path based on the user's role
+   $redirectPath = $user->role === 'staff' ? '/staffDashboard' : '/';
+
+   return response()->json([
+       'access_token' => $token,
+       'token_type' => 'bearer',
+       'expires_in' => JWTAuth::factory()->getTTL() * 3600,
+       'user' => $user,
+       'redirect' => $redirectPath // Return the redirect path
+   ]);
 
    return $this->createNewToken($token);
             
@@ -109,6 +121,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = $hashedPassword; 
+        $user->role = 'staff'; // Set role to staff
         $user->save();
 
         // Save sales agent

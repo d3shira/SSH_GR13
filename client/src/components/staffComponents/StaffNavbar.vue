@@ -4,27 +4,30 @@
         <div class="p-d-flex p-jc-between p-ai-center" style="display: flex; align-items: center;">
           <div class="p-text-center"> 
               <div class="logo"> <img width="50px" height="50" src="../../assets/images/kosova-estate.png"> </div>
-              <div class="title"> <router-link to="/" class="logo">Kosova Estate</router-link> </div>
+              <div class="title"> <router-link to="/staffDashboard" class="logo">Kosova Estate</router-link> </div>
           </div>
           <div class="menu-items p-d-flex p-ai-center">
             <div class="p-mx-3 dropdown">
-              <router-link to="/properties" class="menu-item">Properties</router-link>
+              <router-link to="/manage-properties" class="menu-item">Properties</router-link>
               <div class="dropdown-content">
                 <router-link to="/add-property" class="dropdown-item">Add Property</router-link>
-                <router-link to="/owners" class="dropdown-item">Owners</router-link>
               </div>
             </div>
             <div class="p-mx-3">
               <router-link to="/job-applications" class="menu-item">Job Applications</router-link>
             </div>
             <div class="p-mx-3">
-              <router-link to="/faqs" class="menu-item">FAQs</router-link>
+              <router-link to="/manageFaqs" class="menu-item">FAQs</router-link>
             </div>
-            <div class="p-mx-3">
+            <!-- <div class="p-mx-3">
               <router-link to="/contracts" class="menu-item">Contracts</router-link>
-            </div>
+            </div> -->
             <div class="p-mx-3">
               <router-link to="/messages" class="menu-item">Messages</router-link>
+            </div>
+            <div class="user-menu">
+              <Menu :model="userMenuItems" popup ref="userMenu"></Menu>
+              <i class="fas fa-user" style="font-size: 1.7rem; color:white; cursor: pointer;" @click="$refs.userMenu.toggle($event)"></i>
             </div>
           </div>
         </div>
@@ -33,8 +36,51 @@
   </template>
   
   <script>
+  import Menu from 'primevue/menu';
+
   export default {
     name: 'StaffNavbar',
+    components: {
+    Menu
+  }, 
+  data() {
+    return {
+      userMenuItems: [
+        // {
+        //   label: 'Login',
+        //   icon: 'pi pi-fw pi-sign-in',
+        //   command: () => { this.$router.push('/login'); }
+        // },
+        {
+          label: 'Logout',
+          icon: 'pi pi-fw pi-sign-out',
+          command: this.logout
+        }
+      ]
+    };
+  },
+  methods: {
+    logout() {
+    fetch('http://127.0.0.1:8000/api/logout', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        localStorage.removeItem('auth_token');
+        this.$router.push({ path: '/' }); // Redirect to the home page
+      } else {
+        console.error('Logout failed', data);
+      }
+    })
+    .catch(error => {
+      console.error('Error during logout', error);
+    });
+  }
+  }
   };
   </script>
   
@@ -103,7 +149,8 @@
   }
   
   .dropdown:hover .dropdown-content {
-    display: block;
+    display: flex;
+    justify-content: center;
   }
   
   .dropdown-item {
@@ -115,6 +162,12 @@
   
   .dropdown-item:hover {
     background-color: #575757;
+  }
+
+  .user-menu {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
   }
   </style>
   

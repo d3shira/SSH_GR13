@@ -19,8 +19,12 @@ import Messages from './views/staffViews/Messages.vue';
 import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
+import ManageProperties from './views/staffViews/ManageProperties.vue'
 import Faqs from './views/Faqs.vue';
 import Favorites from '@/views/Favorites.vue';
+import ManageFaqs from './views/staffViews/ManageFaqs.vue';
+
+
 
 const routes = [
   { path: '/', component: Home },
@@ -44,8 +48,13 @@ const routes = [
   { path: '/addClient', component: addClient },
   { path: '/editClient', component: editClient },
   { path: '/property/:id', name: 'PropertyDetails', component: PropertyDetails },
-  { path: '/favorites', name: 'Favorites', component: Favorites }
+  { path: '/favorites', name: 'Favorites', component: Favorites },
+  { path: '/manageFaqs', component: ManageFaqs},
+  {path: '/manage-properties', component: ManageProperties}
+
+
 ];
+
 
 const router = createRouter({
   history: createWebHistory(),
