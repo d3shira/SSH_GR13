@@ -4,11 +4,11 @@
         <div class="p-d-flex p-jc-between p-ai-center" style="display: flex; align-items: center;">
           <div class="p-text-center"> 
               <div class="logo"> <img width="50px" height="50" src="../../assets/images/kosova-estate.png"> </div>
-              <div class="title"> <router-link to="/" class="logo">Kosova Estate</router-link> </div>
+              <div class="title"> <router-link to="/adminDashboard" class="logo">Kosova Estate</router-link> </div>
           </div>
           <div class="menu-items p-d-flex p-ai-center">
             <div class="p-mx-3 dropdown">
-              <router-link to="/staff" class="menu-item">Staff</router-link>
+              <router-link to="/updateStaff" class="menu-item">Staff</router-link>
               <div class="dropdown-content">
                 <router-link to="/registerStaff" class="dropdown-item">Add Staff</router-link>
                 <router-link to="/updateStaff" class="dropdown-item">Update Staff</router-link>
@@ -16,7 +16,7 @@
               </div>
             </div>
             <div class="p-mx-3 dropdown">
-              <router-link to="/manageClients" class="menu-item">Clients</router-link>
+              <router-link to="/editClient" class="menu-item">Clients</router-link>
               <div class="dropdown-content">
                 <router-link to="/addClient" class="dropdown-item">Add Client</router-link>
                 <router-link to="/editClient" class="dropdown-item">Update Client</router-link>
@@ -24,11 +24,9 @@
               </div>
             </div>
             <div class="p-mx-3 dropdown">
-              <router-link to="/properties" class="menu-item">Properties</router-link>
+              <router-link to="/manage-properties-admin" class="menu-item">Properties</router-link>
               <div class="dropdown-content">
-                <router-link to="/add-properties" class="dropdown-item">Add Properties</router-link>
-                <router-link to="/update-properties" class="dropdown-item">Update Properties</router-link>
-                <router-link to="/delete-Properties" class="dropdown-item">Delete Properties</router-link>
+                <router-link to="/add-properties-admin" class="dropdown-item">Add Properties</router-link>
               </div>
             </div>
           </div>

@@ -57,6 +57,9 @@
     Route::get('/property-status', [StaffDashboardController::class, 'getPropertyStatus']);
     Route::get('/job-applications-report', [StaffDashboardController::class, 'getJobApplicationsReport']);
     Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
+    // Route::post('/favorites', [FavoriteController::class, 'store']);
+    Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
+    Route::get('/sales_agents', [AddPropertyController::class, 'getSalesAgents']);
     Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
     Route::post('/registerAdmin',[UserController::class,'registerAdmin']);
 

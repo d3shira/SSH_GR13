@@ -23,6 +23,8 @@ import ManageProperties from './views/staffViews/ManageProperties.vue'
 import Faqs from './views/Faqs.vue';
 import Favorites from '@/views/Favorites.vue';
 import ManageFaqs from './views/staffViews/ManageFaqs.vue';
+import managePropertiesAdmin from './views/adminViews/managePropertiesAdmin.vue';
+import addPropertyAdmin from './views/adminViews/addPropertyAdmin.vue';
 import registerAdmin from './views/adminViews/registerAdmin.vue';
 
 
@@ -51,6 +53,9 @@ const routes = [
   { path: '/property/:id', name: 'PropertyDetails', component: PropertyDetails },
   { path: '/favorites', name: 'Favorites', component: Favorites },
   { path: '/manageFaqs', component: ManageFaqs},
+  { path: '/manage-properties', component: ManageProperties},
+  { path: '/manage-properties-admin', component: managePropertiesAdmin},
+  { path: '/add-properties-admin', component: addPropertyAdmin}
   {path: '/manage-properties', component: ManageProperties},
   { path: '/registerAdmin', component: registerAdmin},
 
