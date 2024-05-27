@@ -20,6 +20,7 @@ import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
 import Faqs from './views/Faqs.vue';
+import ManageProperties from './views/staffViews/ManageProperties.vue';
 
 
 
@@ -39,7 +40,7 @@ const routes = [
   { path: '/registerStaff',component:registerStaff},
   { path: '/updateStaff', component:updateStaff},
   { path: '/deleteStaff', component:deleteStaff},
-
+  { path: '/ManageProperties', component:ManageProperties},
   { path: '/messages', component: Messages},
   { path: '/faqs', component: Faqs},
 

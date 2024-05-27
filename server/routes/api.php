@@ -12,6 +12,7 @@
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
     use App\Http\Controllers\ClientsController;
+    use App\Http\Controllers\PropertyManagementController;
 
     use App\Models\Applications;
 
@@ -48,6 +49,8 @@
     Route::put('/users/{id}', [ClientsController::class, 'update']);   
     Route::post('/agentImage',[AgentController::class,'uploadAgentImage']);                                        
     Route::get('/cities', [PropertyController::class, 'getCities']);
-                                          
+    Route::get('/properties', [PropertyManagementController::class, 'getProperties']);
+    Route::get('/properties/{id}', [PropertyManagementController::class, 'show']);
+    Route::put('/properties/{id}', [PropertyManagementController::class, 'update']);                                   
 
 
