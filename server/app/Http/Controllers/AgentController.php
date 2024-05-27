@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\DB;
 
 class AgentController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/agents",
+     *     summary="Get all agents",
+     *     @OA\Response(response="200", description="List of agents"),
+     *     @OA\Response(response="500", description="Unable to fetch agents")
+     * )
+     */
     public function getAgents(Request $request)
     {
         try {
@@ -29,6 +37,70 @@ class AgentController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/agents/{id}",
+     *     summary="Edit an agent",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Agent ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="first_name",
+     *         in="query",
+     *         description="First name of the agent",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="last_name",
+     *         in="query",
+     *         description="Last name of the agent",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="Email of the agent",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="phone",
+     *         in="query",
+     *         description="Phone number of the agent",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="username",
+     *         in="query",
+     *         description="Username of the agent",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="job_position",
+     *         in="query",
+     *         description="Job position of the agent",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="image",
+     *         in="query",
+     *         description="Image path of the agent",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="User updated successfully"),
+     *     @OA\Response(response="500", description="Unable to update user")
+     * )
+     */
     public function editAgent(Request $request, $id)
     {
         try {
@@ -43,22 +115,46 @@ class AgentController extends Controller
                 'phone' => $request->input('phone'),
                 'username' => $request->input('username'),
             ]);
- // If the user has a sales agent record, update job position and image path
- if ($user->salesAgent) {
-    $salesAgent = $user->salesAgent;
-    $salesAgent->job_position = $request->input('job_position');
-    $salesAgent->image = $request->input('image');
 
-    $salesAgent->save();
-}
+            // If the user has a sales agent record, update job position and image path
+            if ($user->salesAgent) {
+                $salesAgent = $user->salesAgent;
+                $salesAgent->job_position = $request->input('job_position');
+                $salesAgent->image = $request->input('image');
 
-       
+                $salesAgent->save();
+            }
+
             return response()->json(['message' => 'User updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Unable to update user.'], 500);
         }
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/agents/upload-image",
+     *     summary="Upload an agent image",
+     *     @OA\RequestBody(
+     *         description="Image file to upload",
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="image",
+     *                     description="Image file",
+     *                     type="string",
+     *                     format="binary"
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Image uploaded successfully"),
+     *     @OA\Response(response="400", description="No file uploaded"),
+     *     @OA\Response(response="500", description="Unable to upload image")
+     * )
+     */
     public function uploadAgentImage(Request $request)
     {
         try {
@@ -68,7 +164,7 @@ class AgentController extends Controller
                 $file->move(public_path('agents_picture'), $fileName);
                 $imagePath = 'agents_picture/' . $fileName;
 
-                return response()->json(['imagePath' =>asset($imagePath)]);
+                return response()->json(['imagePath' => asset($imagePath)]);
             } else {
                 return response()->json(['error' => 'No file uploaded.'], 400);
             }
@@ -77,6 +173,21 @@ class AgentController extends Controller
         }
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/api/agents/{id}",
+     *     summary="Delete an agent",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Agent ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="User deleted successfully"),
+     *     @OA\Response(response="500", description="Unable to delete user")
+     * )
+     */
     public function deleteAgent($id)
     {
         try {
@@ -92,4 +203,4 @@ class AgentController extends Controller
         }
     }
 }
-
+?>

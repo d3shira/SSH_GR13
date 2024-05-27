@@ -9,6 +9,35 @@ use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/properties/filter",
+     *     summary="Filter properties based on query parameters",
+     *     @OA\Parameter(
+     *         name="query",
+     *         in="query",
+     *         description="Search query for property description or address",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="propertyType",
+     *         in="query",
+     *         description="Type of property (sale or rent)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="propertyCategory",
+     *         in="query",
+     *         description="Category of property (residential or business)",
+     *         required=false,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Filtered properties list"),
+     *     @OA\Response(response="500", description="Server error")
+     * )
+     */
     public function filter(Request $request)
     {
         try {

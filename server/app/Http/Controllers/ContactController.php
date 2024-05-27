@@ -8,6 +8,24 @@ use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/contact",
+     *     summary="Submit a contact application",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", description="Applicant's name", example="John Doe"),
+     *             @OA\Property(property="address", type="string", description="Applicant's address", example="123 Main St"),
+     *             @OA\Property(property="contact", type="string", description="Applicant's contact", example="123-456-7890"),
+     *             @OA\Property(property="email", type="string", format="email", description="Applicant's email", example="john.doe@example.com"),
+     *             @OA\Property(property="message", type="string", description="Applicant's message", example="I am interested in your services.")
+     *         )
+     *     ),
+     *     @OA\Response(response="201", description="Application submitted successfully"),
+     *     @OA\Response(response="422", description="Validation errors")
+     * )
+     */
     public function store(Request $request)
     {
         // Validation rules
@@ -33,3 +51,4 @@ class ContactController extends Controller
         return response()->json(['message' => 'Application submitted successfully', 'data' => $application], 201);
     }
 }
+?>

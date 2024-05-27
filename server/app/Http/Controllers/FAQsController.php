@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class FaqsController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/faqs",
+     *     summary="Retrieve a list of FAQs",
+     *     @OA\Response(response="200", description="A list of FAQs"),
+     *     @OA\Response(response="500", description="Server error")
+     * )
+     */
     public function getFaqs()
     {
         try {
@@ -22,8 +30,24 @@ class FaqsController extends Controller
             return response()->json(['error' => 'Server Error'], 500);
         }
     }
-    
 
+    /**
+     * @OA\Post(
+     *     path="/api/faqs",
+     *     summary="Create a new FAQ",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="user_id", type="integer", description="ID of the user", example="1"),
+     *             @OA\Property(property="question", type="string", description="FAQ question", example="What is the return policy?"),
+     *             @OA\Property(property="answer", type="string", description="FAQ answer", example="Our return policy is 30 days.")
+     *         )
+     *     ),
+     *     @OA\Response(response="201", description="FAQ created successfully"),
+     *     @OA\Response(response="422", description="Validation errors"),
+     *     @OA\Response(response="500", description="Server error")
+     * )
+     */
     public function store(Request $request)
     {
         try {
@@ -50,6 +74,28 @@ class FaqsController extends Controller
         }
     }
 
+    /**
+     * @OA\Put(
+     *     path="/api/faqs/{id}",
+     *     summary="Update an existing FAQ",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID of the FAQ to update",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="answer", type="string", description="Updated answer for the FAQ", example="Our return policy is 30 days.")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="FAQ updated successfully"),
+     *     @OA\Response(response="422", description="Validation errors"),
+     *     @OA\Response(response="500", description="Server error")
+     * )
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -71,6 +117,5 @@ class FaqsController extends Controller
             return response()->json(['error' => 'Server Error'], 500);
         }
     }
-    
-
 }
+?>
