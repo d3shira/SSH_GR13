@@ -1,0 +1,974 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "User API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/agents": {
+            "get": {
+                "tags": [
+                    "Agents"
+                ],
+                "summary": "Get all agents",
+                "operationId": "defdc8451e3eedb011a818c7dd227d6f",
+                "responses": {
+                    "200": {
+                        "description": "List of agents"
+                    },
+                    "500": {
+                        "description": "Unable to fetch agents"
+                    }
+                }
+            }
+        },
+        "/api/agents/{id}": {
+            "put": {
+                "tags": [
+                    "Agents"
+                ],
+                "summary": "Edit an agent",
+                "operationId": "7d003d53937ed09545740a185148a5da",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Agent ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "First name of the agent",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Last name of the agent",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email of the agent",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Phone number of the agent",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "Username of the agent",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "job_position",
+                        "in": "query",
+                        "description": "Job position of the agent",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Image path of the agent",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully"
+                    },
+                    "500": {
+                        "description": "Unable to update user"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Agents"
+                ],
+                "summary": "Delete an agent",
+                "operationId": "c144bff0e057fe112adca1005b658e7b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Agent ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully"
+                    },
+                    "500": {
+                        "description": "Unable to delete user"
+                    }
+                }
+            }
+        },
+        "/api/agents/upload-image": {
+            "post": {
+                "tags": [
+                    "Agents"
+                ],
+                "summary": "Upload an agent image",
+                "operationId": "7c03a81cd0a52b9150fa6d5dec3a98be",
+                "requestBody": {
+                    "description": "Image file to upload",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "image": {
+                                        "description": "Image file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Image uploaded successfully"
+                    },
+                    "400": {
+                        "description": "No file uploaded"
+                    },
+                    "500": {
+                        "description": "Unable to upload image"
+                    }
+                }
+            }
+        },
+        "/api/careers": {
+            "post": {
+                "tags": [
+                    "Job Applications"
+                ],
+                "summary": "Submit a job application",
+                "operationId": "b4af4f9088271e734af4300ad21c3065",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Applicant's name",
+                                        "type": "string"
+                                    },
+                                    "surname": {
+                                        "description": "Applicant's surname",
+                                        "type": "string"
+                                    },
+                                    "birthday": {
+                                        "description": "Applicant's birthday",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "nationality": {
+                                        "description": "Applicant's nationality",
+                                        "type": "string"
+                                    },
+                                    "personal_number": {
+                                        "description": "Applicant's personal number",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Applicant's email",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "message": {
+                                        "description": "Applicant's message",
+                                        "type": "string"
+                                    },
+                                    "resume": {
+                                        "description": "Applicant's resume",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Form submitted successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/api/job-applications": {
+            "get": {
+                "tags": [
+                    "Job Applications"
+                ],
+                "summary": "Get all job applications",
+                "operationId": "aaabbf1a132d64b12b892078ad702733",
+                "responses": {
+                    "200": {
+                        "description": "List of job applications"
+                    },
+                    "500": {
+                        "description": "Unable to fetch job applications"
+                    }
+                }
+            }
+        },
+        "/api/job-applications/{id}/approve": {
+            "post": {
+                "tags": [
+                    "Job Applications"
+                ],
+                "summary": "Approve a job application",
+                "operationId": "13e900684c1d0a9540d310e56f764e28",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Job application ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application approved successfully"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    }
+                }
+            }
+        },
+        "/api/job-applications/{id}/reject": {
+            "post": {
+                "tags": [
+                    "Job Applications"
+                ],
+                "summary": "Reject a job application",
+                "operationId": "48dfd2b5941eda6518143814454b9ba5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Job application ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application rejected successfully"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    }
+                }
+            }
+        },
+        "/api/job-applications/{id}/undo": {
+            "post": {
+                "tags": [
+                    "Job Applications"
+                ],
+                "summary": "Undo job application status",
+                "operationId": "8a3b5ac76a06e95fdfc388cf9ec32167",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Job application ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Application status undone successfully"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    },
+                    "500": {
+                        "description": "Unable to undo application status"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Get all clients",
+                "operationId": "720a19446752b22638a415cd62afa54b",
+                "responses": {
+                    "200": {
+                        "description": "List of clients"
+                    },
+                    "500": {
+                        "description": "Unable to fetch clients"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Update a client",
+                "operationId": "aee9299b0fd57a02ceb154161755cd18",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "First name",
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "description": "Last name",
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "description": "Username",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Email",
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "phone": {
+                                        "description": "Phone number",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Password",
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Unable to update user"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Delete a client",
+                "operationId": "4dce23d43f253a2f4d42cbf416020609",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Unable to delete user"
+                    }
+                }
+            }
+        },
+        "/api/contact": {
+            "post": {
+                "tags": [
+                    "Contact Us"
+                ],
+                "summary": "Submit a contact application",
+                "operationId": "4d33e9ce28a28bf1184927750df24ba8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Applicant's name",
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "address": {
+                                        "description": "Applicant's address",
+                                        "type": "string",
+                                        "example": "123 Main St"
+                                    },
+                                    "contact": {
+                                        "description": "Applicant's contact",
+                                        "type": "string",
+                                        "example": "123-456-7890"
+                                    },
+                                    "email": {
+                                        "description": "Applicant's email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "message": {
+                                        "description": "Applicant's message",
+                                        "type": "string",
+                                        "example": "I am interested in your services."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Application submitted successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/api/faqs": {
+            "get": {
+                "tags": [
+                    "FAQs"
+                ],
+                "summary": "Retrieve a list of FAQs",
+                "operationId": "2b5fb58f5e0deb541848dd201a46becb",
+                "responses": {
+                    "200": {
+                        "description": "A list of FAQs"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "FAQs"
+                ],
+                "summary": "Create a new FAQ",
+                "operationId": "18c6ac5147188ad557f2c4cd0f21718b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "ID of the user",
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "question": {
+                                        "description": "FAQ question",
+                                        "type": "string",
+                                        "example": "What is the return policy?"
+                                    },
+                                    "answer": {
+                                        "description": "FAQ answer",
+                                        "type": "string",
+                                        "example": "Our return policy is 30 days."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "FAQ created successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/faqs/{id}": {
+            "put": {
+                "tags": [
+                    "FAQs"
+                ],
+                "summary": "Update an existing FAQ",
+                "operationId": "6fd89df2092fae177a5897f61deecbc1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the FAQ to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "answer": {
+                                        "description": "Updated answer for the FAQ",
+                                        "type": "string",
+                                        "example": "Our return policy is 30 days."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "FAQ updated successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/properties/filter": {
+            "get": {
+                "tags": [
+                    "Properties - Home"
+                ],
+                "summary": "Filter properties based on query parameters",
+                "operationId": "c48e9866382172e6da9f191aebfd622d",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Search query for property description or address",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "propertyType",
+                        "in": "query",
+                        "description": "Type of property (sale or rent)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "propertyCategory",
+                        "in": "query",
+                        "description": "Category of property (residential or business)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Filtered properties list"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/reviews": {
+            "post": {
+                "tags": [
+                    "Reviews"
+                ],
+                "summary": "Submit a review for a property",
+                "operationId": "154c71f5f72b459d998f5ea451bd4c96",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "ID of the user submitting the review (optional)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "property_id",
+                        "in": "query",
+                        "description": "ID of the property being reviewed",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "review_category_id",
+                        "in": "query",
+                        "description": "ID of the review category (optional)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "rating",
+                        "in": "query",
+                        "description": "Rating for the property (1 to 5)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 5,
+                            "minimum": 1
+                        }
+                    },
+                    {
+                        "name": "comment",
+                        "in": "query",
+                        "description": "Comment for the review",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Review submitted successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/sales-report": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Get sales report for the current week",
+                "operationId": "dadd8240bf47f6332e96b3425d806176",
+                "responses": {
+                    "200": {
+                        "description": "Sales data retrieved successfully"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/property-status": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Get count of properties for rent and for sale",
+                "operationId": "562c3f25fa4f47970e35998ab8638d29",
+                "responses": {
+                    "200": {
+                        "description": "Property status data retrieved successfully"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/job-applications-report": {
+            "get": {
+                "tags": [
+                    "Reports"
+                ],
+                "summary": "Get job applications report for the current week",
+                "operationId": "5e12a2d4b34401a61c8f64f3f85a19f8",
+                "responses": {
+                    "200": {
+                        "description": "Job applications data retrieved successfully"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "summary": "Register a new user",
+                "operationId": "2f25885f3b6f61ca11724ec302d2e439",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Swagger"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "johndoe_swagger"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe.swagger@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Login user",
+                "operationId": "0fc9610184083ac6dddab2c63139225a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "johndoe"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/api/registerStaff": {
+            "post": {
+                "summary": "Register a new staff",
+                "operationId": "5c7fe7a03ca46025f0415eb122ea79f8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "Jane"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "janedoe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "jane.doe@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "987654321"
+                                    },
+                                    "job_position": {
+                                        "type": "string",
+                                        "example": "Manager"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Staff registered successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "summary": "Get authenticated user",
+                "operationId": "a522c0230639ee7c7f1204582b59b41a",
+                "responses": {
+                    "200": {
+                        "description": "Authenticated user"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Could not authenticate token"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "summary": "Logout user",
+                "operationId": "67d5147477c548bfbc3f982833bbc7bd",
+                "responses": {
+                    "200": {
+                        "description": "User successfully logged out"
+                    },
+                    "500": {
+                        "description": "Sorry, the user cannot be logged out"
+                    }
+                }
+            }
+        }
+    }
+}
