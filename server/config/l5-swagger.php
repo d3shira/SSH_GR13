@@ -3,7 +3,7 @@
 return [
     'default' => 'default',
     'documentations' => [
-        'default1' => [
+        'default' => [
             'api' => [
                 'title' => 'L5 Swagger UI - Kosova Estate',
             ],

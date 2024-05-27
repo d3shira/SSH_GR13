@@ -12,6 +12,7 @@ class ContactController extends Controller
      * @OA\Post(
      *     path="/api/contact",
      *     summary="Submit a contact application",
+     *     tags={"Contact Us"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(

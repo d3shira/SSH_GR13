@@ -1,12 +1,15 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Kosova Estate",
+        "title": "User API",
         "version": "1.0.0"
     },
     "paths": {
         "/api/agents": {
             "get": {
+                "tags": [
+                    "Agents"
+                ],
                 "summary": "Get all agents",
                 "operationId": "defdc8451e3eedb011a818c7dd227d6f",
                 "responses": {
@@ -21,6 +24,9 @@
         },
         "/api/agents/{id}": {
             "put": {
+                "tags": [
+                    "Agents"
+                ],
                 "summary": "Edit an agent",
                 "operationId": "7d003d53937ed09545740a185148a5da",
                 "parameters": [
@@ -107,6 +113,9 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Agents"
+                ],
                 "summary": "Delete an agent",
                 "operationId": "c144bff0e057fe112adca1005b658e7b",
                 "parameters": [
@@ -132,6 +141,9 @@
         },
         "/api/agents/upload-image": {
             "post": {
+                "tags": [
+                    "Agents"
+                ],
                 "summary": "Upload an agent image",
                 "operationId": "7c03a81cd0a52b9150fa6d5dec3a98be",
                 "requestBody": {
@@ -167,6 +179,9 @@
         },
         "/api/careers": {
             "post": {
+                "tags": [
+                    "Job Applications"
+                ],
                 "summary": "Submit a job application",
                 "operationId": "b4af4f9088271e734af4300ad21c3065",
                 "requestBody": {
@@ -228,6 +243,9 @@
         },
         "/api/job-applications": {
             "get": {
+                "tags": [
+                    "Job Applications"
+                ],
                 "summary": "Get all job applications",
                 "operationId": "aaabbf1a132d64b12b892078ad702733",
                 "responses": {
@@ -242,6 +260,9 @@
         },
         "/api/job-applications/{id}/approve": {
             "post": {
+                "tags": [
+                    "Job Applications"
+                ],
                 "summary": "Approve a job application",
                 "operationId": "13e900684c1d0a9540d310e56f764e28",
                 "parameters": [
@@ -267,6 +288,9 @@
         },
         "/api/job-applications/{id}/reject": {
             "post": {
+                "tags": [
+                    "Job Applications"
+                ],
                 "summary": "Reject a job application",
                 "operationId": "48dfd2b5941eda6518143814454b9ba5",
                 "parameters": [
@@ -292,6 +316,9 @@
         },
         "/api/job-applications/{id}/undo": {
             "post": {
+                "tags": [
+                    "Job Applications"
+                ],
                 "summary": "Undo job application status",
                 "operationId": "8a3b5ac76a06e95fdfc388cf9ec32167",
                 "parameters": [
@@ -318,10 +345,13 @@
                 }
             }
         },
-        "/api/clients": {
+        "/api/users": {
             "get": {
+                "tags": [
+                    "Clients"
+                ],
                 "summary": "Get all clients",
-                "operationId": "0b636ca85e574ff3010b44d6c621c537",
+                "operationId": "720a19446752b22638a415cd62afa54b",
                 "responses": {
                     "200": {
                         "description": "List of clients"
@@ -332,10 +362,13 @@
                 }
             }
         },
-        "/api/clients/{id}": {
+        "/api/users/{id}": {
             "put": {
+                "tags": [
+                    "Clients"
+                ],
                 "summary": "Update a client",
-                "operationId": "9ffd4acb0368eb6068e75cd7dd5d43ff",
+                "operationId": "aee9299b0fd57a02ceb154161755cd18",
                 "parameters": [
                     {
                         "name": "id",
@@ -401,8 +434,11 @@
                 }
             },
             "delete": {
+                "tags": [
+                    "Clients"
+                ],
                 "summary": "Delete a client",
-                "operationId": "527e3694096ac0e9d71511de8b647c8d",
+                "operationId": "4dce23d43f253a2f4d42cbf416020609",
                 "parameters": [
                     {
                         "name": "id",
@@ -429,6 +465,9 @@
         },
         "/api/contact": {
             "post": {
+                "tags": [
+                    "Contact Us"
+                ],
                 "summary": "Submit a contact application",
                 "operationId": "4d33e9ce28a28bf1184927750df24ba8",
                 "requestBody": {
@@ -481,6 +520,9 @@
         },
         "/api/faqs": {
             "get": {
+                "tags": [
+                    "FAQs"
+                ],
                 "summary": "Retrieve a list of FAQs",
                 "operationId": "2b5fb58f5e0deb541848dd201a46becb",
                 "responses": {
@@ -493,6 +535,9 @@
                 }
             },
             "post": {
+                "tags": [
+                    "FAQs"
+                ],
                 "summary": "Create a new FAQ",
                 "operationId": "18c6ac5147188ad557f2c4cd0f21718b",
                 "requestBody": {
@@ -537,6 +582,9 @@
         },
         "/api/faqs/{id}": {
             "put": {
+                "tags": [
+                    "FAQs"
+                ],
                 "summary": "Update an existing FAQ",
                 "operationId": "6fd89df2092fae177a5897f61deecbc1",
                 "parameters": [
@@ -582,6 +630,9 @@
         },
         "/api/properties/filter": {
             "get": {
+                "tags": [
+                    "Properties - Home"
+                ],
                 "summary": "Filter properties based on query parameters",
                 "operationId": "c48e9866382172e6da9f191aebfd622d",
                 "parameters": [
@@ -625,6 +676,9 @@
         },
         "/api/reviews": {
             "post": {
+                "tags": [
+                    "Reviews"
+                ],
                 "summary": "Submit a review for a property",
                 "operationId": "154c71f5f72b459d998f5ea451bd4c96",
                 "parameters": [
@@ -689,10 +743,13 @@
                 }
             }
         },
-        "/api/staff/sales-report": {
+        "/api/sales-report": {
             "get": {
+                "tags": [
+                    "Reports"
+                ],
                 "summary": "Get sales report for the current week",
-                "operationId": "5c592ee45f6a76189fe7fbe753c7322d",
+                "operationId": "dadd8240bf47f6332e96b3425d806176",
                 "responses": {
                     "200": {
                         "description": "Sales data retrieved successfully"
@@ -703,10 +760,13 @@
                 }
             }
         },
-        "/api/staff/property-status": {
+        "/api/property-status": {
             "get": {
+                "tags": [
+                    "Reports"
+                ],
                 "summary": "Get count of properties for rent and for sale",
-                "operationId": "d2168ad3acc6e97fee697f832c911e98",
+                "operationId": "562c3f25fa4f47970e35998ab8638d29",
                 "responses": {
                     "200": {
                         "description": "Property status data retrieved successfully"
@@ -717,10 +777,13 @@
                 }
             }
         },
-        "/api/staff/job-applications-report": {
+        "/api/job-applications-report": {
             "get": {
+                "tags": [
+                    "Reports"
+                ],
                 "summary": "Get job applications report for the current week",
-                "operationId": "3de4c00dd04d6a7112cc87706629aaff",
+                "operationId": "5e12a2d4b34401a61c8f64f3f85a19f8",
                 "responses": {
                     "200": {
                         "description": "Job applications data retrieved successfully"

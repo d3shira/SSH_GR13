@@ -13,6 +13,7 @@ class HomeController extends Controller
      * @OA\Get(
      *     path="/api/properties/filter",
      *     summary="Filter properties based on query parameters",
+     *     tags={"Properties - Home"},
      *     @OA\Parameter(
      *         name="query",
      *         in="query",

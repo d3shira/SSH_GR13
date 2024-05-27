@@ -11,6 +11,7 @@ class AgentController extends Controller
      * @OA\Get(
      *     path="/api/agents",
      *     summary="Get all agents",
+     *     tags={"Agents"},
      *     @OA\Response(response="200", description="List of agents"),
      *     @OA\Response(response="500", description="Unable to fetch agents")
      * )
@@ -41,6 +42,7 @@ class AgentController extends Controller
      * @OA\Put(
      *     path="/api/agents/{id}",
      *     summary="Edit an agent",
+     *     tags={"Agents"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -135,6 +137,7 @@ class AgentController extends Controller
      * @OA\Post(
      *     path="/api/agents/upload-image",
      *     summary="Upload an agent image",
+     *     tags={"Agents"},
      *     @OA\RequestBody(
      *         description="Image file to upload",
      *         required=true,
@@ -177,6 +180,7 @@ class AgentController extends Controller
      * @OA\Delete(
      *     path="/api/agents/{id}",
      *     summary="Delete an agent",
+     *     tags={"Agents"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

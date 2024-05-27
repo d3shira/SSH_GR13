@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Users;
+use OpenApi\Annotations as OA;
 
 class ClientsController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/clients",
+     *     path="/api/users",
      *     summary="Get all clients",
+     *     tags={"Clients"},
      *     @OA\Response(response="200", description="List of clients"),
      *     @OA\Response(response="500", description="Unable to fetch clients")
      * )
@@ -22,8 +24,9 @@ class ClientsController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/clients/{id}",
+     *     path="/api/users/{id}",
      *     summary="Delete a client",
+     *     tags={"Clients"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -49,8 +52,9 @@ class ClientsController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/clients/{id}",
+     *     path="/api/users/{id}",
      *     summary="Update a client",
+     *     tags={"Clients"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -109,5 +113,3 @@ class ClientsController extends Controller
         }
     }
 }
-?>
-

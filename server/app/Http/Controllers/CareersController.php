@@ -13,6 +13,7 @@ class CareersController extends Controller
      * @OA\Post(
      *     path="/api/careers",
      *     summary="Submit a job application",
+     *     tags={"Job Applications"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(
@@ -79,6 +80,7 @@ class CareersController extends Controller
      * @OA\Get(
      *     path="/api/job-applications",
      *     summary="Get all job applications",
+     *     tags={"Job Applications"},
      *     @OA\Response(response="200", description="List of job applications"),
      *     @OA\Response(response="500", description="Unable to fetch job applications")
      * )
@@ -97,6 +99,7 @@ class CareersController extends Controller
      * @OA\Post(
      *     path="/api/job-applications/{id}/approve",
      *     summary="Approve a job application",
+     *     tags={"Job Applications"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -125,6 +128,7 @@ class CareersController extends Controller
      * @OA\Post(
      *     path="/api/job-applications/{id}/reject",
      *     summary="Reject a job application",
+     *     tags={"Job Applications"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
@@ -153,6 +157,7 @@ class CareersController extends Controller
      * @OA\Post(
      *     path="/api/job-applications/{id}/undo",
      *     summary="Undo job application status",
+     *     tags={"Job Applications"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

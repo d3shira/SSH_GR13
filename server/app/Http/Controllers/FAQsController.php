@@ -14,6 +14,7 @@ class FaqsController extends Controller
      * @OA\Get(
      *     path="/api/faqs",
      *     summary="Retrieve a list of FAQs",
+     *     tags={"FAQs"},
      *     @OA\Response(response="200", description="A list of FAQs"),
      *     @OA\Response(response="500", description="Server error")
      * )
@@ -35,6 +36,7 @@ class FaqsController extends Controller
      * @OA\Post(
      *     path="/api/faqs",
      *     summary="Create a new FAQ",
+     *     tags={"FAQs"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
@@ -78,6 +80,7 @@ class FaqsController extends Controller
      * @OA\Put(
      *     path="/api/faqs/{id}",
      *     summary="Update an existing FAQ",
+     *     tags={"FAQs"},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",

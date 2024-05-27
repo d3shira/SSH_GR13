@@ -14,6 +14,7 @@ class ReviewController extends Controller
      * @OA\Post(
      *     path="/api/reviews",
      *     summary="Submit a review for a property",
+     *     tags={"Reviews"},
      *     @OA\Parameter(
      *         name="user_id",
      *         in="query",
