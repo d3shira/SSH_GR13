@@ -12,7 +12,7 @@
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
     use App\Http\Controllers\ClientsController;
-    use App\Http\Controllers\FavoriteController;
+    //use App\Http\Controllers\FavoriteController;
 
     use App\Models\Applications;
     use App\Http\Controllers\StaffDashboardController;
@@ -60,6 +60,8 @@
     // Route::post('/favorites', [FavoriteController::class, 'store']);
     Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
     Route::get('/sales_agents', [AddPropertyController::class, 'getSalesAgents']);
+    Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
+    Route::post('/registerAdmin',[UserController::class,'registerAdmin']);
 
                                  
 

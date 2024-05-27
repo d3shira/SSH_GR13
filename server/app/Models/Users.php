@@ -18,7 +18,7 @@ class Users extends Authenticatable implements JWTSubject
 
     public function ability()
     {
-        return $this->belongsTo(Abilities::class, 'ability_id');
+        return $this->belongsTo(Ability::class, 'ability_id');
     }
     public function salesAgent()
     {
