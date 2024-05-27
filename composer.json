@@ -1,0 +1,6 @@
+{
+    "require": {
+        "darkaonline/l5-swagger": "^8.6",
+        "tymon/jwt-auth": "^2.1"
+    }
+}

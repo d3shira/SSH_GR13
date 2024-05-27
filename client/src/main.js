@@ -22,6 +22,8 @@ import 'primevue/resources/themes/aura-light-green/theme.css';
 import 'primeicons/primeicons.css';
 import 'primevue/resources/primevue.min.css';
 import '/node_modules/primeflex/primeflex.css';
+import Dropdown from 'primevue/dropdown';
+import Menubar from 'primevue/menubar';
 
 
 
@@ -37,6 +39,9 @@ app.component('Column', Column);
 app.component('InputText', InputText);
 app.component('Dropdown', Dropdown);
 app.component('Button', Button);
+app.component('Dropdown', Dropdown);
+app.component('Menubar', Menubar);
+
 
 app.mount('#app');
 

@@ -8,6 +8,7 @@ use App\Models\Features;
 use App\Models\Images;
 use App\Models\Properties;
 use App\Models\Contracts;
+use App\Models\SalesAgents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -26,6 +27,18 @@ class AddPropertyController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getSalesAgents()
+    {
+        try {
+            $salesAgents = SalesAgents::with('user:id,first_name,last_name')->get(['id', 'user_id']); // Include sales_agents.id and user_id
+            return response()->json($salesAgents);
+        } catch (\Exception $e) {
+            Log::error('Error fetching sales agents: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
 
     public function store(Request $request)
     {
@@ -156,5 +169,95 @@ class AddPropertyController extends Controller
         return response()->json(['message' => 'Property added successfully']);
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $property = Properties::findOrFail($id);
+
+            // Validate the request
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'municipality' => 'required|string|max:255',
+                'address_line' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'status' => 'nullable|string',
+                'num_bedrooms' => 'nullable|integer',
+                'num_bathrooms' => 'nullable|integer',
+                'floor_number' => 'nullable|integer',
+                'square_meters' => 'nullable|integer',
+                'price' => 'nullable|numeric',
+                'balcony' => 'boolean',
+                'garden' => 'boolean',
+                'garage' => 'boolean',
+                'parking' => 'boolean',
+                'elevator' => 'boolean',
+            ]);
+
+            // Update the property
+            $property->title = $request->input('title');
+            $property->description = $request->input('description');
+            $property->status = $request->input('status');
+            $property->save();
+
+            // Update the address
+            $address = Addresses::findOrFail($property->address_id);
+            $address->municipality = $request->input('municipality');
+            $address->address_line = $request->input('address_line');
+            $address->save();
+
+            // Update the features
+            $features = Features::findOrFail($property->property_feature_id);
+            $features->num_bedrooms = $request->input('num_bedrooms');
+            $features->num_bathrooms = $request->input('num_bathrooms');
+            $features->floor_number = $request->input('floor_number');
+            $features->square_meters = $request->input('square_meters');
+            $features->price = $request->input('price');
+            $features->has_balcony = $request->input('balcony');
+            $features->has_garden = $request->input('garden');
+            $features->has_garage = $request->input('garage');
+            $features->has_parking = $request->input('parking');
+            $features->has_elevator = $request->input('elevator');
+            $features->save();
+
+
+            return response()->json(['message' => 'Property updated successfully']);
+        } catch (\Exception $e) {
+            Log::error('Error updating property: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to update property'], 500);
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            // Find the property by ID with its relationships
+            $property = Properties::with('address', 'propertyFeature', 'images')->findOrFail($id);
+
+            // Delete associated address
+            if ($property->address) {
+                $property->address->delete();
+            }
+
+            // Delete associated features
+            if ($property->propertyFeature) {
+                $property->propertyFeature->delete();
+            }
+
+            // Delete associated images
+            if ($property->images) {
+                foreach ($property->images as $image) {
+                    $image->delete();
+                }
+            }
+
+            // Finally, delete the property itself
+            $property->delete();
+
+            return response()->json(['message' => 'Property deleted successfully']);
+        } catch (\Exception $e) {
+            Log::error('Error deleting property: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete property'], 500);
+        }
+    }
 
 }

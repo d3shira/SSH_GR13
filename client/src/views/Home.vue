@@ -131,6 +131,13 @@ export default {
         console.error('Error fetching properties:', error);
       }
     },
+    saveFavorite(property) {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    if (!favorites.some(fav => fav.id === property.id)) {
+      favorites.push(property);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+  },
     setPropertyCategory(category) {
       this.selectedPropertyCategory = category;
     },

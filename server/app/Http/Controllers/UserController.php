@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Http\Controllers;
@@ -5,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Users; 
 use App\Models\SalesAgents;
+use App\Models\Ability;
+use App\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +17,65 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function register(Request $request)
+
+    public function registerAdmin(Request $request)
+    {
+        // Validation rules for registering an admin
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users', 
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'nullable|string|max:255',
+            'password' => 'required|string|min:8',
+        ]);
+
+
+        $hashedPassword = Hash::make($request->password);
+
+
+            $user = new Users();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->phone= $request->phone;
+            $user->password = $hashedPassword; 
+
+
+
+
+                // Get the admin role
+            $adminRole = Role::where('role_name', 'admin')->first();
+
+
+            if (!$adminRole) {
+                // If admin role not found, return error response
+                return response()->json(['error' => 'Admin role not found'], 404);
+            }
+
+            // Associate the admin role with the user
+            $user->role_id = $adminRole->id;
+
+            $user->save();
+
+            return response()->json([
+                'message' => 'User registered as admin successfully',
+                'user' => [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'role' => [
+                        'id' => $user->role->id,
+                        'role_name' => $user->role->role_name,
+                    ],
+                ]
+            ], 201);
+    }
+    public function register(Request $request)       //register for normal users
     {
         // Validation rules
         $validator = Validator::make($request->all(), [
@@ -39,6 +100,17 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone= $request->phone;
         $user->password = $hashedPassword; 
+        
+        $clientRole = Role::where('role_name', 'client')->first();
+
+
+        if (!$clientRole) {
+
+            return response()->json(['error' => 'Client role not found'], 404);
+        }
+
+
+        $user->role_id = $clientRole->id;
         $user->save();
 
         return response()->json(['message' => 'User registered successfully', 'data' => $user], 201);
@@ -66,6 +138,21 @@ class UserController extends Controller
    if (!$token = JWTAuth::fromUser($user)) {
        return response()->json(['error' => 'Could not create token'], 500);
    }
+
+   $redirectPath = '/';
+   if ($user->role_id === 13) { // Assuming admin role ID is 13
+       $redirectPath = '/admindashboard';
+   } elseif ($user->role_id === 15) { // Assuming staff role ID is 2
+       $redirectPath = '/staffdashboard';
+   }
+
+   return response()->json([
+       'access_token' => $token,
+       'token_type' => 'bearer',
+       'expires_in' => JWTAuth::factory()->getTTL() * 3600,
+       'user' => $user,
+       'redirect' => $redirectPath // Return the redirect path
+   ]);
 
    return $this->createNewToken($token);
             
@@ -109,6 +196,18 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->password = $hashedPassword; 
+        
+        
+        $staffRole = Role::where('role_name', 'staff')->first();
+
+
+                if (!$staffRole) {
+                   
+                    return response()->json(['error' => 'Staff role not found'], 404);
+                }
+
+                // Associate the admin role with the user
+                $user->role_id = $staffRole->id;
         $user->save();
 
         // Save sales agent
@@ -149,5 +248,17 @@ class UserController extends Controller
     }
 
 
+    public function logout()
+{
+    try {
+        // Invalidate the token
+        JWTAuth::invalidate(JWTAuth::getToken());
 
+        return response()->json(['message' => 'User successfully logged out']);
+    } catch (JWTException $exception) {
+        return response()->json(['error' => 'Sorry, the user cannot be logged out'], 500);
     }
+}
+
+
+}

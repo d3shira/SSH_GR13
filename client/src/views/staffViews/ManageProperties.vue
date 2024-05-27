@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <AdminNavbar />
     <div class="spacer"></div>
@@ -374,3 +375,4 @@ onUnmounted(() => {
   margin-top: 10rem;
 }
 </style>
+

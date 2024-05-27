@@ -5,6 +5,7 @@
     <div class="welcome-message">
       <h1>Welcome, Admin!</h1>
       <p>Enjoy managing your platform with ease.</p>
+      <br>
     </div>
     <AdminFooter />
   </div>
