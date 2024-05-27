@@ -55,8 +55,7 @@ const routes = [
   { path: '/manageFaqs', component: ManageFaqs},
   { path: '/manage-properties', component: ManageProperties},
   { path: '/manage-properties-admin', component: managePropertiesAdmin},
-  { path: '/add-properties-admin', component: addPropertyAdmin}
-  {path: '/manage-properties', component: ManageProperties},
+  { path: '/add-properties-admin', component: addPropertyAdmin},
   { path: '/registerAdmin', component: registerAdmin},
 
 
