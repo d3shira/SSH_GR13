@@ -1,7 +1,7 @@
 <template>
 
   <div>
-    <AdminNavbar />
+    <StaffNavbar />
     <div class="spacer"></div>
     <div class="card">
       <DataTable
@@ -175,7 +175,7 @@
         </Column>
       </DataTable>
     </div>
-    <AdminFooter />
+    <StaffFooter />
     <!-- Edit Property Modal -->
     <Dialog v-model="editDialogVisible" header="Edit Property" :visible="editDialogVisible" width="30%" @hide="resetEditProperty">
       <div>
@@ -226,8 +226,8 @@ import InputText from 'primevue/inputtext';
 import Checkbox from 'primevue/checkbox';
 
 // Import components
-import AdminFooter from '../../components/adminComponents/AdminFooter.vue';
-import AdminNavbar from '../../components/adminComponents/AdminNavbar.vue';
+import StaffFooter from '../../components/staffComponents/StaffFooter.vue';
+  import StaffNavbar from '../../components/staffComponents/StaffNavbar.vue';
 
 // Setup references
 const properties = ref([]);
