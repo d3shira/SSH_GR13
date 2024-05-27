@@ -12,7 +12,7 @@
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
     use App\Http\Controllers\ClientsController;
-    use App\Http\Controllers\FavoriteController;
+    //use App\Http\Controllers\FavoriteController;
 
     use App\Models\Applications;
     use App\Http\Controllers\StaffDashboardController;
@@ -57,8 +57,8 @@
     Route::get('/property-status', [StaffDashboardController::class, 'getPropertyStatus']);
     Route::get('/job-applications-report', [StaffDashboardController::class, 'getJobApplicationsReport']);
     Route::middleware('auth:api')->post('/logout', [UserController::class, 'logout']);
-    Route::post('/favorites', [FavoriteController::class, 'store']);
     Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
+    Route::post('/registerAdmin',[UserController::class,'registerAdmin']);
 
                                  
 
