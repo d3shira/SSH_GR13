@@ -19,9 +19,8 @@ import Messages from './views/staffViews/Messages.vue';
 import registerStaff from './views/adminViews/registerStaff.vue';
 import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
-import ManageProperties from './views/staffViews/ManageProperties.vue'
-import Faqs from './views/Faqs.vue';
 import ManageProperties from './views/staffViews/ManageProperties.vue';
+import Faqs from './views/Faqs.vue';
 import Favorites from '@/views/Favorites.vue';
 import ManageFaqs from './views/staffViews/ManageFaqs.vue';
 import managePropertiesAdmin from './views/adminViews/managePropertiesAdmin.vue';
