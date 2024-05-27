@@ -13,11 +13,24 @@ This document provides guidance on implementing Object-Relational Mapping (ORM) 
 ### Tables
   - Users
   - Properties
-  - Property Addresses
   - Applications
   - Appointments
   - Reviews
   - FAQs
+  - Properties_type
+  - Abilities
+  - Addresses
+  - Contract_type
+  - Contract
+  - Features
+  - Images
+  - Messages
+  - Owners
+  - Rating
+  - Role
+  - Role_ability
+  - Sales_Agents
+  
   
 ### Development Process Overview
 
@@ -48,6 +61,77 @@ If you encounter any errors during model and migration creation, install Laravel
 `USE database server;`
 
 `SELECT * FROM your_table_name;`
+
+## Installation and Usage
+### Requirements
+- Vue 
+- Laravel
+
+#### Dependencies
+##### Client Side
+Open your terminal and run the following commands to install the necessary client-side dependencies:
+  
+  `npm install vue-router@4`
+  
+  `npm install primevue`
+  
+  `npm install primeicons`
+  
+  `npm install primeflex`
+
+  `npm install chart.js`
+  
+##### Server Side
+
+Open your terminal and run the following commands to install the necessary server-side dependencies:
+ 
+  `composer require tymon/jwt-auth`
+  
+  `php artisan jwt:secret`
+  
+  `composer require laravel/tinker`
+  
+  `npm install axios --save`
+  
+  `composer require laravel/sanctum`
+  
+ 
+ ### Steps
+1. Clone this repository
+2. Make sure you install the dependencies listed above
+
+### Usage
+   
+#### Client Side
+
+Navigate to the client folder: 
+
+`cd client`
+
+Start the client: 
+
+`npm run dev`
+
+#### Server Side
+
+Navigate to the server folder:
+
+`cd server`
+
+Seed the database:
+
+`php artisan db:seed`
+
+Start the server:
+
+`php artisan serve`
+
+## Additional Notes
+
+- Ensure you have the correct versions of Node.js and Composer installed.
+- The `php artisan jwt:secret` command generates a secret key for JWT authentication, which is crucial for security.
+- Make sure your .env file is properly configured for your database and other settings.
+- Run `php artisan migrate` before `php artisan db:seed` if your database needs migrations.
 
 ## Contributors
 - [Anjeza Gashi](https://github.com/anjezagashi)
