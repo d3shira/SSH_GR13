@@ -61,25 +61,26 @@
                 </div>
               </div>
               <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
+              <div v-if="errors.general" class="error-message">{{ errors.general }}</div>
             </form>
           
         
-         
-  <div class="contact-info">
-    <div class="container">
-    <div class="contact-item">
-      <i class="pi pi-map-marker"></i>
-      <span>Pristina, Kosovo</span>
-    </div>
-    <div class="contact-item">
-      <i class="pi pi-phone"></i>
-      <span>+38345111111</span>
-    </div>
-    <div class="contact-item">
-      <i class="pi pi-envelope"></i>
-      <span>kosova_estate@gmail.com</span>
-    </div>
-    </div>
+                    
+              <div class="contact-info">
+                <div class="container">
+                <div class="contact-item">
+                  <i class="pi pi-map-marker"></i>
+                  <span>Pristina, Kosovo</span>
+              </div>
+               <div class="contact-item">
+                  <i class="pi pi-phone"></i>
+                  <span>+38345111111</span>
+                </div>
+                <div class="contact-item">
+                  <i class="pi pi-envelope"></i>
+                  <span>kosova_estate@gmail.com</span>
+                </div>
+                </div>
   </div>
 </div>
       </div>
@@ -144,6 +145,15 @@ export default {
     },
 
     async submitForm() {
+      if (!this.user.id) {
+         this.errors.general = 'You must be logged in to submit the form.';
+    
+       setTimeout(() => {
+        this.errors.general = '';
+      }, 5000);
+    
+     return;
+     }
       try {
         const response = await fetch('http://127.0.0.1:8000/api/contact', {
           method: 'POST',
@@ -161,6 +171,9 @@ export default {
         console.log('Form submitted successfully:', data);
 
         this.successMessage = 'Form submitted successfully!';
+        setTimeout(() => {
+        this.errors.general = '';
+      }, 5000);
 
         this.form = {
           name: '',
@@ -215,7 +228,7 @@ export default {
 }
 
 .form-container {
-  padding: 20px;
+  padding-top: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -255,6 +268,7 @@ p {
 
 #message{
   width:550px;
+  margin-right: 1%;
 }
 
 
@@ -262,7 +276,7 @@ p {
 
 .contact-info {
   text-align: center;
-  margin-top: 100px;
+  margin-top: 40px;
   font-size: 18px;
   margin-right: 230px;
   /* margin-left: 20px; */
@@ -273,7 +287,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   transition: transform 0.2s;
   margin-right: 130px;
 }
@@ -302,12 +316,26 @@ p {
 
 .success-message {
   margin-top: 10px;
-  padding: 10px;
+  /* padding: 10px; */
   background-color: #dff0d8;
   color: #3c763d;
   border: 1px solid #d6e9c6;
   border-radius: 4px;
   text-align: center;
+  width:300px;
+  margin-left: 40%;;
+}
+
+.error-message {
+  margin-top: 10px;
+  /* padding: 10px; */
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  text-align: center;
+  width:300px;
+  margin-left: 40%;;
 }
 
 </style>
