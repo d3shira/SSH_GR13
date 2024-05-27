@@ -8,7 +8,7 @@
           </div>
           <div class="menu-items p-d-flex p-ai-center">
             <div class="p-mx-3 dropdown">
-              <router-link to="/manage-properties" class="menu-item">Properties</router-link>
+              <router-link to="/manageProperties" class="menu-item">Properties</router-link>
               <div class="dropdown-content">
                 <router-link to="/add-property" class="dropdown-item">Add Property</router-link>
               </div>

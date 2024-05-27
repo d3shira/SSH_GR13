@@ -12,7 +12,10 @@
     use App\Http\Controllers\ReviewController; // Add this line
     use App\Http\Controllers\FAQsController;
     use App\Http\Controllers\ClientsController;
+    use App\Http\Controllers\PropertyManagementController;
+
     //use App\Http\Controllers\FavoriteController;
+
 
     use App\Models\Applications;
     use App\Http\Controllers\StaffDashboardController;
@@ -53,6 +56,11 @@
     Route::put('/users/{id}', [ClientsController::class, 'update']);   
     Route::post('/agentImage',[AgentController::class,'uploadAgentImage']);                                        
     Route::get('/cities', [PropertyController::class, 'getCities']);
+
+    Route::get('/properties', [PropertyManagementController::class, 'getProperties']);
+    Route::get('/properties/{id}', [PropertyManagementController::class, 'show']);
+    Route::put('/properties/{id}', [PropertyManagementController::class, 'update']);                                   
+
     Route::get('/sales-report', [StaffDashboardController::class, 'getSalesReport']);
     Route::get('/property-status', [StaffDashboardController::class, 'getPropertyStatus']);
     Route::get('/job-applications-report', [StaffDashboardController::class, 'getJobApplicationsReport']);
@@ -63,6 +71,6 @@
     Route::put('/faqs/{id}', [FaqsController::class, 'update']); 
     Route::post('/registerAdmin',[UserController::class,'registerAdmin']);
 
-                                 
+
 
 

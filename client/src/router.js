@@ -21,11 +21,13 @@ import updateStaff from './views/adminViews/updateStaff.vue';
 import deleteStaff from './views/adminViews/deleteStaff.vue';
 import ManageProperties from './views/staffViews/ManageProperties.vue'
 import Faqs from './views/Faqs.vue';
+import ManageProperties from './views/staffViews/ManageProperties.vue';
 import Favorites from '@/views/Favorites.vue';
 import ManageFaqs from './views/staffViews/ManageFaqs.vue';
 import managePropertiesAdmin from './views/adminViews/managePropertiesAdmin.vue';
 import addPropertyAdmin from './views/adminViews/addPropertyAdmin.vue';
 import registerAdmin from './views/adminViews/registerAdmin.vue';
+
 
 
 
@@ -38,6 +40,7 @@ const routes = [
   { path: '/properties', component: Properties },
   { path: '/contact', component: Contact },
   { path: '/aboutus', component: AboutUs },
+  { path: '/ManageProperties', component:ManageProperties},
   { path: '/adminDashboard', component: adminDashboard },
   { path: '/job-applications', component: ManageJobApplications },
   { path: '/staffDashboard', component: Dashboard },
@@ -57,6 +60,7 @@ const routes = [
   { path: '/manage-properties-admin', component: managePropertiesAdmin},
   { path: '/add-properties-admin', component: addPropertyAdmin},
   { path: '/registerAdmin', component: registerAdmin},
+
 
 
 ];
