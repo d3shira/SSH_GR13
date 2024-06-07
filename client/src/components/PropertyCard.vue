@@ -15,7 +15,7 @@
           <img v-else alt="default header" src="https://primefaces.org/cdn/primevue/images/usercard.png" />
         </div>
       </template>
-      <template #title">{{ property.title }}</template>
+      <template #title>{{ property.title }}</template>
       <template #subtitle>
         <div class="flex items-center gap-2">
           <i class="pi pi-map-marker"></i>

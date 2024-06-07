@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class AgentController extends Controller
 {
+    
     /**
      * @OA\Get(
      *     path="/api/agents",

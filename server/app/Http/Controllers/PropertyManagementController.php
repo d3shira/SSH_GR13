@@ -13,9 +13,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Info(
+ *     title="Property Management API",
+ *     version="1.0.0",
+ *     description="API endpoints for managing properties"
+ * )
+ */
+
+/**
+ * @OA\Tag(
+ *     name="Property Management",
+ *     description="API Endpoints for managing properties"
+ * )
+ */
+
 
 class PropertyManagementController extends Controller
 {
+
     public function getProperties(Request $request)
     {
         try {
@@ -119,6 +137,59 @@ class PropertyManagementController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+      /**
+     * @OA\Post(
+     *     path="/api/properties/{id}",
+     *     summary="Update property",
+     *     tags={"Property Management"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Property ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="title", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="address", type="object",
+     *                 @OA\Property(property="country", type="string"),
+     *                 @OA\Property(property="municipality", type="string"),
+     *                 @OA\Property(property="city_village", type="string"),
+     *                 @OA\Property(property="address_line", type="string"),
+     *                 @OA\Property(property="postal_code", type="string")
+     *             ),
+     *             @OA\Property(property="features", type="object",
+     *                 @OA\Property(property="num_bedrooms", type="integer"),
+     *                 @OA\Property(property="num_bathrooms", type="integer"),
+     *                 @OA\Property(property="square_meters", type="integer"),
+     *                 @OA\Property(property="floor_number", type="integer"),
+     *                 @OA\Property(property="has_balcony", type="boolean"),
+     *                 @OA\Property(property="has_garden", type="boolean"),
+     *                 @OA\Property(property="has_garage", type="boolean"),
+     *                 @OA\Property(property="has_parking", type="boolean"),
+     *                 @OA\Property(property="has_elevator", type="boolean"),
+     *                 @OA\Property(property="price", type="number")
+     *             ),
+     *             @OA\Property(property="owner", type="object",
+     *                 @OA\Property(property="owner_name", type="string"),
+     *                 @OA\Property(property="contact_info", type="string")
+     *             ),
+     *             @OA\Property(property="sales_agent", type="object",
+     *                 @OA\Property(property="agent_name", type="string"),
+     *                 @OA\Property(property="contact_info", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Property updated successfully"),
+     *     @OA\Response(response="404", description="Property not found"),
+     *     @OA\Response(response="500", description="Error updating property")
+     * )
+     */
 
     public function update(Request $request, $id)
     {

@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
 use App\Models\Addresses;
@@ -8,10 +7,35 @@ use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(
+ *     title="Your API Title",
+ *     version="1.0.0",
+ *     description="Your API Description"
+ * )
+ */
+
+/**
+ * @OA\Tag(
+ *     name="Properties",
+ *     description="API Endpoints for showing and filtering properties"
+ * )
+ */
 class PropertyController extends Controller
 
 {
+       /**
+     * @OA\Get(
+     *     path="/api/properties",
+     *     summary="Get all properties",
+     *     tags={"Properties"},
+     *     @OA\Response(response="200", description="List of properties"),
+     *     @OA\Response(response="500", description="Unable to fetch properties")
+     * )
+     */
+
     public function getProperties(Request $request)
     {
         try {
@@ -44,6 +68,25 @@ class PropertyController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+     /**
+     * @OA\Post(
+     *     path="/api/properties/filter",
+     *     summary="Filter properties",
+     *     tags={"Properties"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="category", type="string"),
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="type", type="string"),
+     *             @OA\Property(property="city", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Filtered list of properties"),
+     *     @OA\Response(response="500", description="Error filtering properties")
+     * )
+     */
 
     public function filterProperties(Request $request)
     {
@@ -116,11 +159,38 @@ class PropertyController extends Controller
         }
     }
 
+      /**
+     * @OA\Get(
+     *     path="/api/cities",
+     *     summary="Get all cities",
+     *     tags={"Properties"},
+     *     @OA\Response(response="200", description="List of cities"),
+     *     @OA\Response(response="500", description="Unable to fetch cities")
+     * )
+     */
+
     public function getCities()
     {
         $cities = Addresses::distinct()->pluck('city_village')->toArray();
         return response()->json($cities);
     }
+
+     /**
+     * @OA\Get(
+     *     path="/api/properties/{id}",
+     *     summary="Get property by ID",
+     *     tags={"Properties"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Property ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Property details"),
+     *     @OA\Response(response="404", description="Property not found")
+     * )
+     */
 
     
     public function show( $id)

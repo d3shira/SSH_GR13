@@ -21,9 +21,9 @@
     use App\Http\Controllers\StaffDashboardController;
 
 
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    })->middleware('auth:sanctum');
+    // Route::get('/user', function (Request $request) {
+    //     return $request->user();
+    // })->middleware('auth:sanctum');
 
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
@@ -53,13 +53,13 @@
     Route::put('/users/{id}', [ClientsController::class, 'update']);    
     Route::put('/properties/{id}', [AddPropertyController::class, 'update']);    
     Route::delete('/properties/{id}', [AddPropertyController::class, 'delete']);                              
-    Route::put('/users/{id}', [ClientsController::class, 'update']);   
+    Route::put('/users/{id}', [ClientsController::class, 'update']);  
     Route::post('/agentImage',[AgentController::class,'uploadAgentImage']);                                        
     Route::get('/cities', [PropertyController::class, 'getCities']);
 
-    Route::get('/properties', [PropertyManagementController::class, 'getProperties']);
-    Route::get('/properties/{id}', [PropertyManagementController::class, 'show']);
-    Route::put('/properties/{id}', [PropertyManagementController::class, 'update']);                                   
+   //  Route::get('/properties', [PropertyManagementController::class, 'getProperties']);
+   //  Route::get('/properties/{id}', [PropertyManagementController::class, 'show']);
+   //  Route::put('/properties/{id}', [PropertyManagementController::class, 'update']);                                   
 
     Route::get('/sales-report', [StaffDashboardController::class, 'getSalesReport']);
     Route::get('/property-status', [StaffDashboardController::class, 'getPropertyStatus']);

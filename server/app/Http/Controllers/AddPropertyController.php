@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Addresses;
@@ -13,10 +12,47 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Info(
+ *     title="Your API Title",
+ *     version="1.0.0",
+ *     description="Your API Description"
+ * )
+ */
+
+/**
+ * @OA\Tag(
+ *     name="Add Properties",
+ *     description="API Endpoints for adding properties"
+ * )
+ */
 
 
 class AddPropertyController extends Controller
 {
+       /**
+     * @OA\Get(
+     *     path="/api/property/types",
+     *     tags={"Properties"},
+     *     summary="Get Property Types",
+     *     description="Retrieve a list of available property types",
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of property types",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="property_type_name", type="string", example="House")
+     *             )
+     *         )
+     *     )
+     * )
+     */
+
     public function getPropertyTypes()
     {
         try {
@@ -27,6 +63,26 @@ class AddPropertyController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+      /**
+     * @OA\Get(
+     *     path="/api/sales-agents",
+     *     tags={"Properties"},
+     *     summary="Get Sales Agents",
+     *     description="Retrieve a list of sales agents",
+     *     @OA\Response(
+     *         response=200,
+     *         description="List of sales agents",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="user_id", type="integer", example=123)
+     *             )
+     *         )
+     *     )
+     * )
+     */
 
     public function getSalesAgents()
     {
@@ -38,6 +94,56 @@ class AddPropertyController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+     /**
+     * @OA\Post(
+     *     path="/api/property",
+     *     tags={"Properties"},
+     *     summary="Add Property",
+     *     description="Add a new property",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Property details",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="title", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="date_listed", type="string", format="date"),
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="seller_id", type="integer"),
+     *             @OA\Property(property="property_type_id", type="integer"),
+     *             @OA\Property(property="address", type="object",
+     *                 @OA\Property(property="country", type="string"),
+     *                 @OA\Property(property="municipality", type="string"),
+     *                 @OA\Property(property="city_village", type="string"),
+     *                 @OA\Property(property="address_line", type="string"),
+     *                 @OA\Property(property="postal_code", type="string")
+     *             ),
+     *             @OA\Property(property="features", type="object",
+     *                 @OA\Property(property="num_bedrooms", type="integer"),
+     *                 @OA\Property(property="num_bathrooms", type="integer"),
+     *                 @OA\Property(property="square_meters", type="integer"),
+     *                 @OA\Property(property="floor_number", type="integer"),
+     *                 @OA\Property(property="has_balcony", type="boolean"),
+     *                 @OA\Property(property="has_garden", type="boolean"),
+     *                 @OA\Property(property="has_garage", type="boolean"),
+     *                 @OA\Property(property="has_parking", type="boolean"),
+     *                 @OA\Property(property="has_elevator", type="boolean"),
+     *                 @OA\Property(property="price", type="number")
+     *             ),
+     *             @OA\Property(property="owner", type="object",
+     *                 @OA\Property(property="owner_name", type="string"),
+     *                 @OA\Property(property="contact_info", type="string")
+     *             ),
+     *             @OA\Property(property="contract_type", type="integer"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Property added successfully"
+     *     )
+     * )
+     */
 
 
     public function store(Request $request)
@@ -168,6 +274,49 @@ class AddPropertyController extends Controller
 
         return response()->json(['message' => 'Property added successfully']);
     }
+      /**
+     * @OA\Put(
+     *     path="/api/property/{id}",
+     *     tags={"Properties"},
+     *     summary="Update Property",
+     *     description="Update an existing property",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Property ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Property details",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="title", type="string"),
+     *             @OA\Property(property="description", type="string"),
+     *             @OA\Property(property="status", type="string"),
+     *             @OA\Property(property="municipality", type="string"),
+     *             @OA\Property(property="address_line", type="string"),
+     *             @OA\Property(property="num_bedrooms", type="integer"),
+     *             @OA\Property(property="num_bathrooms", type="integer"),
+     *             @OA\Property(property="floor_number", type="integer"),
+     *             @OA\Property(property="square_meters", type="integer"),
+     *             @OA\Property(property="price", type="number"),
+     *             @OA\Property(property="balcony", type="boolean"),
+     *             @OA\Property(property="garden", type="boolean"),
+     *             @OA\Property(property="garage", type="boolean"),
+     *             @OA\Property(property="parking", type="boolean"),
+     *             @OA\Property(property="elevator", type="boolean")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Property updated successfully"
+     *     )
+     * )
+     */
 
     public function update(Request $request, $id)
     {
@@ -226,6 +375,28 @@ class AddPropertyController extends Controller
             return response()->json(['error' => 'Failed to update property'], 500);
         }
     }
+
+      /**
+     * @OA\Delete(
+     *     path="/api/property/{id}",
+     *     tags={"Properties"},
+     *     summary="Delete Property",
+     *     description="Delete an existing property",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Property ID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Property deleted successfully"
+     *     )
+     * )
+     */
 
     public function delete($id)
     {

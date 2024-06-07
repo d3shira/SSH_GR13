@@ -26,6 +26,7 @@ import ManageFaqs from './views/staffViews/ManageFaqs.vue';
 import managePropertiesAdmin from './views/adminViews/managePropertiesAdmin.vue';
 import addPropertyAdmin from './views/adminViews/addPropertyAdmin.vue';
 import registerAdmin from './views/adminViews/registerAdmin.vue';
+import ManagePropertiesStaff from './views/staffViews/ManagePropertiesStaff.vue';
 
 
 
@@ -39,7 +40,7 @@ const routes = [
   { path: '/properties', component: Properties },
   { path: '/contact', component: Contact },
   { path: '/aboutus', component: AboutUs },
-  { path: '/ManageProperties', component:ManageProperties},
+  { path: '/manageProperties', component:ManagePropertiesStaff},
   { path: '/adminDashboard', component: adminDashboard },
   { path: '/job-applications', component: ManageJobApplications },
   { path: '/staffDashboard', component: Dashboard },

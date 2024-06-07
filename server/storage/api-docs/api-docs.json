@@ -1,7 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "User API",
+        "title": "Kosova Estate",
+        "description": "API documentation for Kosova Estate website",
         "version": "1.0.0"
     },
     "paths": {
@@ -672,6 +673,107 @@
                         "description": "Server error"
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Filter properties",
+                "operationId": "e6c7a89307771cfedb1f2754e646433b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Filtered list of properties"
+                    },
+                    "500": {
+                        "description": "Error filtering properties"
+                    }
+                }
+            }
+        },
+        "/api/properties": {
+            "get": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Get all properties",
+                "operationId": "8421f0f674200b20d1472069f10eb324",
+                "responses": {
+                    "200": {
+                        "description": "List of properties"
+                    },
+                    "500": {
+                        "description": "Unable to fetch properties"
+                    }
+                }
+            }
+        },
+        "/api/cities": {
+            "get": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Get all cities",
+                "operationId": "6ad6ee5027bd0cf760ffcdd2756b1c6f",
+                "responses": {
+                    "200": {
+                        "description": "List of cities"
+                    },
+                    "500": {
+                        "description": "Unable to fetch cities"
+                    }
+                }
+            }
+        },
+        "/api/properties/{id}": {
+            "get": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Get property by ID",
+                "operationId": "1ffeff79c18b3281ff5e01339a5831e7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Property ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Property details"
+                    },
+                    "404": {
+                        "description": "Property not found"
+                    }
+                }
             }
         },
         "/api/reviews": {
@@ -794,46 +896,142 @@
                 }
             }
         },
-        "/api/register": {
+        "/api/registerAdmin": {
             "post": {
-                "summary": "Register a new user",
-                "operationId": "2f25885f3b6f61ca11724ec302d2e439",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "John"
-                                    },
-                                    "last_name": {
-                                        "type": "string",
-                                        "example": "Swagger"
-                                    },
-                                    "username": {
-                                        "type": "string",
-                                        "example": "johndoe_swagger"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "john.doe.swagger@example.com"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "123456789"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "password123"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "tags": [
+                    "User Controller"
+                ],
+                "summary": "Register a new admin",
+                "operationId": "69d52c42d28831007466ec4263563f14",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "Admin's first name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Admin's last name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "Admin's username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Admin's email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Admin's phone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Admin's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
-                },
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User registered as admin successfully"
+                    },
+                    "422": {
+                        "description": "Validation errors"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "User Controller"
+                ],
+                "summary": "Register a new user",
+                "operationId": "2f25885f3b6f61ca11724ec302d2e439",
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "User's first name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "User's last name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "User's username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User's email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "User's phone",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "User registered successfully"
@@ -846,31 +1044,34 @@
         },
         "/api/login": {
             "post": {
-                "summary": "Login user",
+                "tags": [
+                    "User Controller"
+                ],
+                "summary": "User login",
                 "operationId": "0fc9610184083ac6dddab2c63139225a",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "username": {
-                                        "type": "string",
-                                        "example": "johndoe"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "password123"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "User's username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
-                        "description": "Login successful"
+                        "description": "User logged in successfully"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -883,52 +1084,86 @@
         },
         "/api/registerStaff": {
             "post": {
+                "tags": [
+                    "User Controller"
+                ],
                 "summary": "Register a new staff",
                 "operationId": "5c7fe7a03ca46025f0415eb122ea79f8",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "Jane"
-                                    },
-                                    "last_name": {
-                                        "type": "string",
-                                        "example": "Doe"
-                                    },
-                                    "username": {
-                                        "type": "string",
-                                        "example": "janedoe"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "example": "jane.doe@example.com"
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "987654321"
-                                    },
-                                    "job_position": {
-                                        "type": "string",
-                                        "example": "Manager"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "example": "password123"
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "first_name",
+                        "in": "query",
+                        "description": "Staff's first name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "query",
+                        "description": "Staff's last name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "Staff's username",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Staff's email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Staff's phone",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "job_position",
+                        "in": "query",
+                        "description": "Staff's job position",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Staff's password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "image",
+                        "in": "query",
+                        "description": "Staff's image",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "binary"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "201": {
                         "description": "Staff registered successfully"
@@ -939,25 +1174,11 @@
                 }
             }
         },
-        "/api/user": {
-            "get": {
-                "summary": "Get authenticated user",
-                "operationId": "a522c0230639ee7c7f1204582b59b41a",
-                "responses": {
-                    "200": {
-                        "description": "Authenticated user"
-                    },
-                    "404": {
-                        "description": "User not found"
-                    },
-                    "500": {
-                        "description": "Could not authenticate token"
-                    }
-                }
-            }
-        },
         "/api/logout": {
             "post": {
+                "tags": [
+                    "User Controller"
+                ],
                 "summary": "Logout user",
                 "operationId": "67d5147477c548bfbc3f982833bbc7bd",
                 "responses": {
@@ -966,6 +1187,26 @@
                     },
                     "500": {
                         "description": "Sorry, the user cannot be logged out"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "tags": [
+                    "User Controller"
+                ],
+                "summary": "Get authenticated user",
+                "operationId": "a522c0230639ee7c7f1204582b59b41a",
+                "responses": {
+                    "200": {
+                        "description": "Authenticated user retrieved successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "500": {
+                        "description": "Could not authenticate token"
                     }
                 }
             }
